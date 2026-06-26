@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Make Space — the series map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#ffffff;
+    --ink:#5d5a5b;
+    --accent:#a29f9f;
+    --muted:#6f6b6c;
+    --line:#e7e4e4;
+    --surface:#f7f6f5;
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Asap",system-ui,sans-serif;font-weight:400;line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:760px;margin:0 auto;padding:4rem 1.5rem 5rem;}
+
+  .eyebrow{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:0 0 1rem;}
+  h1{font-size:clamp(1.7rem,4.5vw,2.2rem);font-weight:600;line-height:1.15;margin:0 0 .85rem;letter-spacing:-.01em;color:var(--ink);}
+  .lede{font-size:1.05rem;margin:0 0 0;max-width:54ch;color:var(--ink);}
+
+  .meta{margin:1.5rem 0 0;padding:1.2rem 0 0;border-top:1px solid var(--line);}
+  .meta p{margin:0 0 .55rem;font-size:.9rem;color:var(--muted);}
+  .meta p:last-child{margin-bottom:0;}
+  .meta b{color:var(--ink);font-weight:600;}
+  .arc{font-style:italic;}
+
+  .controls{margin:2rem 0 0;}
+  .toggle-all{
+    font:inherit;font-size:.8rem;font-weight:500;letter-spacing:.02em;
+    color:var(--ink);background:none;border:1px solid var(--line);
+    border-radius:999px;padding:.35rem .9rem;cursor:pointer;
+  }
+  .toggle-all:hover{border-color:var(--accent);}
+  .toggle-all:focus-visible{outline:2px solid var(--ink);outline-offset:2px;}
+
+  .phase{margin:2.6rem 0 0;}
+  .phase-head{margin:0 0 .3rem;}
+  .phase-eyebrow{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:600;}
+  .phase-title{font-size:1.2rem;font-weight:600;margin:.2rem 0 .25rem;color:var(--ink);}
+  .phase-goal{font-size:.9rem;color:var(--muted);margin:0;font-style:italic;}
+
+  .constellation{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600;
+    margin:1.25rem 0 .1rem;padding-bottom:.3rem;border-bottom:1px solid var(--line);}
+
+  .weeks{position:relative;list-style:none;margin:1rem 0 0;padding:0;}
+  .weeks::before{content:"";position:absolute;left:7px;top:18px;bottom:18px;width:2px;background:var(--accent);opacity:.5;}
+  .week{position:relative;}
+
+  .wbtn{
+    display:grid;grid-template-columns:1fr auto;align-items:center;gap:1rem;
+    width:100%;text-align:left;background:none;border:0;
+    border-bottom:1px solid var(--line);
+    padding:.95rem .25rem .95rem 30px;cursor:pointer;color:var(--ink);font:inherit;
+  }
+  .wbtn:hover .wtitle{color:var(--muted);}
+  .wbtn:focus-visible{outline:2px solid var(--ink);outline-offset:-2px;border-radius:4px;}
+  .wnode{
+    position:absolute;left:1px;top:1.25rem;width:14px;height:14px;border-radius:50%;
+    background:var(--bg);border:2px solid var(--accent);transition:background .2s,border-color .2s;
+  }
+  .week[data-open="true"] .wnode{background:var(--accent);}
+  .wnum{display:block;font-size:.68rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:3px;font-weight:600;}
+  .wtitle{font-size:1.04rem;font-weight:500;color:var(--ink);transition:color .15s;}
+  .wchev{font-size:1.4rem;line-height:1;color:var(--accent);font-weight:400;width:1rem;text-align:center;}
+
+  .panel{padding:.5rem .25rem 1.3rem 30px;}
+  .panel[hidden]{display:none;}
+  .facet{margin:0 0 .7rem;}
+  .facet:last-child{margin-bottom:0;}
+  .flabel{display:block;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:.2rem;}
+  .facet p{margin:0;font-size:.96rem;line-height:1.55;color:var(--ink);max-width:58ch;}
+  .reframe{font-size:1.05rem;line-height:1.5;color:var(--ink);}
+  .reframe .arrow{color:var(--accent);font-weight:600;padding:0 .15rem;}
+  .reframe .to{font-style:italic;}
+
+  @keyframes reveal{from{opacity:0;transform:translateY(-4px);}to{opacity:1;transform:none;}}
+  .panel:not([hidden]){animation:reveal .26s ease;}
+  @media (prefers-reduced-motion:reduce){.panel:not([hidden]){animation:none;}.wnode{transition:none;}}
+
+  footer{margin:3.5rem 0 0;padding:1.4rem 0 0;border-top:1px solid var(--line);font-size:.85rem;color:var(--muted);}
+  footer a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line);}
+  footer a:hover{border-color:var(--accent);}
+
+  .noscript{margin:2rem 0;padding:1rem 1.2rem;background:var(--surface);border-radius:8px;font-size:.9rem;color:var(--ink);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Therapeutic Studio · Other Bodies and Creative Health</p>
+    <h1>Make Space — the series map</h1>
+    <p class="lede">A 52-week year of creative health, in four movements. Open any week to see the territory it explores — and, in the Other Bodies weeks, the feeling it holds and the reframe it carries.</p>
+    <div class="meta">
+      <p class="arc">Each week is one unified post that moves from a practitioner, through a natural body, into the studio, and out again into watching, sharing, and rest.</p>
+      <p><b>Three pillars:</b> Creative Access · Body as Site · Emergent Practice.</p>
+    </div>
+  </header>
+
+  <div class="controls">
+    <button class="toggle-all" id="toggleAll" aria-pressed="false">Expand all</button>
+  </div>
+
+  <noscript>
+    <p class="noscript">This map is interactive — please enable JavaScript to open each week. A linear, screen-reader-friendly version is available on request.</p>
+  </noscript>
+
+  <main id="series" aria-label="Make Space, 52 weeks across four phases"></main>
+
+  <footer>
+    <p>Make Space is published by Therapeutic Studio · <a href="https://www.therapeuticstudio.ca/make-space">therapeuticstudio.ca/make-space</a></p>
+  </footer>
+</div>
+
+<script>
+const PHASES = [
+  {
+    n:1, name:"Foundations", range:"Weeks 1–13",
+    goal:"Define the field, lower the threshold, and learn to make without a goal.",
+    weeks:[
+      {n:1, title:"The Goal of Goal-less Making", focus:"Permission to fail as a therapeutic threshold."},
+      {n:2, title:"Somatic Arrival", focus:"Noticing weight, breath, and what the body is carrying today."},
+      {n:3, title:"The Architecture of the Studio", focus:"The therapeutic studio as a state of readiness, not a place."},
+      {n:4, title:"Watercolour as Co-Creator", focus:"Material agency — the way paint pools, spreads, and resists control."},
+      {n:5, title:"Backward Design for Forward Living", focus:"Start with the desired emotional outcome and design back toward it."},
+      {n:6, title:"The \u201COther Body\u201D Concept", focus:"Natural bodies as sites of wisdom, not metaphors."},
+      {n:7, title:"Defining Creative Health", focus:"Distinguishing creative health from art therapy."},
+      {n:8, title:"The Question of Stakeholders", focus:"Who is the making for? And who does it miss?"},
+      {n:9, title:"Accessibility and Infrastructure", focus:"Systemic barriers — the \u201Cpostcode lottery\u201D of who can reach this."},
+      {n:10, title:"The Ethics of Witnessing", focus:"The maker-in-process as an active researcher of their own experience."},
+      {n:11, title:"Mapping the 3D Emotion Space", focus:"Locating a feeling by its activation, orientation, and permeability."},
+      {n:12, title:"Differentiated Making", focus:"A starting point, never a prescription."},
+      {n:13, title:"Collective Empowerment", focus:"From individual success to shared community resilience."}
+    ]
+  },
+  {
+    n:2, name:"Literature", range:"Weeks 14–26",
+    goal:"Bring the research into the practice — as living argument, not external authority.",
+    weeks:[
+      {n:14, title:"Historical Context", focus:"Ancient rituals \u2192 indigenous storytelling \u2192 modern healthcare."},
+      {n:15, title:"Neuroscientific Perspective", focus:"The Mirror Neuron System and the Default Mode Network."},
+      {n:16, title:"Psychological Impact", focus:"Broaden-and-Build theory; cognitive flexibility."},
+      {n:17, title:"Physiological Resilience", focus:"Cortisol, immune function, and pain management."},
+      {n:18, title:"Social Connection Theory", focus:"Isolation, and the protection of supportive group identity."},
+      {n:19, title:"The State of Flow", focus:"Resilience through absorbed, unhurried making."},
+      {n:20, title:"Narrative and Meaning-Making", focus:"Storytelling as the preservation of collective wisdom."},
+      {n:21, title:"Creative Health in Education", focus:"Artscaping; whole-school approaches."},
+      {n:22, title:"Clinical Environments", focus:"Hospital design, patient recovery, and staff retention."},
+      {n:23, title:"Social Prescribing", focus:"Non-medical referrals as foundational public health."},
+      {n:24, title:"The Depression Treatment Gap", focus:"Most people in low-income settings receive no treatment — the global stakes of this work."},
+      {n:25, title:"Task-Shifting as a Learning Design Problem", focus:"Training non-specialists to deliver creative health approaches at scale."},
+      {n:26, title:"The Global Shift", focus:"Reactive care \u2192 proactive, person-centred health, at every scale."}
+    ]
+  },
+  {
+    n:3, name:"Investigation — Other Bodies", range:"Weeks 27–48",
+    goal:"Let each natural body reframe a human feeling. Begin with biology; arrive at the reframe through precision.",
+    groups:[
+      { label:"Protective states", weeks:[
+        {n:27, body:"Octopus", emotion:"Shame", reframe:"exquisite sensitivity"},
+        {n:28, body:"Cave", emotion:"Fear", reframe:"sanctuary; gathering before the light"},
+        {n:29, body:"Permafrost", emotion:"Numbness", reframe:"careful keeping; ancient storage"},
+        {n:30, body:"Pine Cone", emotion:"Guarded", reframe:"the wisdom of discernment"}
+      ]},
+      { label:"Heavy states", weeks:[
+        {n:31, body:"Moss", emotion:"Grief", reframe:"a slow green hush; velvet patience"},
+        {n:32, body:"Rain", emotion:"Sadness", reframe:"honest disturbance"},
+        {n:33, body:"River Delta", emotion:"Exhaustion", reframe:"the abundance of arrival"},
+        {n:34, body:"Dormant Volcano", emotion:"Despair", reframe:"powerful, contained, and patient"}
+      ]},
+      { label:"Relational & activated states", weeks:[
+        {n:35, body:"Deep Ocean", emotion:"Loneliness", reframe:"luminosity in the dark"},
+        {n:36, body:"Starling", emotion:"Anxiety", reframe:"coherence from chaos"},
+        {n:37, body:"Salmon", emotion:"Urgency", reframe:"the bright pull of purpose"},
+        {n:38, body:"Tides", emotion:"Restless", reframe:"a rhythm larger than yourself"}
+      ]},
+      { label:"Self-directed & expansive states", weeks:[
+        {n:39, body:"Lichen", emotion:"Inadequacy", reframe:"the courage of beginnings"},
+        {n:40, body:"Wildflowers", emotion:"Joy", reframe:"the celebration of suddenness"},
+        {n:41, body:"Whale", emotion:"Wonder", reframe:"the marvel of being heard"},
+        {n:42, body:"Autumn Tree", emotion:"Gratitude", reframe:"the record of release"}
+      ]},
+      { label:"Complex & mixed states", weeks:[
+        {n:43, body:"Estuary", emotion:"Ambivalence", reframe:"a fertile crossing of currents"},
+        {n:44, body:"Snowfall", emotion:"Overwhelmed", reframe:"the quiet strength of an ecosystem"},
+        {n:45, body:"Fog", emotion:"Confusion", reframe:"a mind midway through transformation"}
+      ]},
+      { label:"Existential & threshold states", weeks:[
+        {n:46, body:"Glacier", emotion:"Grief for the World", reframe:"honest response, not defeat"},
+        {n:47, body:"Bud", emotion:"The Ache of Not Yet", reframe:"the slow accumulation of readiness"},
+        {n:48, body:"Germination", emotion:"Alive", reframe:"the fierce choice to be here"}
+      ]}
+    ]
+  },
+  {
+    n:4, name:"Synthesis", range:"Weeks 49–52",
+    goal:"Hold the full arc without summarising it. Arrive at the horizon — what is found, and what remains open.",
+    weeks:[
+      {n:49, title:"The Public Record of Learning", focus:"52 weeks of posts and practices \u2192 a shareable knowledge base and field notes."},
+      {n:50, title:"Addressing the Evidence Gap", focus:"Hybrid research models: qualitative narrative + quantitative markers, and what peer review would require."},
+      {n:51, title:"Scaling Creative Health", focus:"Individual and community resilience \u2192 population-level strategies \u2192 task-shifting for global deployment."},
+      {n:52, title:"Arriving at the Horizon", focus:"What remains open? What the practice has taught the field — and what the depression treatment gap still needs."}
+    ]
+  }
+];
+
+const series = document.getElementById('series');
+let idc = 0;
+
+function makeWeek(w, ol){
+  const id = 'panel-' + (++idc);
+  const li = document.createElement('li');
+  li.className = 'week';
+  const isBody = !!w.body;
+
+  const btn = document.createElement('button');
+  btn.className = 'wbtn';
+  btn.setAttribute('aria-expanded', 'false');
+  btn.setAttribute('aria-controls', id);
+  const eyebrow = isBody ? ('Week ' + w.n + ' · ' + w.emotion) : ('Week ' + w.n);
+  const title = isBody ? w.body : w.title;
+  btn.innerHTML =
+    '<span class="wnode" aria-hidden="true"></span>' +
+    '<span><span class="wnum">' + eyebrow + '</span>' +
+    '<span class="wtitle">' + title + '</span></span>' +
+    '<span class="wchev" aria-hidden="true">+</span>';
+
+  const panel = document.createElement('div');
+  panel.className = 'panel';
+  panel.id = id;
+  panel.hidden = true;
+  if (isBody){
+    panel.innerHTML =
+      '<div class="facet"><span class="flabel">The other body</span><p>' + w.body + ' \u2014 what it has practised about ' + w.emotion.toLowerCase() + '.</p></div>' +
+      '<div class="facet"><span class="flabel">What it reframes</span>' +
+      '<p class="reframe">' + w.emotion + '<span class="arrow">\u2192</span><span class="to">' + w.reframe + '</span></p></div>';
+  } else {
+    panel.innerHTML =
+      '<div class="facet"><span class="flabel">The territory</span><p>' + w.focus + '</p></div>';
+  }
+
+  btn.addEventListener('click', () => {
+    const open = btn.getAttribute('aria-expanded') === 'true';
+    setWeek(btn, panel, li, !open);
+    syncToggleAll();
+  });
+
+  li.appendChild(btn);
+  li.appendChild(panel);
+  ol.appendChild(li);
+}
+
+PHASES.forEach(phase => {
+  const sec = document.createElement('section');
+  sec.className = 'phase';
+
+  const head = document.createElement('div');
+  head.className = 'phase-head';
+  head.innerHTML =
+    '<p class="phase-eyebrow">Phase ' + phase.n + ' · ' + phase.range + '</p>' +
+    '<h2 class="phase-title">' + phase.name + '</h2>' +
+    '<p class="phase-goal">' + phase.goal + '</p>';
+  sec.appendChild(head);
+
+  if (phase.groups){
+    phase.groups.forEach(g => {
+      const cl = document.createElement('p');
+      cl.className = 'constellation';
+      cl.textContent = g.label;
+      sec.appendChild(cl);
+      const ol = document.createElement('ol');
+      ol.className = 'weeks';
+      g.weeks.forEach(w => makeWeek(w, ol));
+      sec.appendChild(ol);
+    });
+  } else {
+    const ol = document.createElement('ol');
+    ol.className = 'weeks';
+    phase.weeks.forEach(w => makeWeek(w, ol));
+    sec.appendChild(ol);
+  }
+
+  series.appendChild(sec);
+});
+
+function setWeek(btn, panel, li, open){
+  btn.setAttribute('aria-expanded', String(open));
+  panel.hidden = !open;
+  li.setAttribute('data-open', String(open));
+  btn.querySelector('.wchev').textContent = open ? '\u2212' : '+';
+}
+
+const toggleAllBtn = document.getElementById('toggleAll');
+function allButtons(){ return Array.from(document.querySelectorAll('.wbtn')); }
+function syncToggleAll(){
+  const anyClosed = allButtons().some(b => b.getAttribute('aria-expanded') !== 'true');
+  toggleAllBtn.textContent = anyClosed ? 'Expand all' : 'Collapse all';
+  toggleAllBtn.setAttribute('aria-pressed', String(!anyClosed));
+}
+toggleAllBtn.addEventListener('click', () => {
+  const expand = toggleAllBtn.textContent === 'Expand all';
+  allButtons().forEach(b => {
+    const panel = document.getElementById(b.getAttribute('aria-controls'));
+    setWeek(b, panel, b.closest('.week'), expand);
+  });
+  syncToggleAll();
+});
+</script>
+</body>
+</html>
