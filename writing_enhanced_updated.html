@@ -1,0 +1,1824 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brand-text: #5d5a5b;
+    --brand-bg: #ffffff;
+    --brand-accent: #a29f9f;
+    --brand-light: #f5f3f0;
+    --brand-mid: #e8e5e0;
+    --brand-warm: #c8c3bc;
+    --brand-dark: #3a3838;
+    --brand-muted: #7a7775;
+    --serif: 'Asap', Georgia, serif;
+    --sans: 'Asap', system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--sans);
+    color: var(--brand-text);
+    background: var(--brand-bg);
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  .layout {
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    width: 220px;
+    min-width: 220px;
+    background: var(--brand-light);
+    border-right: 1px solid var(--brand-mid);
+    padding: 2rem 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    flex-shrink: 0;
+  }
+
+  .sidebar-logo {
+    font-family: var(--serif);
+    font-size: 13px;
+    color: var(--brand-muted);
+    padding: 0 1.5rem 1.5rem;
+    border-bottom: 1px solid var(--brand-mid);
+    letter-spacing: 0.03em;
+    font-style: italic;
+  }
+
+  .sidebar-logo strong {
+    display: block;
+    font-family: var(--serif);
+    font-size: 15px;
+    color: var(--brand-dark);
+    font-weight: 400;
+    margin-bottom: 2px;
+  }
+
+  .nav-section {
+    padding: 1rem 0 0;
+  }
+
+  .nav-label {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brand-warm);
+    padding: 0.75rem 1.5rem 0.25rem;
+    font-weight: 500;
+  }
+
+  .nav-item {
+    display: block;
+    padding: 0.5rem 1.5rem;
+    color: var(--brand-muted);
+    font-size: 13.5px;
+    cursor: pointer;
+    border: none;
+    background: none;
+    text-align: left;
+    width: 100%;
+    border-left: 2px solid transparent;
+    transition: all 0.15s;
+    font-family: var(--sans);
+  }
+
+  .nav-item:hover {
+    color: var(--brand-dark);
+    background: var(--brand-mid);
+  }
+
+  .nav-item.active {
+    color: var(--brand-dark);
+    border-left-color: var(--brand-accent);
+    background: var(--brand-mid);
+    font-weight: 500;
+  }
+
+  /* MAIN */
+  .main {
+    flex: 1;
+    overflow-y: auto;
+    max-height: 100vh;
+  }
+
+  .page {
+    display: none;
+    padding: 3rem;
+    max-width: 860px;
+  }
+
+  .page.active {
+    display: block;
+  }
+
+  /* TYPOGRAPHY */
+  .page-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brand-warm);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+
+  .page-title {
+    font-family: var(--serif);
+    font-size: 36px;
+    color: var(--brand-dark);
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+
+  .page-subtitle {
+    color: var(--brand-muted);
+    font-size: 15px;
+    margin-bottom: 2.5rem;
+    font-style: italic;
+  }
+
+  h2 {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--brand-dark);
+    margin: 2.5rem 0 0.75rem;
+    line-height: 1.3;
+  }
+
+  h3 {
+    font-size: 13px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--brand-accent);
+    margin: 1.75rem 0 0.5rem;
+  }
+
+  p {
+    margin-bottom: 0.85rem;
+    color: var(--brand-text);
+    font-size: 14.5px;
+  }
+
+  /* DIVIDER */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--brand-mid);
+    margin: 2rem 0;
+  }
+
+  /* CARDS */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+
+  .card {
+    background: var(--brand-light);
+    border: 1px solid var(--brand-mid);
+    border-radius: 8px;
+    padding: 1.25rem;
+  }
+
+  .card-num {
+    font-family: var(--serif);
+    font-size: 28px;
+    color: var(--brand-warm);
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  .card-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--brand-dark);
+    margin-bottom: 0.4rem;
+  }
+
+  .card-desc {
+    font-size: 12.5px;
+    color: var(--brand-muted);
+    line-height: 1.5;
+  }
+
+  /* STEP LIST */
+  .step-list {
+    list-style: none;
+    counter-reset: steps;
+    margin: 1rem 0 1.5rem;
+  }
+
+  .step-list li {
+    counter-increment: steps;
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    align-items: flex-start;
+  }
+
+  .step-list li::before {
+    content: counter(steps);
+    font-family: var(--serif);
+    font-size: 18px;
+    color: var(--brand-warm);
+    min-width: 24px;
+    line-height: 1.3;
+    margin-top: 1px;
+  }
+
+  .step-content {
+    flex: 1;
+  }
+
+  .step-title {
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--brand-dark);
+    margin-bottom: 0.2rem;
+  }
+
+  .step-desc {
+    font-size: 13px;
+    color: var(--brand-muted);
+    line-height: 1.55;
+  }
+
+  /* CALLOUT */
+  .callout {
+    background: var(--brand-light);
+    border-left: 3px solid var(--brand-accent);
+    padding: 1rem 1.25rem;
+    margin: 1.25rem 0;
+    border-radius: 0 6px 6px 0;
+  }
+
+  .callout-label {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--brand-accent);
+    font-weight: 500;
+    margin-bottom: 0.35rem;
+  }
+
+  .callout p {
+    font-size: 13.5px;
+    margin: 0;
+    color: var(--brand-text);
+  }
+
+  /* TEMPLATE BLOCK */
+  .template-block {
+    background: var(--brand-light);
+    border: 1px solid var(--brand-mid);
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 1.25rem 0;
+  }
+
+  .template-header {
+    background: var(--brand-mid);
+    padding: 0.6rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .template-tag {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--brand-muted);
+    font-weight: 500;
+  }
+
+  .template-body {
+    padding: 1.25rem;
+  }
+
+  .template-section {
+    margin-bottom: 1.25rem;
+  }
+
+  .template-section:last-child {
+    margin-bottom: 0;
+  }
+
+  .template-section-title {
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--brand-accent);
+    border-bottom: 1px solid var(--brand-mid);
+    padding-bottom: 0.3rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .template-field {
+    font-size: 13px;
+    color: var(--brand-muted);
+    font-style: italic;
+    line-height: 1.6;
+    margin-bottom: 0.4rem;
+  }
+
+  .template-placeholder {
+    display: inline-block;
+    background: var(--brand-mid);
+    color: var(--brand-text);
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-style: normal;
+    font-size: 12px;
+  }
+
+  /* TABLE */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin: 1rem 0;
+  }
+
+  .data-table th {
+    background: var(--brand-mid);
+    padding: 0.6rem 0.75rem;
+    text-align: left;
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--brand-muted);
+    border-bottom: 1px solid var(--brand-warm);
+  }
+
+  .data-table td {
+    padding: 0.65rem 0.75rem;
+    border-bottom: 1px solid var(--brand-mid);
+    color: var(--brand-text);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+
+  .data-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .data-table tr:hover td {
+    background: var(--brand-light);
+  }
+
+  /* PILL */
+  .pill {
+    display: inline-block;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 500;
+    background: var(--brand-mid);
+    color: var(--brand-muted);
+  }
+
+  .pill-accent {
+    background: #e8e4de;
+    color: var(--brand-dark);
+  }
+
+  /* WEEK CONSTELLATION */
+  .constellation-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.75rem;
+    margin: 1rem 0;
+  }
+
+  .constellation-item {
+    border: 1px solid var(--brand-mid);
+    border-radius: 6px;
+    padding: 0.85rem 1rem;
+    background: var(--brand-bg);
+  }
+
+  .const-weeks {
+    font-size: 11px;
+    color: var(--brand-warm);
+    margin-bottom: 0.25rem;
+  }
+
+  .const-body {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--brand-dark);
+    margin-bottom: 0.2rem;
+  }
+
+  .const-emotion {
+    font-size: 12px;
+    color: var(--brand-muted);
+    font-style: italic;
+  }
+
+  /* README STEP */
+  .readme-step {
+    display: flex;
+    gap: 1.25rem;
+    margin-bottom: 1.75rem;
+    align-items: flex-start;
+  }
+
+  .readme-num {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    background: var(--brand-dark);
+    color: white;
+    font-family: var(--serif);
+    font-size: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+  }
+
+  .readme-content {
+    flex: 1;
+  }
+
+  .readme-title {
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--brand-dark);
+    margin-bottom: 0.35rem;
+  }
+
+  .readme-body {
+    font-size: 13.5px;
+    color: var(--brand-muted);
+    line-height: 1.6;
+  }
+
+  .readme-body strong {
+    color: var(--brand-text);
+    font-weight: 500;
+  }
+
+  /* TAG */
+  .tag {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border: 1px solid var(--brand-mid);
+    border-radius: 3px;
+    color: var(--brand-muted);
+    display: inline-block;
+    margin-right: 4px;
+    margin-bottom: 4px;
+  }
+
+  /* LINK */
+  a.brand-link {
+    color: var(--brand-text);
+    text-decoration: underline;
+    text-decoration-color: var(--brand-warm);
+    text-underline-offset: 2px;
+    font-size: 13.5px;
+  }
+
+  a.brand-link:hover {
+    text-decoration-color: var(--brand-text);
+  }
+
+  .inline-accent {
+    color: var(--brand-accent);
+    font-style: italic;
+  }
+
+  /* Two-col */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin: 1rem 0;
+  }
+
+  @media (max-width: 700px) {
+    .two-col { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    .page { padding: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar">
+    <div class="sidebar-logo">
+      <strong>Make Space</strong>
+      Other Bodies &amp; Creative Health
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-label">Start here</div>
+      <button class="nav-item active" onclick="show('readme')">README — How to Write</button>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-label">Foundations</div>
+      <button class="nav-item" onclick="show('hypothesis')">Working Hypothesis</button>
+      <button class="nav-item" onclick="show('gmh')">Global Mental Health</button>
+      <button class="nav-item" onclick="show('structure')">Weekly Structure</button>
+      <button class="nav-item" onclick="show('pillars')">3 Pillars</button>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-label">Learning</div>
+      <button class="nav-item" onclick="show('objectives')">Learning Objectives</button>
+      <button class="nav-item" onclick="show('competencies')">Core Competencies</button>
+      <button class="nav-item" onclick="show('outcomes')">Weekly Outcomes</button>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-label">Template</div>
+      <button class="nav-item" onclick="show('template')">Weekly Template</button>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-label">Curriculum</div>
+      <button class="nav-item" onclick="show('curriculum')">52-Week Map</button>
+      <button class="nav-item" onclick="show('investigation')">Phase 3 — Other Bodies</button>
+      <button class="nav-item" onclick="show('practitioners')">Practitioner Index</button>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-label">Integrity</div>
+      <button class="nav-item" onclick="show('factcheck')">Fact-Checking Guide</button>
+      <button class="nav-item" onclick="show('citations')">Verified Citations</button>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <!-- ═══════════════ README ═══════════════ -->
+    <div id="readme" class="page active">
+      <p class="page-eyebrow">Start here</p>
+      <h1 class="page-title">How to write each week</h1>
+      <p class="page-subtitle">Your step-by-step process from blank page to published post on <a class="brand-link" href="https://www.therapeuticstudio.ca/writing" target="_blank">therapeuticstudio.ca/writing</a></p>
+
+      <div class="callout">
+        <div class="callout-label">Before you begin</div>
+        <p>Each week produces one unified post that lives in a single piece of writing. The truest posts open inside the week's <em>feeling</em> — a felt, sensory moment the reader meets in the body — and let the natural body, the idea, and the practitioners arrive afterward, as company to what's already been felt. The sections below describe the elements of a post; the order they appear in serves the feeling, not the other way around. There is a second form for the standalone framing essays that orient a reader to the whole — see <strong>MakeSpace_Orientation_Essay_Form.md</strong>; the commitments below apply to it too.</p>
+      </div>
+
+      <h2>The commitments that govern every post</h2>
+      <p>Read these before the process. The steps serve the commitments; if a structural choice ever pulls against one of them, the commitment wins. We are inviting participants into a journey of experiential learning — building capacity in creative health by doing, with us — and we hold a real responsibility to them. These hold for every Make Space piece, weekly posts and orientation essays alike.</p>
+
+      <div class="callout">
+        <div class="callout-label">1 · Feel before think</div>
+        <p>The reader meets a feeling in the body before they are asked to consider any concept — a recognition, a loosening, a held breath they know from the inside. Knowing in the emotions comes before knowing in the thoughts. The ideas are earned afterward. This is the single most important thing the writing does.</p>
+      </div>
+
+      <div class="callout">
+        <div class="callout-label">2 · Stay inside the feeling — never explain it</div>
+        <p>Invite the reader into emotion; never step outside it to point at what you have done. The moment a post turns and narrates its own method — "notice how that made you feel" — it stops holding the reader and starts using them; their tenderness becomes a demonstration. Do not tell a participant what is happening inside them, to diagnose it or to show it off. Stay alongside, witnessing — sitting, attending, holding.</p>
+      </div>
+
+      <div class="callout">
+        <div class="callout-label">3 · The natural body is a companion; the feeling is named in pencil</div>
+        <p>Each week pairs an emotion with a natural body that keeps it company. The feeling is offered as a guess held loosely — <em>in pencil, not ink</em>. The reader is free to sit with the companion and find a different feeling there, or none. Naming widens the shelf the reader builds from; it never tells them what is inside them.</p>
+      </div>
+
+      <div class="callout">
+        <div class="callout-label">4 · Never diagnose the reader</div>
+        <p>Make Space is a creative-health early intervention — never assessment, never treatment, never a verdict about what the reader has or is. No clinical label, no claim about what they are feeling as a fact we can see and they cannot. We offer vocabulary and a body to hold it with; the reader's meaning stays theirs. Keep the grammar of possibility — <em>may, might, could</em> — never the grammar of verdict.</p>
+      </div>
+
+      <div class="callout">
+        <div class="callout-label">5 · Center HPSM voices and ancestral knowledge — with complete respect</div>
+        <p>Center the work, lives, and experiences of historically, persistently, or systemically marginalized people. This is a centering, not an addition: the post is built with them at its heart. Begin where a practice genuinely comes from; name people, nations, and lineages precisely; let people speak in their own words; honour ancestral knowledge as knowledge in its own right — not folklore awaiting validation — and attribute it to its source community, not only the scholar who recorded it. Know what is sacred, closed, or simply not yours to repurpose.</p>
+      </div>
+
+      <div class="callout">
+        <div class="callout-label">6 · The truth behind the facts</div>
+        <p>The facts — the biology, the study, the framework — are never the destination. They are the path to something truer underneath, felt before it is argued. Hold the facts with precision and the reader with deep, complete respect.</p>
+      </div>
+
+      <h2>Before you write</h2>
+
+      <div class="readme-step">
+        <div class="readme-num">1</div>
+        <div class="readme-content">
+          <div class="readme-title">Locate your week on the curriculum</div>
+          <div class="readme-body">Open the <strong>52-Week Map</strong> page. Find your current week number and note: the phase (Foundations / Literature / Investigation / Synthesis), the pillar (Creative Access / Body as Site / Emergent Practice), and the natural body + emotional state if you're in Phase 3. Write these at the top of a blank document before you do anything else.</div>
+        </div>
+      </div>
+
+      <div class="readme-step">
+        <div class="readme-num">2</div>
+        <div class="readme-content">
+          <div class="readme-title">Identify your heading — the provocation</div>
+          <div class="readme-body">This is a single statement or question that names the tension. <strong>Ask yourself:</strong> What assumption about creativity or the body does this week challenge? What would a reader assume that this week will complicate? The heading should be arguable — something that could be wrong. Write three options, then choose the one that feels most unsettling in the best way.</div>
+        </div>
+      </div>
+
+      <div class="readme-step">
+        <div class="readme-num">3</div>
+        <div class="readme-content">
+          <div class="readme-title">Identify your three keywords</div>
+          <div class="readme-body">From the <strong>Weekly Structure</strong> page: every week has 3–5 conceptual anchors that carry the intellectual weight. Name them before writing. They thread through the whole post — surfacing as you open, shaping the natural body section, and echoing through to the studio invitation.</div>
+        </div>
+      </div>
+
+      <div class="readme-step">
+        <div class="readme-num">4</div>
+        <div class="readme-content">
+          <div class="readme-title">Do a somatic check-in before writing</div>
+          <div class="readme-body">This is not optional. Notice the weight of your body, the breath, what you're carrying today. Make Space speaks from inside the practice. The writing comes from that position — curious, grounded, willing to be uncertain. If you skip this, you'll write from above the material rather than within it.</div>
+        </div>
+      </div>
+
+      <hr class="divider">
+      <h2>Writing the unified weekly post</h2>
+      <p class="page-subtitle" style="margin-bottom:1rem;">Use the Weekly Template page as your working document. The post moves in one continuous arc — do not break it into separate publications.</p>
+
+      <div class="readme-step">
+        <div class="readme-num">5</div>
+        <div class="readme-content">
+          <div class="readme-title">Open inside the week's feeling (not a concept, not a practitioner)</div>
+          <div class="readme-body">Begin in a felt, sensory experience of the emotion this week may bring — rendered in pencil, as something that <em>may</em> arise, never told to the reader as fact. A door in the body, not an abstraction and not yet a practitioner. From there, move to the natural body — let it simply be itself first — and let the key idea and the practitioners arrive afterward, as company to what has already been felt. (This reorders the elements below, and that is correct: feel-before-think is a commitment, and when structure pulls against a commitment, the commitment wins.) Two cautions earned in practice: do not reuse the shape of a previous post — each week finds the form its own truth demands, so avoid recycling a familiar opening frame. And when you appear, be the maker working <em>alongside</em> the reader — "I'll be in the same dark, not knowing either" — not the essayist performing a technique. Bring the research in after the feeling, held lightly; where findings are contested, say so inside the prose. Be willing to be uncertain.</div>
+        </div>
+      </div>
+
+      <div class="readme-step">
+        <div class="readme-num">6</div>
+        <div class="readme-content">
+          <div class="readme-title">Write the natural body section (300 words)</div>
+          <div class="readme-body">Four sub-sections. <strong>Its nature:</strong> what this body actually does — biology, behaviour, specificity. No metaphor yet. Just fact. Let it be itself for a moment before it has anything to do with the reader. <strong>What it keeps company with:</strong> name — in pencil — the emotional state this body keeps company with, as a feeling that <em>may</em> arise, never a claim about what the reader is feeling. <strong>What it reframes:</strong> what becomes possible to feel or make through this body — said as possibility, never as a verdict about the reader. <strong>Into watercolour:</strong> connect body + emotion to the material practice. What does this body teach the hand? In the emotion-first shape, the natural body follows the feeling and precedes the idea — not the other way around.</div>
+        </div>
+      </div>
+
+      <div class="readme-step">
+        <div class="readme-num">7</div>
+        <div class="readme-content">
+          <div class="readme-title">Write the framework section — held lightly</div>
+          <div class="readme-body">The research arrives here, after the body. It names what the practitioner and the natural body have already shown. It does not lead. 1–2 paragraphs drawing on the relevant evidence base. Where findings are limited or contested, say so inside the sentence that carries the claim — not after it. Bring in a third practitioner here if the week calls for it.</div>
+        </div>
+      </div>
+
+      <div class="readme-step">
+        <div class="readme-num">8</div>
+        <div class="readme-content">
+          <div class="readme-title">Write the studio invitation</div>
+          <div class="readme-body">3–4 sentences in first person — an invitation from a peer, not an instruction from a teacher. Describe your own starting point. What does this week's natural body make available to you? What are you not trying to achieve? Close with a line that releases the reader from obligation. Then follow with "What the hand might do" — 3–5 short suggestions, each naming a gesture, not an image. Name the moment of resistance. End with a second somatic check-in.</div>
+        </div>
+      </div>
+
+      <div class="readme-step">
+        <div class="readme-num">9</div>
+        <div class="readme-content">
+          <div class="readme-title">Write Watch, Share, and Rest</div>
+          <div class="readme-body"><strong>Watch:</strong> one sentence on why the video earns the time; 2–3 sentences of context on what the viewer will feel or notice. <strong>Share:</strong> one sentence on why this territory benefits from company; one specific, concrete prompt grounded in the natural body. <strong>Rest:</strong> 2–3 sentences — a genuine open question about where creative health as a field is heading. Not a summary. Something unresolved.</div>
+        </div>
+      </div>
+
+      <div class="readme-step">
+        <div class="readme-num">10</div>
+        <div class="readme-content">
+          <div class="readme-title">Write the next week preview</div>
+          <div class="readme-body">One sentence that names the natural body and territory the next week will explore — enough to create anticipation, not enough to give it away.</div>
+        </div>
+      </div>
+
+      <hr class="divider">
+      <h2>After writing</h2>
+
+      <div class="readme-step">
+        <div class="readme-num">11</div>
+        <div class="readme-content">
+          <div class="readme-title">Write your Anchors section</div>
+          <div class="readme-body">List this week's practitioners with their role, specific work, and one sentence on what they contribute. Then list sources that informed the post (Author, Full Title, Publisher, Year + one sentence) and 1–2 "worth going deeper with" sources. <strong>Every citation must be verified against the actual source before publishing</strong> — not against AI-generated text or memory. Check titles character by character. If a detail is uncertain, mark it [VERIFY] or omit it. See the <strong>Verified Citations</strong> page for the exact format of recurring sources — copy from there, don't retype.</div>
+        </div>
+      </div>
+
+      <div class="readme-step">
+        <div class="readme-num">12</div>
+        <div class="readme-content">
+          <div class="readme-title">Run the voice checklist and the pre-publication integrity checklist</div>
+          <div class="readme-body">Read the post aloud. Ask: Does it open with a practitioner's specific work, not a concept? Does the natural body arrive after the practitioner, not before? Does the framework arrive after the body? Does the studio invitation speak in peer register, not from above? Is there any place the writing explains what the practice means instead of letting it do its own work? Then run the pre-publication checklist on the <strong>Fact-Checking Guide</strong> page — every statistic, citation, framework attribution, and biographical claim must be traceable before publishing.</div>
+        </div>
+      </div>
+
+      <div class="readme-step">
+        <div class="readme-num">13</div>
+        <div class="readme-content">
+          <div class="readme-title">Publish on therapeuticstudio.ca/writing</div>
+          <div class="readme-body">One post per week. Tag the pillar. Tag the natural body for Phase 3 posts. Include the "Make Space: Other Bodies and Creative Health · Week X" label at the top of each post.</div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <div class="callout-label">A note on voice</div>
+        <p>Make Space speaks from inside the practice, not above it. The "I" of this project is a maker-in-process working <em>alongside</em> the reader — curious, grounded, willing to be uncertain, in the same dark and not pretending otherwise. Never the clever essayist who steps outside a feeling to point at it. The most important discipline of the voice is also the gentlest: invite the reader into emotion and then let it be theirs. Do not narrate what is happening inside them. The reader — often someone arriving tender, sometimes living with depression, taking this on trust — should feel held and taken seriously, never used to demonstrate a point or guided through a lesson.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════ HYPOTHESIS ═══════════════ -->
+    <div id="hypothesis" class="page">
+      <p class="page-eyebrow">Foundations</p>
+      <h1 class="page-title">Working Hypothesis</h1>
+      <p class="page-subtitle">The core argument Make Space is testing and building through 52 weeks</p>
+
+      <div class="callout">
+        <div class="callout-label">The hypothesis</div>
+        <p>Creative health is best cultivated when individuals are given explicit permission to fail (through goal-less making) within a highly supportive structure (compelling curriculum design) that uses the natural world (Other Bodies) as a mirror for the complexities of human feeling. This program operates in the context of a global depression treatment gap — in which 75% of people with depression in low-income settings receive no treatment — and positions scalable creative approaches as an understudied but evidenced path toward closing it.</p>
+      </div>
+
+      <h2>Full statement</h2>
+      <p>By engaging in a structured, evidence-informed curriculum that prioritises process over product and utilises nature-based emotional companionship, individuals and communities can cultivate "creative health" — a state of improved emotional capacity, social connection, and resilience.</p>
+
+      <p>The expected outcome is a shift from reactive care to a proactive, holistic, person-centred approach to wellness. Creativity is a process, not an output. Creative health looks at how engaging with creative process benefits individuals, strengthens communities, and impacts public health — including in settings where specialist mental health care is unavailable or inaccessible.</p>
+
+      <h2>Three pillars the hypothesis rests on</h2>
+
+      <div class="card-grid">
+        <div class="card">
+          <span class="card-num">I</span>
+          <div class="card-label">Pedagogical Framework</div>
+          <div class="card-desc">Intentional "goal-less" learning. Backward Design — starting with the end goal — paradoxically achieves the goal of making without a goal. The four-part arc: Foundations → Literature → Investigation → Synthesis.</div>
+        </div>
+        <div class="card">
+          <span class="card-num">II</span>
+          <div class="card-label">The Methodology</div>
+          <div class="card-desc">"Other Bodies" as somatic companions. Natural bodies are not just metaphors but sites of wisdom. Watercolour is central — it resists control, pools, spreads, and surprises. Somatic arrival grounds the creative act in physical reality.</div>
+        </div>
+        <div class="card">
+          <span class="card-num">III</span>
+          <div class="card-label">Scale: Individual to Population</div>
+          <div class="card-desc">Benefits are fractal. Individual resilience → community cohesion → public health record. Make Space acts as a public record of learning, contributing to the evidence base for integrating creative health into public health strategies — including task-shifting models for settings where specialist care is scarce.</div>
+        </div>
+      </div>
+
+      <h2>Key claims — hold these when you write</h2>
+      <div class="data-table" style="display:table; width:100%;">
+        <table class="data-table" style="width:100%">
+          <thead>
+            <tr>
+              <th>Claim</th>
+              <th>What it means in practice</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Natural bodies are sites of wisdom, not illustration</td><td>The octopus doesn't symbolise shame — it has actually practised something humans call shame for longer than we have. Write from that position.</td></tr>
+            <tr><td>Watercolour resists control — and that is the point</td><td>Material agency is pedagogical. When the paint does something unplanned, staying with it is the practice.</td></tr>
+            <tr><td>Somatic arrival is not optional</td><td>The creative act must be grounded in physical reality before emotional exploration begins. Every session starts and ends with a somatic check-in.</td></tr>
+            <tr><td>Process over product — every time</td><td>No post should ever imply that a "good" outcome is the goal. The threshold of entry must remain low for every reader.</td></tr>
+            <tr><td>Making without a goal is evidence-based</td><td>Flow states, cortisol reduction, emotional regulation — the field supports this. You are working within a research context, not against it.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ═══════════════ GLOBAL MENTAL HEALTH ═══════════════ -->
+    <div id="gmh" class="page">
+      <p class="page-eyebrow">Foundations</p>
+      <h1 class="page-title">Global Mental Health</h1>
+      <p class="page-subtitle">The field context that gives Make Space its stakes — and what the curriculum is building toward</p>
+
+      <div class="callout">
+        <div class="callout-label">Why this matters for how you write</div>
+        <p>Make Space is not a personal project shared publicly. It is a community mental health early intervention for depression — operating in the context of a global treatment gap in which most people who need care never receive it. Understanding this field shapes how every week opens: who does the current system miss, and why does creative health matter at that scale?</p>
+      </div>
+
+      <h2>The treatment gap</h2>
+      <p>Depression affects more than 280 million people globally. In high-income countries, fewer than half receive treatment. In low- and middle-income countries, the figure falls to one in four — or lower. The gap is not a matter of diagnosis: it is a matter of access, resource, workforce, and design. Make Space operates in this context, not as a clinical solution, but as part of the evidential case that structured creative approaches can reach people that specialist systems cannot.</p>
+
+      <div class="card-grid">
+        <div class="card">
+          <span class="card-num">1</span>
+          <div class="card-label">Task-Shifting</div>
+          <div class="card-desc">Non-specialist practitioners — community workers, facilitators, peers — can be trained to deliver simplified, effective depression interventions at scale. This is the model Make Space facilitator training points toward. See: Vikram Patel, WHO mhGAP.</div>
+        </div>
+        <div class="card">
+          <span class="card-num">2</span>
+          <div class="card-label">Creative Health Evidence</div>
+          <div class="card-desc">Arts engagement is associated with reduced depression symptoms, lower cortisol, and improved social connection. Daisy Fancourt's epidemiological work and the 2019 WHO report are the primary references. Make Space is a living case study within this evidence base.</div>
+        </div>
+        <div class="card">
+          <span class="card-num">3</span>
+          <div class="card-label">Social Prescribing</div>
+          <div class="card-desc">Non-medical referrals to community-based activities — including creative programs — are now part of NHS primary care and are spreading globally. Make Space is the kind of program that social prescribing is designed to send people to.</div>
+        </div>
+      </div>
+
+      <h2>Key figures — know these names</h2>
+      <div class="data-table" style="display:table; width:100%;">
+        <table class="data-table" style="width:100%">
+          <thead>
+            <tr>
+              <th>Figure</th>
+              <th>Contribution</th>
+              <th>Why it matters here</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Vikram Patel</strong></td>
+              <td>Task-shifting; Sangath (India); "Mental Health for All by Involving All"</td>
+              <td>The model that shows non-specialists can deliver effective mental health care. The systems logic behind Make Space facilitator training.</td>
+            </tr>
+            <tr>
+              <td><strong>Daisy Fancourt</strong></td>
+              <td>Arts in health epidemiology; 2019 WHO report; UCL arts and health research</td>
+              <td>The primary evidence base for creative health outcomes. Her work is the field context your hypothesis lives inside.</td>
+            </tr>
+            <tr>
+              <td><strong>WHO mhGAP</strong></td>
+              <td>Mental Health Gap Action Programme; international framework for scaling MH care in LMICs</td>
+              <td>The professional framework global health collaborators and funders expect fluency with. Map Make Space against it.</td>
+            </tr>
+            <tr>
+              <td><strong>Arthur Kleinman</strong></td>
+              <td>Cultural competence in psychiatry; explanatory models; "The Illness Narratives"</td>
+              <td>The framework for understanding how depression is experienced differently across cultures — essential for the Global Shift week and for writing that does not universalise Western experience.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>How global mental health appears in your writing</h2>
+      <div class="step-list">
+        <li>
+          <div class="step-content">
+            <div class="step-title">In the opening section — name the gap</div>
+            <div class="step-desc">When the practitioner opening and framework ask "what does the field currently do or assume?" — the honest answer often includes who the field doesn't reach. The treatment gap is not abstract. It is a design failure with a human cost. You don't need to cite statistics every week, but the awareness should shape the provocation.</div>
+          </div>
+        </li>
+        <li>
+          <div class="step-content">
+            <div class="step-title">In Phase 2 weeks 24–26 — engage the evidence directly</div>
+            <div class="step-desc">These three weeks are where the global mental health frame becomes explicit: the depression treatment gap (Week 24), task-shifting as a learning design problem (Week 25), and the global shift from reactive to proactive care (Week 26). Write these from inside the practice — the numbers serve the making, not the other way around.</div>
+          </div>
+        </li>
+        <li>
+          <div class="step-content">
+            <div class="step-title">In Phase 4 — name the research stakes</div>
+            <div class="step-desc">By Week 49, the curriculum has accumulated 52 weeks of field notes. The synthesis posts should make explicit what this public record of learning is contributing to: the evidential case for creative health as a scalable intervention. What would a researcher need in order to take this seriously? What does the practice still need to document?</div>
+          </div>
+        </li>
+        <li>
+          <div class="step-content">
+            <div class="step-title">In references — draw from the field</div>
+            <div class="step-desc">Every post's reference list is an opportunity to position Make Space within the global mental health evidence base. Fancourt, Patel, mhGAP, social prescribing literature, Lancet Commission on Global Mental Health (2018) — these are not decorative. They are the field this work belongs to.</div>
+          </div>
+        </li>
+      </div>
+
+      <div class="callout" style="margin-top:1.5rem;">
+        <div class="callout-label">A note on voice</div>
+        <p>Global mental health stakes can flatten into abstraction — statistics and frameworks that hover above lived experience. The discipline here is the same as everywhere in Make Space: arrive at the big claim through the specific. What does the treatment gap feel like in a particular body, in a particular place, making without a goal on a Tuesday morning? The evidence base is the context. The practice is the argument.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════ STRUCTURE ═══════════════ -->
+    <div id="structure" class="page">
+      <p class="page-eyebrow">Foundations</p>
+      <h1 class="page-title">Weekly Structure</h1>
+      <p class="page-subtitle">The recurring architecture of every week — and how the parts hold together</p>
+
+      <h2>The four elements every week contains</h2>
+
+      <div class="step-list">
+        <li>
+          <div class="step-content">
+            <div class="step-title">Heading — the provocation</div>
+            <div class="step-desc">A single statement or question that names the tension the week is working with. Not a topic label — an argument starter. Something that could be wrong, or surprising, or that challenges an assumption the reader is likely to hold. Write three options and choose the most unsettling.</div>
+          </div>
+        </li>
+        <li>
+          <div class="step-content">
+            <div class="step-title">Subheadings — the three moves</div>
+            <div class="step-desc">Every week makes three moves that mirror the three pillars: first grounding the reader in what the system currently does (Creative Access / infrastructure); then asking whose interests that serves and who it misses (Body as Site / ethics); then opening toward what becomes possible when the design is adaptive and relational (Emergent Practice / method).</div>
+          </div>
+        </li>
+        <li>
+          <div class="step-content">
+            <div class="step-title">Keywords — the conceptual anchors</div>
+            <div class="step-desc">Three to five terms that carry the week's intellectual weight and connect to the broader hypothesis. These recur across weeks in different combinations — this is how the curriculum builds cumulative understanding rather than isolated lessons.</div>
+          </div>
+        </li>
+        <li>
+          <div class="step-content">
+            <div class="step-title">Key sentences — the load-bearing claims</div>
+            <div class="step-desc">One sentence per subheading that a reader could extract and hold as the essential argument of that section. These are the sentences you'd underline. They should be true at the week's specific level and also true at the level of the whole hypothesis.</div>
+          </div>
+        </li>
+      </div>
+
+      <h2>The unified weekly post</h2>
+
+      <div class="template-block">
+        <div class="template-header">
+          <span class="template-tag">One unified post</span>
+          <span class="pill">Feeling · Body · Idea · Studio · Rest</span>
+        </div>
+        <div class="template-body">
+          <p style="font-size:13px; color:var(--brand-muted); margin-bottom:0.75rem;">One continuous arc, held together in a single piece of writing. The feeling opens it. The natural body keeps it company. The idea and the practitioners arrive as company to what's been felt. The studio receives it. Rest leaves it open. The order serves the feeling — feel-before-think outranks any fixed sequence.</p>
+          <div class="template-field">→ Heading — the provocation</div>
+          <div class="template-field">→ Open inside the week's feeling (felt, sensory, in pencil)</div>
+          <div class="template-field">→ The natural body: Its nature · What it keeps company with · What it reframes</div>
+          <div class="template-field">→ The idea and the practitioners — arriving as company, after the feeling</div>
+          <div class="template-field">→ The framework — held lightly (research arrives late, in service)</div>
+          <div class="template-field">→ Into the studio (invitation, not instruction; the "I" alongside)</div>
+          <div class="template-field">→ Watch</div>
+          <div class="template-field">→ Share</div>
+          <div class="template-field">→ Rest (open question for the field)</div>
+          <div class="template-field">→ Next week preview</div>
+          <div class="template-field">→ Anchors</div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <div class="callout-label">How the order works</div>
+        <p>An earlier version of the curriculum split each week into Part 1 / Part 2 (Notice/Witness, then Make/Share/Rest) published separately; the structure is now one unified post. Within it, the truest posts open emotion-first: the reader feels before they think, and the natural body, the idea, and the practitioners arrive afterward as company. The elements above are the parts of a post, not a fixed running order — feel-before-think is a commitment, and when a structural choice pulls against a commitment, the commitment wins.</p>
+      </div>
+
+      <h2>The three moves in detail</h2>
+      <p>Every section of every post makes one of these three moves. Use them to check your work:</p>
+
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-label">Move 1 — Ground</div>
+          <div class="card-desc">What does the system, field, or culture currently do? What is the infrastructure or assumption? Open from inside the reader's existing reality before reframing it.</div>
+        </div>
+        <div class="card">
+          <div class="card-label">Move 2 — Whose interests?</div>
+          <div class="card-desc">Who does the current design serve? Who does it miss? Disability justice, access, ethics — not as lecture but as honest question from inside the practice.</div>
+        </div>
+        <div class="card">
+          <div class="card-label">Move 3 — What becomes possible</div>
+          <div class="card-desc">When the design is adaptive and relational, what opens up? What does the reader now have permission to feel, do, or make? This is the sentence they'll remember.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ PILLARS ═══════════════ -->
+    <div id="pillars" class="page">
+      <p class="page-eyebrow">Foundations</p>
+      <h1 class="page-title">The Three Pillars</h1>
+      <p class="page-subtitle">Every post is located within one primary pillar. The pillar shapes the angle.</p>
+
+      <div class="callout">
+        <div class="callout-label">How to use this</div>
+        <p>Each week is tagged with one pillar. The pillar tells you which of the three moves is primary that week — and what the subheading's intellectual weight is resting on.</p>
+      </div>
+
+      <h2>Creative Access</h2>
+      <p>The infrastructure of creative health. Systemic barriers — funding, geography, the "postcode lottery," logistical challenges, lack of trained support. Who gets access to the conditions that make making possible? Creative Access weeks ask: what does equitable creative health require, structurally?</p>
+      <p class="inline-accent">Primary move: Ground (what the system currently does or fails to do)</p>
+      <div style="margin-top:0.5rem;">
+        <span class="tag">Weeks 1–13 (Foundations)</span>
+        <span class="tag">Weeks 14–26 (Literature)</span>
+        <span class="tag">Week 49–52 (Synthesis)</span>
+      </div>
+
+      <h2>Body as Site</h2>
+      <p>The body — the human body and the natural body — as the primary site of knowing. Not a vessel for the mind but an intelligent system in its own right. Body as Site weeks work with somatic arrival, the "Other Bodies" framework, and the lived intelligence of organisms that have practised emotional states longer than humans have named them.</p>
+      <p class="inline-accent">Primary move: Whose interests? (whose body counts as a site of knowledge)</p>
+      <div style="margin-top:0.5rem;">
+        <span class="tag">Weeks 27–48 (Investigation)</span>
+        <span class="tag">All Phase 3 posts</span>
+      </div>
+
+      <h2>Emergent Practice</h2>
+      <p>The living, adaptive, relational dimension of creative health. What becomes possible when instruction is a starting point rather than a prescription? When the maker is also the researcher? When the practice is designed to surprise itself? Emergent Practice weeks work with material agency, differentiated making, and collective empowerment.</p>
+      <p class="inline-accent">Primary move: What becomes possible (adaptive, relational design)</p>
+      <div style="margin-top:0.5rem;">
+        <span class="tag">Studio sections — all weeks</span>
+        <span class="tag">Watercolour practice</span>
+      </div>
+    </div>
+
+    <!-- ═══════════════ OBJECTIVES ═══════════════ -->
+    <div id="objectives" class="page">
+      <p class="page-eyebrow">Learning</p>
+      <h1 class="page-title">Learning Objectives</h1>
+      <p class="page-subtitle">The five primary objectives the curriculum is designed to achieve — and how each one shapes your writing</p>
+
+      <div class="step-list">
+        <li>
+          <div class="step-content">
+            <div class="step-title">Internalise the practice of "goal-less" making</div>
+            <div class="step-desc">Learners move from product-orientation to process-orientation. The threshold of entry must remain low in every post. Never imply that a "good" or "finished" result is the goal. The state of flow, the reduction of perfectionist anxiety, the psychological resilience — these are the aims. Write as if failure is not possible because the goal is presence, not output.</div>
+          </div>
+        </li>
+        <li>
+          <div class="step-content">
+            <div class="step-title">Develop somatic and emotional literacy through "Other Bodies"</div>
+            <div class="step-desc">The natural world is not illustration — it is instruction. When you write about the octopus and shame, or permafrost and numbness, you are not reaching for metaphor. You are locating a site of wisdom that has practised these states without pathologising them. The reader's own feelings become more bearable when held by a body that has held them longer.</div>
+          </div>
+        </li>
+        <li>
+          <div class="step-content">
+            <div class="step-title">Cultivate acceptance through material agency</div>
+            <div class="step-desc">Watercolour resists control. This is the practice. When you write the studio section, the activity must include a moment of resistance — when the paint does something unplanned. The instruction is: stay. Watch. Let it be. The material is teaching the maker something. Every post is partly about what happens when we stop trying to fix what the material has done.</div>
+          </div>
+        </li>
+        <li>
+          <div class="step-content">
+            <div class="step-title">Synthesise interdisciplinary evidence for creative health</div>
+            <div class="step-desc">The research is real. Reduced cortisol, improved immune function, neural pathway activation, the Mirror Neuron System, the Default Mode Network, the Broaden-and-Build theory — these are not decorative. Use the reference documents in this project. When you make a claim, the field supports it. Your writing is part of the public record of evidence, not separate from it.</div>
+          </div>
+        </li>
+        <li>
+          <div class="step-content">
+            <div class="step-title">Translate individual insights into collective empowerment</div>
+            <div class="step-desc">The Share section of every post exists for this reason. What the individual discovers in their practice has community implications. The ohHEY Creative Care Community is not an add-on — it is where the fractal scale from personal resilience to collective health becomes real. Write the Share prompt as if the conversation it starts will matter, because it will.</div>
+          </div>
+        </li>
+      </div>
+    </div>
+
+    <!-- ═══════════════ COMPETENCIES ═══════════════ -->
+    <div id="competencies" class="page">
+      <p class="page-eyebrow">Learning</p>
+      <h1 class="page-title">Core Competencies</h1>
+      <p class="page-subtitle">Ten competencies the curriculum builds — and what they look like in the writing</p>
+
+      <table class="data-table" style="width:100%">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Competency</th>
+            <th>In your writing</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1</strong></td>
+            <td><strong>Goal-less Making</strong><br><span style="font-size:12px; color:var(--brand-muted)">Process over product</span></td>
+            <td style="font-size:12.5px">Every post must make the threshold of entry feel low. Honest making, not good making. "Blobs" are legitimate. The session is enough in itself.</td>
+          </tr>
+          <tr>
+            <td><strong>2</strong></td>
+            <td><strong>Somatic Arrival</strong><br><span style="font-size:12px; color:var(--brand-muted)">Grounding</span></td>
+            <td style="font-size:12.5px">Every studio activity begins and ends with a somatic check-in. The body's weight, the breath, what the body is carrying today. This is not warm-up — it is the practice.</td>
+          </tr>
+          <tr>
+            <td><strong>3</strong></td>
+            <td><strong>Relational Emotional Reframing</strong><br><span style="font-size:12px; color:var(--brand-muted)">Other Bodies framework</span></td>
+            <td style="font-size:12.5px">The natural body is not a metaphor. It has a biology, a behaviour, a way of being. Write the "Its nature" section with no metaphor. Just fact. The reframe comes later.</td>
+          </tr>
+          <tr>
+            <td><strong>4</strong></td>
+            <td><strong>Material Agency &amp; Resistance</strong><br><span style="font-size:12px; color:var(--brand-muted)">Watercolour</span></td>
+            <td style="font-size:12.5px">Name the moment of resistance in every activity. When the paint pools where it wasn't invited, or bleeds into another colour — that is the lesson. Stay. Watch. Don't fix.</td>
+          </tr>
+          <tr>
+            <td><strong>5</strong></td>
+            <td><strong>Adaptive &amp; Differentiated Practice</strong><br><span style="font-size:12px; color:var(--brand-muted)">Starting points, not prescriptions</span></td>
+            <td style="font-size:12.5px">Every activity must include an "Adapting for your context" note. Instructions are starting points. Every body and every space is different.</td>
+          </tr>
+          <tr>
+            <td><strong>6</strong></td>
+            <td><strong>Interdisciplinary Evidence</strong><br><span style="font-size:12px; color:var(--brand-muted)">Research synthesis</span></td>
+            <td style="font-size:12.5px">The references at the end of each post are not decorative. Use the evidence base. Make Space is a public record of learning, not personal opinion.</td>
+          </tr>
+          <tr>
+            <td><strong>7</strong></td>
+            <td><strong>Social Cohesion &amp; Collective Empowerment</strong><br><span style="font-size:12px; color:var(--brand-muted)">Community</span></td>
+            <td style="font-size:12.5px">The Share prompt is specific, grounded in the natural body, and concrete enough to start a real conversation. Not "share your experience" — something that opens inquiry.</td>
+          </tr>
+          <tr>
+            <td><strong>8</strong></td>
+            <td><strong>State of Flow</strong><br><span style="font-size:12px; color:var(--brand-muted)">Unhurried making</span></td>
+            <td style="font-size:12.5px">The activity is 20–40 minutes. Or as long as the body wants to stay. Never rush the reader. The time estimate is a suggestion, not a cap.</td>
+          </tr>
+          <tr>
+            <td><strong>9</strong></td>
+            <td><strong>Systemic Barrier Awareness</strong><br><span style="font-size:12px; color:var(--brand-muted)">Creative Access &amp; the Treatment Gap</span></td>
+            <td style="font-size:12.5px">Creative Access weeks audit infrastructure — locally and globally. Notice who the current design misses: accommodation barriers, cultural exclusion, and the 75% of people with depression in low-income settings who receive no specialist care. The "Adapting for your context" note in the studio section is a small act of access; the evidence base behind it is a global one.</td>
+          </tr>
+          <tr>
+            <td><strong>10</strong></td>
+            <td><strong>Reflective Documentation</strong><br><span style="font-size:12px; color:var(--brand-muted)">Public record of learning</span></td>
+            <td style="font-size:12.5px">Every post is part of the public record. The load-bearing sentences you write are the sentences that carry the curriculum forward. Write them carefully.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ═══════════════ OUTCOMES ═══════════════ -->
+    <div id="outcomes" class="page">
+      <p class="page-eyebrow">Learning</p>
+      <h1 class="page-title">Weekly Learning Outcomes</h1>
+      <p class="page-subtitle">What learners should be able to do after each phase — translated into what your writing must deliver</p>
+
+      <h2>Phase 1: Foundations (Weeks 1–13)</h2>
+      <p>By the end of Phase 1, learners can perform a somatic check-in, engage in goal-less making, set up a low-friction creative space, identify a natural body and describe it without metaphor, and articulate the difference between creative health and art therapy.</p>
+      <div class="callout">
+        <div class="callout-label">Your writing must do</div>
+        <p>Lower the threshold of entry in every post. Give permission. Make the practice feel possible for someone who has never done it. Establish vocabulary (somatic arrival, material agency, goal-less making) without jargon.</p>
+      </div>
+
+      <h2>Phase 2: Literature (Weeks 14–26)</h2>
+      <p>By the end of Phase 2, learners can connect the practice to neuroscience (DMN, MNS, flow states), psychology (Broaden-and-Build theory), physiology (cortisol, immune function), social theory (isolation, group identity), policy (social prescribing, reactive vs. proactive care), and global mental health (the treatment gap, task-shifting models, and the WHO mhGAP framework).</p>
+      <div class="callout">
+        <div class="callout-label">Your writing must do</div>
+        <p>Bring the research into the practice — not as citations but as living argument. The reader should feel the evidence as confirmation of something they've already begun to sense, not as external authority. Where the global evidence base appears, ground it in lived experience first — the numbers serve the practice, not the other way around.</p>
+      </div>
+
+      <h2>Phase 3: Investigation (Weeks 27–48)</h2>
+      <p>By the end of Phase 3, learners have worked with 52 feelings across 10 constellations, using each natural body to reframe a human emotional state. They can locate themselves on the 3D emotion space (Activation, Orientation, Permeability) and connect specific feelings to specific watercolour gestures.</p>
+      <div class="callout">
+        <div class="callout-label">Your writing must do</div>
+        <p>The natural body section must be specific enough that the reader can feel the natural body in their own body. No generality. What does the octopus actually know? What has permafrost actually practised? Be precise. The reframe lives in the specificity.</p>
+      </div>
+
+      <h2>Phase 4: Synthesis (Weeks 49–52)</h2>
+      <p>By the end of Phase 4, learners can synthesise 52 weeks of insights into a public record, design a hybrid evidence approach, articulate how individual practice scales toward population health, describe how Make Space facilitation principles map to task-shifting models, and identify what further documentation would be needed to submit the program for peer review.</p>
+      <div class="callout">
+        <div class="callout-label">Your writing must do</div>
+        <p>Hold the full arc without summarising it. The synthesis posts are not conclusions — they are the arrival at the horizon. What remains open is as important as what has been found. Name the global mental health stakes plainly: this practice is part of a larger story about what depression care could look like at scale.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════ UNIFIED TEMPLATE ═══════════════ -->
+    <div id="template" class="page">
+      <p class="page-eyebrow">Template</p>
+      <h1 class="page-title">Weekly Template</h1>
+      <p class="page-subtitle">Complete annotated template for every weekly post — one unified post per week</p>
+
+      <div class="callout">
+        <div class="callout-label">Read first — the commitments come before the structure</div>
+        <p>This template lays the sections out in a reference order, but the truest posts open emotion-first: the reader feels before they think, and the natural body, the idea, and the practitioners arrive as company afterward. Whenever the running order pulls against a commitment — feel before think, stay inside the feeling and never explain it, the feeling in pencil, never diagnose, center HPSM voices and ancestral knowledge, the truth behind the facts — the commitment wins. The full statements live on the <strong>How to write each week</strong> page.</p>
+      </div>
+
+      <div class="callout">
+        <div class="callout-label">Suggested length</div>
+        <p>Practitioner opening: 200–300 words. Natural body (all four sub-sections): 200–300 words. Framework: 250–350 words. Studio invitation: 200–300 words. Watch / Share / Rest: 150–200 words combined. Total: approximately 1000–1450 words plus anchors.</p>
+      </div>
+
+      <div class="template-block">
+        <div class="template-header">
+          <span class="template-tag">Header</span>
+        </div>
+        <div class="template-body">
+          <div class="template-section">
+            <div class="template-section-title">Label line</div>
+            <div class="template-field"><span class="template-placeholder">Make Space: Other Bodies and Creative Health</span> · Week <span class="template-placeholder">X</span></div>
+            <div class="template-field">Pillar: <span class="template-placeholder">Creative Access / Body as Site / Emergent Practice</span></div>
+          </div>
+          <div class="template-section">
+            <div class="template-section-title">Heading — the provocation</div>
+            <div class="template-field">A single statement or question that names the tension. Not a topic label — an argument starter. Something that could be wrong, or surprising, or that unsettles what the reader assumes about creativity, the body, or health.</div>
+          </div>
+          <div class="template-section">
+            <div class="template-section-title">Opening — inside the feeling</div>
+            <div class="template-field">Open in a felt, sensory moment of the emotion this week may bring — something the reader meets in the body before any concept arrives. Render it in pencil: a feeling that <em>may</em> be present, offered and then left with the reader, never named as a fact about them. Not as a patient, professional, or student — as a body that has felt something. A reason to stay, and a door in. Do not reuse a previous post's opening frame; let this week find its own.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="template-block">
+        <div class="template-header">
+          <span class="template-tag">The practitioner — as company</span>
+          <span class="pill">200–300 words</span>
+        </div>
+        <div class="template-body">
+          <div class="template-section">
+            <div class="template-section-title">Arriving after the feeling, in the middle of something specific</div>
+            <div class="template-field">The practitioner is no longer the opener — they arrive after the feeling and the natural body, as company to what's been felt. When they do, begin in the middle of something specific: not "this week we examine X" but [Practitioner] did this, here is what that looked like — a concrete, slightly surprising moment, method, gesture, or discovery from their actual work, carrying the week's question without naming it. Before choosing them, ask whose practice this territory genuinely belongs to, and begin there (see commitment 5).</div>
+            <div class="template-field" style="border-left: 3px solid var(--brand-accent); padding-left: 0.75rem; color: var(--brand-muted); font-size: 12.5px;">→ Integrity note: This opening image must be traceable to a verifiable source — a published book, a documented session, a peer-reviewed study, a recorded talk, or a known body of work. Do not invent details. If you cannot name a specific source, describe the work in general terms or choose a different practitioner.</div>
+          </div>
+          <div class="template-section">
+            <div class="template-section-title">Name the week's question — obliquely</div>
+            <div class="template-field">1–2 sentences. A short pivot from the opening image toward the territory this week is in. Not a thesis statement — more like a direction of travel.</div>
+          </div>
+          <div class="template-section">
+            <div class="template-section-title">A second practitioner — or deeper into the first</div>
+            <div class="template-field">2–3 sentences. Where their reception is contested, name that honestly — woven into the description, not appended to it.</div>
+            <div class="template-field" style="border-left: 3px solid var(--brand-accent); padding-left: 0.75rem; color: var(--brand-muted); font-size: 12.5px;">→ Integrity note: Every empirical claim must be traceable to a named source. If you cannot name the source, soften the claim or remove it.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="template-block">
+        <div class="template-header">
+          <span class="template-tag">The natural body</span>
+          <span class="pill">200–300 words</span>
+        </div>
+        <div class="template-body">
+          <div class="template-section">
+            <div class="template-section-title">Introduce the body</div>
+            <div class="template-field">One sentence: what it is, where it lives, what condition it carries. (Weeks 1–26 may use a material or concept rather than a natural body — adapt accordingly.)</div>
+          </div>
+          <div class="template-section">
+            <div class="template-section-title">Its nature (2–4 sentences)</div>
+            <div class="template-field">What this natural body actually does — its biology, behaviour, way of being. Be specific enough that the reader can picture it, feel it, locate themselves in relation to it. <strong>No metaphor here.</strong> Just: what is true about this body?</div>
+          </div>
+          <div class="template-section">
+            <div class="template-section-title">What it keeps company with (2–4 sentences)</div>
+            <div class="template-field">Name — in pencil — the emotional state this natural body keeps company with, and let the body carry that state as a lived condition, not a symbol. What does the octopus actually know about shame? What has permafrost genuinely practised about numbness? Offer the feeling as one that <em>may</em> arise; the reader may find it waiting, or find something else, and both are right. Natural bodies are sites of wisdom, not illustration — and never a diagnosis of the reader.</div>
+          </div>
+          <div class="template-section">
+            <div class="template-section-title">What it reframes (2–4 sentences)</div>
+            <div class="template-field">What changes when a human looks at their own emotional experience through this natural body? What becomes possible that wasn't before? What does the reader now have permission to do, or feel, or make? <strong>This is the sentence they will remember.</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="template-block">
+        <div class="template-header">
+          <span class="template-tag">The framework — held lightly</span>
+          <span class="pill">250–350 words</span>
+        </div>
+        <div class="template-body">
+          <div class="template-field" style="font-style:italic; color:var(--brand-muted); font-size:13px; margin-bottom:0.75rem;">The research arrives here, after the body. It names what the practitioner and the natural body have already shown. It does not lead.</div>
+          <div class="template-section">
+            <div class="template-section-title">The evidence base</div>
+            <div class="template-field">1–2 paragraphs. Draw on the relevant evidence base — neuroscience, creative health research, psychology, somatic theory — whatever the week calls for. Where a finding is contested, partial, or carries documented limitations, say so inside the prose, not as a bracketed aside. Honest uncertainty belongs in the same sentence as the claim it qualifies.</div>
+            <div class="template-field" style="border-left: 3px solid var(--brand-accent); padding-left: 0.75rem; color: var(--brand-muted); font-size: 12.5px;">→ Integrity note: Do not invent caveats to seem balanced — fabricated criticism is as damaging as uncritical acceptance.</div>
+          </div>
+          <div class="template-section">
+            <div class="template-section-title">A third practitioner (or go deeper)</div>
+            <div class="template-field">2–3 sentences. Bring in a third practitioner if the week calls for it, or go deeper with one already introduced. Give the work space. What did they discover, make, practise, or argue?</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="template-block">
+        <div class="template-header">
+          <span class="template-tag">Into the studio</span>
+          <span class="pill">200–300 words</span>
+        </div>
+        <div class="template-body">
+          <div class="template-section">
+            <div class="template-section-title">Where I am starting (3–4 sentences)</div>
+            <div class="template-field">Not an instruction. An invitation from a peer, not a teacher. Describe your own starting point for this week's making. What does this week's natural body make available to you? What are you not trying to achieve? Close with a line that releases the reader from obligation — they don't need to do what you're doing. They only need to find their own starting point.</div>
+            <div class="template-field" style="font-style:italic; color:var(--brand-muted); font-size:13px;">Tone: genuinely open, not performatively humble.</div>
+          </div>
+          <div class="template-section">
+            <div class="template-section-title">What the hand might do</div>
+            <div class="template-field" style="font-style:italic; font-size:13px; color:var(--brand-muted);">These are entry points, not steps. Every body and every space is different. Adapt freely.</div>
+            <div class="template-field"><strong>Before you touch anything:</strong> Notice the weight of your body. Notice your breath. Name one thing your body is carrying right now.</div>
+            <div class="template-field"><strong>What you need:</strong> Watercolour paper (or any absorbent surface that won't buckle), watercolours or whatever fluid pigments are available, water, a brush, somewhere to be undisturbed for twenty to forty minutes.</div>
+            <div class="template-field"><strong>3–5 short suggestions</strong> — each naming a gesture, not an image. Pool. Hold. Spread slowly. Let a colour stay longer than feels comfortable. Name the moment of resistance — when the watercolour does something the maker didn't plan — and what to do with it: stay, watch, let it be. End with the second somatic check-in: what has shifted?</div>
+            <div class="template-field"><em>Time: 20–40 minutes, or as long as the body wants to stay.</em></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="template-block">
+        <div class="template-header">
+          <span class="template-tag">Watch</span>
+        </div>
+        <div class="template-body">
+          <div class="template-field">One sentence introducing the video — what it demonstrates and why it earns the viewer's time. Focus on what they will be able to feel or notice afterward, not just see.</div>
+          <div class="template-field" style="margin-top:0.5rem;">▶ <strong>[Video title]</strong><br>2–3 sentences of context. What will the viewer encounter? What might open up for them?</div>
+          <div class="template-field" style="margin-top:0.5rem; font-size:12px;">[Embed or link] — This video is part of the Make Space moving practice, a standalone series of somatic and creative sessions you can return to at any point in the curriculum. [Link to playlist]</div>
+        </div>
+      </div>
+
+      <div class="template-block">
+        <div class="template-header">
+          <span class="template-tag">Share</span>
+        </div>
+        <div class="template-body">
+          <div class="template-field">1 sentence on why this particular emotional territory benefits from being held in company — not generically, but because of what this week is actually working with.</div>
+          <div class="template-section" style="margin-top:0.5rem;">
+            <div class="template-section-title">This week's prompt</div>
+            <div class="template-field">A single, specific question or invitation grounded in the natural body from this week. Concrete enough to start a real conversation. Not "share your experience of the practice" — something like: <em>"What did the paint do that you didn't expect? What did it refuse to do? What does that refusal remind you of?"</em><br><br><span style="font-size:12.5px; color:var(--brand-muted);">Bring this to the ohHEY Creative Care Community, a trusted person, or your own journal — wherever feels right.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="template-block">
+        <div class="template-header">
+          <span class="template-tag">Rest</span>
+        </div>
+        <div class="template-body">
+          <div class="template-field">2–3 sentences. Not a summary of what was covered. A genuine open question about where creative health — as a field, as a practice, as a hypothesis still being tested — is heading. Something unresolved. Something the reader's own practice might contribute to answering. Slightly larger than this week, pointing toward the horizon without telling the reader what they'll find there.</div>
+        </div>
+      </div>
+
+      <div class="template-block">
+        <div class="template-header">
+          <span class="template-tag">Next week preview</span>
+        </div>
+        <div class="template-body">
+          <div class="template-field"><em>Next week — Week [X+1]:</em><br><strong>[Heading provocation for next week]</strong><br>One sentence that names the natural body and emotional territory the next week will explore — enough to create anticipation, not enough to give it away.</div>
+        </div>
+      </div>
+
+      <div class="template-block">
+        <div class="template-header">
+          <span class="template-tag">Anchors</span>
+        </div>
+        <div class="template-body">
+          <div class="template-field" style="border-left: 3px solid var(--brand-accent); padding-left: 0.75rem; color: var(--brand-muted); font-size: 12.5px; margin-bottom: 0.75rem;">Every citation must be verifiable. Do not carry forward citations from AI-generated drafts without checking them against the actual source. Check each one character by character before publishing.</div>
+          <div class="template-section">
+            <div class="template-section-title">This week's practitioners</div>
+            <div class="template-field">Practitioner 1 — Role/field. Specific work or series referenced, year if known. One sentence on what their practice contributes to this week's territory.</div>
+            <div class="template-field">Practitioner 2 — Role/field. Specific work or series referenced, year if known. One sentence on what their practice contributes to this week's territory.</div>
+            <div class="template-field">Practitioner 3 — Role/field. Specific work or series referenced, year if known. One sentence on what their practice contributes to this week's territory.</div>
+          </div>
+          <div class="template-section">
+            <div class="template-section-title">Sources that informed this post</div>
+            <div class="template-field">Author(s). <em>Full Title.</em> Publisher, Year. [One sentence on why it matters here.]<br>Author(s). "Article title." <em>Journal Name,</em> volume(issue), year.</div>
+          </div>
+          <div class="template-section">
+            <div class="template-section-title">Worth going deeper with</div>
+            <div class="template-field">Author(s). <em>Full Title.</em> Publisher, Year. [One sentence note.] Include counterarguments and critics, not only primary sources.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="template-block">
+        <div class="template-header">
+          <span class="template-tag">Voice checklist</span>
+        </div>
+        <div class="template-body">
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <label style="display:flex; gap:10px; align-items:flex-start; cursor:pointer;"><input type="checkbox" style="margin-top:3px; flex-shrink:0;"> <span style="font-size:13px;"><strong>Feel before think:</strong> does the reader feel something — in the body, through the senses — before being asked to understand anything? (If only one box matters, it is this one.)</span></label>
+            <label style="display:flex; gap:10px; align-items:flex-start; cursor:pointer;"><input type="checkbox" style="margin-top:3px; flex-shrink:0;"> <span style="font-size:13px;">Does the piece stay <em>inside</em> the feeling — never stepping outside it to point at its own method, and never telling the reader what is happening inside them?</span></label>
+            <label style="display:flex; gap:10px; align-items:flex-start; cursor:pointer;"><input type="checkbox" style="margin-top:3px; flex-shrink:0;"> <span style="font-size:13px;">Is the feeling offered in pencil — as a companion that <em>may</em> arise — with nothing diagnosed, no clinical label, no verdict about the reader?</span></label>
+            <label style="display:flex; gap:10px; align-items:flex-start; cursor:pointer;"><input type="checkbox" style="margin-top:3px; flex-shrink:0;"> <span style="font-size:13px;">Are HPSM voices centered rather than added — named precisely, in their own words where possible — and is any ancestral knowledge held as knowledge, attributed to its source community, within what is yours to share?</span></label>
+            <label style="display:flex; gap:10px; align-items:flex-start; cursor:pointer;"><input type="checkbox" style="margin-top:3px; flex-shrink:0;"> <span style="font-size:13px;">Does the opening avoid reusing a previous post's frame — finding the shape this week's own truth demands?</span></label>
+            <label style="display:flex; gap:10px; align-items:flex-start; cursor:pointer;"><input type="checkbox" style="margin-top:3px; flex-shrink:0;"> <span style="font-size:13px;">Does the natural body section describe what is actually true about that body, without reaching for metaphor?</span></label>
+            <label style="display:flex; gap:10px; align-items:flex-start; cursor:pointer;"><input type="checkbox" style="margin-top:3px; flex-shrink:0;"> <span style="font-size:13px;">Does the framework arrive after the practitioner and the natural body — in service of what they've already shown, not ahead of it?</span></label>
+            <label style="display:flex; gap:10px; align-items:flex-start; cursor:pointer;"><input type="checkbox" style="margin-top:3px; flex-shrink:0;"> <span style="font-size:13px;">Where research or theory is contested, is that said directly inside the prose — not as a bracketed aside, and not invented for balance?</span></label>
+            <label style="display:flex; gap:10px; align-items:flex-start; cursor:pointer;"><input type="checkbox" style="margin-top:3px; flex-shrink:0;"> <span style="font-size:13px;">Is the studio invitation in first person, peer register — <em>I am starting here, you're welcome to come</em> — not instructional?</span></label>
+            <label style="display:flex; gap:10px; align-items:flex-start; cursor:pointer;"><input type="checkbox" style="margin-top:3px; flex-shrink:0;"> <span style="font-size:13px;">Does the piece resist explaining what the practice means, and instead let it do its own work?</span></label>
+            <label style="display:flex; gap:10px; align-items:flex-start; cursor:pointer;"><input type="checkbox" style="margin-top:3px; flex-shrink:0;"> <span style="font-size:13px;">Is there a single unifying question or tension that holds the whole piece together — felt rather than stated?</span></label>
+            <label style="display:flex; gap:10px; align-items:flex-start; cursor:pointer;"><input type="checkbox" style="margin-top:3px; flex-shrink:0;"> <span style="font-size:13px;">Has every empirical claim been traced to a named source? Has every citation been verified against the actual text?</span></label>
+            <label style="display:flex; gap:10px; align-items:flex-start; cursor:pointer;"><input type="checkbox" style="margin-top:3px; flex-shrink:0;"> <span style="font-size:13px;">Have any AI-generated biographical details, artist statements, or critical positions been verified against a primary source before including?</span></label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ═══════════════ CURRICULUM ═══════════════ -->
+    <div id="curriculum" class="page">
+      <p class="page-eyebrow">Curriculum</p>
+      <h1 class="page-title">52-Week Map</h1>
+      <p class="page-subtitle">The four-phase arc — Foundations, Literature, Investigation, Synthesis</p>
+
+      <h2>Phase 1 — Foundations (Weeks 1–13)</h2>
+      <p>Defining the field and establishing the therapeutic studio as a state of readiness. Focus on the three pillars: Creative Access, Body as Site, and Emergent Practice.</p>
+
+      <table class="data-table" style="width:100%">
+        <thead><tr><th>Week</th><th>Theme</th><th>Focus</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>The Goal of Goal-less Making</td><td>Permission to fail as a therapeutic threshold</td></tr>
+          <tr><td>2</td><td>Somatic Arrival</td><td>Noticing weight, breath, and what the body carries</td></tr>
+          <tr><td>3</td><td>The Architecture of the Studio</td><td>Therapeutic studio as a state of readiness, not a place</td></tr>
+          <tr><td>4</td><td>Watercolour as Co-Creator</td><td>Material agency — pool, spread, resist control</td></tr>
+          <tr><td>5</td><td>Backward Design for Forward Living</td><td>Start with the desired emotional outcome</td></tr>
+          <tr><td>6</td><td>The "Other Body" Concept</td><td>Natural bodies as sites of wisdom, not metaphors</td></tr>
+          <tr><td>7</td><td>Defining Creative Health</td><td>Distinguishing creative health from art therapy</td></tr>
+          <tr><td>8</td><td>The Question of Stakeholders</td><td>Who is the making for? Who does it miss?</td></tr>
+          <tr><td>9</td><td>Accessibility and Infrastructure</td><td>Systemic barriers — the "postcode lottery"</td></tr>
+          <tr><td>10</td><td>The Ethics of Witnessing</td><td>The maker-in-process as active researcher</td></tr>
+          <tr><td>11</td><td>Mapping the 3D Emotion Space</td><td>Activation, Orientation, Permeability</td></tr>
+          <tr><td>12</td><td>Differentiated Making</td><td>Starting point, not prescription</td></tr>
+          <tr><td>13</td><td>Collective Empowerment</td><td>From individual success to shared community resilience</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Phase 2 — Literature (Weeks 14–26)</h2>
+      <p>Surveying what current research, history, and theory tell us about the impact of creative practices on health.</p>
+
+      <table class="data-table" style="width:100%">
+        <thead><tr><th>Week</th><th>Theme</th><th>Focus</th></tr></thead>
+        <tbody>
+          <tr><td>14</td><td>Historical Context</td><td>Ancient rituals → indigenous storytelling → modern healthcare</td></tr>
+          <tr><td>15</td><td>Neuroscientific Perspective</td><td>Mirror Neuron System and Default Mode Network</td></tr>
+          <tr><td>16</td><td>Psychological Impact</td><td>Broaden-and-Build theory; cognitive flexibility</td></tr>
+          <tr><td>17</td><td>Physiological Resilience</td><td>Cortisol, immune function, pain management</td></tr>
+          <tr><td>18</td><td>Social Connection Theory</td><td>Isolation, supportive group identity</td></tr>
+          <tr><td>19</td><td>The State of Flow</td><td>Psychological resilience through absorbed, unhurried making</td></tr>
+          <tr><td>20</td><td>Narrative and Meaning-Making</td><td>Storytelling as preservation of collective wisdom</td></tr>
+          <tr><td>21</td><td>Creative Health in Education</td><td>Artscaping; whole-school approaches</td></tr>
+          <tr><td>22</td><td>Clinical Environments</td><td>Hospital design; patient recovery; staff retention</td></tr>
+          <tr><td>23</td><td>Social Prescribing</td><td>Non-medical referrals as foundational public health</td></tr>
+          <tr><td>24</td><td>The Depression Treatment Gap</td><td>75% of people in low-income settings receive no treatment — the global stakes of this work</td></tr>
+          <tr><td>25</td><td>Task-Shifting as a Learning Design Problem</td><td>Training non-specialists to deliver creative health approaches at scale — Patel, mhGAP, and what Make Space can learn from both</td></tr>
+          <tr><td>26</td><td>The Global Shift</td><td>Reactive care → proactive, person-centred health — at the individual level and the population level</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Phase 3 — Investigation (Weeks 27–48)</h2>
+      <p>The Other Bodies case study. 52 feelings across 10 constellations. See the <strong>Phase 3 — Other Bodies</strong> page for the full map.</p>
+
+      <h2>Phase 4 — Synthesis (Weeks 49–52)</h2>
+
+      <table class="data-table" style="width:100%">
+        <thead><tr><th>Week</th><th>Theme</th><th>Focus</th></tr></thead>
+        <tbody>
+          <tr><td>49</td><td>The Public Record of Learning</td><td>52 weeks of posts and practices → shareable knowledge base and field notes</td></tr>
+          <tr><td>50</td><td>Addressing the Evidence Gap</td><td>Hybrid research models: qualitative narrative + quantitative markers; what peer review would require</td></tr>
+          <tr><td>51</td><td>Scaling Creative Health</td><td>Individual and community resilience → population-level strategies → task-shifting models for global deployment</td></tr>
+          <tr><td>52</td><td>Arriving at the Horizon</td><td>What remains open? What has the practice taught the field — and what does the global depression treatment gap still need?</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ═══════════════ INVESTIGATION ═══════════════ -->
+    <div id="investigation" class="page">
+      <p class="page-eyebrow">Curriculum</p>
+      <h1 class="page-title">Phase 3 — Other Bodies</h1>
+      <p class="page-subtitle">52 feelings across 10 constellations, Weeks 27–48. The natural body and its reframe.</p>
+
+      <div class="callout">
+        <div class="callout-label">How to use this map</div>
+        <p>Find your week. The natural body is your Witness subject. The reframe in italics is the load-bearing claim of the "What it reframes" section — the sentence the reader will remember. The emotional state is the territory.</p>
+      </div>
+
+      <h2>Protective States (Weeks 27–30)</h2>
+      <div class="constellation-grid">
+        <div class="constellation-item"><div class="const-weeks">Week 27</div><div class="const-body">Octopus</div><div class="const-emotion">Shame → <em>exquisite sensitivity</em></div></div>
+        <div class="constellation-item"><div class="const-weeks">Week 28</div><div class="const-body">Cave</div><div class="const-emotion">Fear → <em>sanctuary; gathering before the light</em></div></div>
+        <div class="constellation-item"><div class="const-weeks">Week 29</div><div class="const-body">Permafrost</div><div class="const-emotion">Numbness → <em>careful keeping; ancient storage</em></div></div>
+        <div class="constellation-item"><div class="const-weeks">Week 30</div><div class="const-body">Pine Cone</div><div class="const-emotion">Guarded → <em>wisdom of discernment</em></div></div>
+      </div>
+
+      <h2>Heavy States (Weeks 31–34)</h2>
+      <div class="constellation-grid">
+        <div class="constellation-item"><div class="const-weeks">Week 31</div><div class="const-body">Moss</div><div class="const-emotion">Grief → <em>a slow green hush; velvet patience</em></div></div>
+        <div class="constellation-item"><div class="const-weeks">Week 32</div><div class="const-body">Rain</div><div class="const-emotion">Sadness → <em>honest disturbance</em></div></div>
+        <div class="constellation-item"><div class="const-weeks">Week 33</div><div class="const-body">River Delta</div><div class="const-emotion">Exhaustion → <em>the abundance of arrival</em></div></div>
+        <div class="constellation-item"><div class="const-weeks">Week 34</div><div class="const-body">Dormant Volcano</div><div class="const-emotion">Despair → <em>powerful, contained, and patient</em></div></div>
+      </div>
+
+      <h2>Relational &amp; Activated States (Weeks 35–38)</h2>
+      <div class="constellation-grid">
+        <div class="constellation-item"><div class="const-weeks">Week 35</div><div class="const-body">Deep Ocean</div><div class="const-emotion">Loneliness → <em>luminosity in the dark</em></div></div>
+        <div class="constellation-item"><div class="const-weeks">Week 36</div><div class="const-body">Starling</div><div class="const-emotion">Anxiety → <em>coherence from chaos</em></div></div>
+        <div class="constellation-item"><div class="const-weeks">Week 37</div><div class="const-body">Salmon</div><div class="const-emotion">Urgency → <em>the bright pull of purpose</em></div></div>
+        <div class="constellation-item"><div class="const-weeks">Week 38</div><div class="const-body">Tides</div><div class="const-emotion">Restless → <em>rhythm larger than yourself</em></div></div>
+      </div>
+
+      <h2>Self-Directed &amp; Expansive States (Weeks 39–42)</h2>
+      <div class="constellation-grid">
+        <div class="constellation-item"><div class="const-weeks">Week 39</div><div class="const-body">Lichen</div><div class="const-emotion">Inadequacy → <em>the courage of beginnings</em></div></div>
+        <div class="constellation-item"><div class="const-weeks">Week 40</div><div class="const-body">Wildflowers</div><div class="const-emotion">Joy → <em>celebration of suddenness</em></div></div>
+        <div class="constellation-item"><div class="const-weeks">Week 41</div><div class="const-body">Whale</div><div class="const-emotion">Wonder → <em>the marvel of being heard</em></div></div>
+        <div class="constellation-item"><div class="const-weeks">Week 42</div><div class="const-body">Autumn Tree</div><div class="const-emotion">Gratitude → <em>the record of release</em></div></div>
+      </div>
+
+      <h2>Complex &amp; Mixed States (Weeks 43–45)</h2>
+      <div class="constellation-grid">
+        <div class="constellation-item"><div class="const-weeks">Week 43</div><div class="const-body">Estuary</div><div class="const-emotion">Ambivalence → <em>fertile crossing of currents</em></div></div>
+        <div class="constellation-item"><div class="const-weeks">Week 44</div><div class="const-body">Snowfall</div><div class="const-emotion">Overwhelmed → <em>quiet strength of an ecosystem</em></div></div>
+        <div class="constellation-item"><div class="const-weeks">Week 45</div><div class="const-body">Fog</div><div class="const-emotion">Confusion → <em>mind midway through transformation</em></div></div>
+      </div>
+
+      <h2>Existential &amp; Threshold States (Weeks 46–48)</h2>
+      <div class="constellation-grid">
+        <div class="constellation-item"><div class="const-weeks">Week 46</div><div class="const-body">Glacier</div><div class="const-emotion">Grief for the World → <em>honest response, not defeat</em></div></div>
+        <div class="constellation-item"><div class="const-weeks">Week 47</div><div class="const-body">Bud</div><div class="const-emotion">Ache of Not Yet → <em>slow accumulation of readiness</em></div></div>
+        <div class="constellation-item"><div class="const-weeks">Week 48</div><div class="const-body">Germination</div><div class="const-emotion">Alive → <em>the fierce choice to be here</em></div></div>
+      </div>
+
+      <div class="callout" style="margin-top:2rem;">
+        <div class="callout-label">Writing the Witness for Phase 3</div>
+        <p>The reframe phrase above is the destination — the sentence you're building toward in the "What it reframes" sub-section. Begin with biology. Let the wisdom emerge from what the body actually does. Don't start with the metaphor; arrive at it through precision.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════ PRACTITIONER INDEX ═══════════════ -->
+    <div id="practitioners" class="page">
+      <p class="page-eyebrow">Curriculum</p>
+      <h1 class="page-title">Practitioner Index</h1>
+      <p class="page-subtitle">3 practitioners per week — all 52 weeks. A research starting point, not a finished reference list.</p>
+
+      <div class="callout">
+        <div class="callout-label">How to use this index</div>
+        <p>Each entry gives a name, field, and the work most relevant to that week. These are real practitioners whose existence and general field can be attested to with reasonable confidence. However: specific book titles, years, journal articles, and quotes <strong>must be verified by you before use.</strong> Entries marked [VERIFY DETAILS] are practitioners who exist but whose specific works are less certain. Entries marked [VERIFY EXISTENCE] require independent confirmation before use.</p>
+      </div>
+
+      <h2>Phase 1 — Foundations (Weeks 1–13)</h2>
+
+      <table class="data-table" style="width:100%">
+        <thead><tr><th>Week</th><th>Theme</th><th>Practitioners</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>1</strong></td>
+            <td>The Goal of Goal-less Making</td>
+            <td style="font-size:12.5px;">Shauna Kaendo (ohHEY founder — primary source) · Pat B. Allen, <em>Art Is a Way of Knowing</em> [VERIFY] · Shaun McNiff, <em>Art as Medicine</em> [VERIFY]</td>
+          </tr>
+          <tr>
+            <td><strong>2</strong></td>
+            <td>Somatic Arrival</td>
+            <td style="font-size:12.5px;">Bessel van der Kolk, <em>The Body Keeps the Score</em> [VERIFY publisher] · Peter Levine, <em>Waking the Tiger</em> [VERIFY] · tayla shanaye, <em>Nourishing the Nervous System</em> [PRIMARY — verify titles]</td>
+          </tr>
+          <tr>
+            <td><strong>3</strong></td>
+            <td>The Architecture of the Studio</td>
+            <td style="font-size:12.5px;">Cathy Malchiodi, <em>Handbook of Art Therapy</em> [VERIFY editions] · Mimi Farrelly-Hansen, <em>Spirituality and Art Therapy</em> [VERIFY] · David Maclagan, <em>Psychological Aesthetics</em> [VERIFY]</td>
+          </tr>
+          <tr>
+            <td><strong>4</strong></td>
+            <td>Watercolour as Co-Creator</td>
+            <td style="font-size:12.5px;">David Thistlewood [VERIFY EXISTENCE] · Elissa Fazzone Sheridan [VERIFY EXISTENCE — watercolour-specific art therapy] · Tim Ingold, <em>Making</em> (Routledge, 2013) [VERIFY]</td>
+          </tr>
+          <tr>
+            <td><strong>5</strong></td>
+            <td>Backward Design for Forward Living</td>
+            <td style="font-size:12.5px;">Grant Wiggins &amp; Jay McTighe, <em>Understanding by Design</em> [VERIFY] · Mihaly Csikszentmihalyi, <em>Creativity</em> [VERIFY] · Natalie Rogers, <em>The Creative Connection</em> [VERIFY]</td>
+          </tr>
+          <tr>
+            <td><strong>6</strong></td>
+            <td>The "Other Body" Concept</td>
+            <td style="font-size:12.5px;">Robin Wall Kimmerer, <em>Braiding Sweetgrass</em> [VERIFY] · David Abram, <em>The Spell of the Sensuous</em> [VERIFY] · Care at Erotics of Liberation [PRIMARY — verify works]</td>
+          </tr>
+          <tr>
+            <td><strong>7</strong></td>
+            <td>Defining Creative Health</td>
+            <td style="font-size:12.5px;">Daisy Fancourt, <em>Arts in Health</em> (OUP, 2017) [VERIFY] · Stacy Sajnani [VERIFY EXISTENCE] · APPG on Arts, Health and Wellbeing, <em>Creative Health</em> (2017) [VERIFY full title]</td>
+          </tr>
+          <tr>
+            <td><strong>8</strong></td>
+            <td>The Question of Stakeholders</td>
+            <td style="font-size:12.5px;">See full Practitioner Index document for Weeks 8–52</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout" style="margin-top:1.5rem;">
+        <div class="callout-label">Full index</div>
+        <p>The complete practitioner index (all 52 weeks, 3 practitioners each) is available in the project's <strong>MakeSpace_Practitioner_Index.md</strong> file. The table above covers Weeks 1–7 as a reference example. Before including any practitioner in a post, verify the entry against the full index and independently check any details marked [VERIFY] or [VERIFY EXISTENCE].</p>
+      </div>
+
+      <h2>Phase 3 practitioners — a note</h2>
+      <p>Phase 3 practitioners (Weeks 27–48) should where possible be chosen for direct resonance with the emotional territory of the week, not only the general creative health field. Somatic practitioners, nature-based therapists, and expressive arts practitioners who work specifically with the relevant emotions are especially valuable here. Several entries in the full index require independent research — particularly:</p>
+      <div style="margin-top:0.75rem; display:flex; flex-direction:column; gap:6px;">
+        <div class="template-field" style="font-size:12.5px;">Weeks 34, 38, 42, 45, 48 — territories unconfirmed; all three slots need independent research</div>
+        <div class="template-field" style="font-size:12.5px;">Week 25 — Practitioners 2 and 3 need stronger sourcing</div>
+        <div class="template-field" style="font-size:12.5px;">Week 4 — Practitioner 2 (watercolour-specific art therapy) requires specialist research</div>
+        <div class="template-field" style="font-size:12.5px;">Week 9 — All three slots need stronger sourcing</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ FACT-CHECKING GUIDE ═══════════════ -->
+    <div id="factcheck" class="page">
+      <p class="page-eyebrow">Integrity</p>
+      <h1 class="page-title">Fact-Checking Guide</h1>
+      <p class="page-subtitle">Standards and procedures for every Make Space post — before drafting and before publishing</p>
+
+      <div class="callout">
+        <div class="callout-label">Rule of thumb</div>
+        <p>If a fact in an AI draft is doing argumentative work — supporting a claim, establishing credibility, connecting two ideas — it is the fact most likely to be wrong. <strong>Check it first.</strong></p>
+      </div>
+
+      <h2>1. Practitioners and their work</h2>
+      <div class="step-list">
+        <li>
+          <div class="step-content">
+            <div class="step-title">Use the Practitioner Index as a starting point only</div>
+            <div class="step-desc">The index gives names and fields with reasonable confidence. Specific book titles, years, journal articles, and quotes must be verified against the actual source before use in any post. Never cite a source you have not read.</div>
+          </div>
+        </li>
+        <li>
+          <div class="step-content">
+            <div class="step-title">Claims about specific individuals require a named source</div>
+            <div class="step-desc">Where a biographical claim does argumentative work — linking a person to an institution, for example — it requires especially careful verification. If it cannot be verified, remove it or restructure the argument.</div>
+          </div>
+        </li>
+        <li>
+          <div class="step-content">
+            <div class="step-title">Do not present the therapeuticstudio.ca community with a specific size or impact</div>
+            <div class="step-desc">Unless that figure comes from your own current records and can be stated as internal data.</div>
+          </div>
+        </li>
+      </div>
+
+      <h2>2. Concepts and frameworks</h2>
+      <table class="data-table" style="width:100%">
+        <thead><tr><th>Concept</th><th>Originator</th><th>Citation guidance</th></tr></thead>
+        <tbody>
+          <tr><td>Broaden-and-Build theory</td><td>Barbara Fredrickson</td><td>Cite: Fredrickson, B.L. <em>American Psychologist,</em> 56(3), 218–226, 2001.</td></tr>
+          <tr><td>Default Mode Network</td><td>Neuroscience / Marcus Raichle</td><td>Cite a specific study — not a secondary source or review. Trace to primary research.</td></tr>
+          <tr><td>Mirror Neuron System</td><td>Rizzolatti et al.</td><td>Cite: specific study. Do not describe as "proven" — contested in scope/application.</td></tr>
+          <tr><td>State of Flow</td><td>Mihaly Csikszentmihalyi</td><td>Cite: <em>Flow: The Psychology of Optimal Experience</em> (1990). Confirm edition.</td></tr>
+          <tr><td>Task-shifting model</td><td>Vikram Patel / WHO mhGAP</td><td>Cite specific publications — not a general reference to Patel's work. Sangath and mhGAP are separate entities.</td></tr>
+          <tr><td>Social prescribing</td><td>NHS / policy origin</td><td>Describe as an NHS and international health policy approach. Cite a specific policy document or Fancourt's research.</td></tr>
+          <tr><td>Artscaping</td><td>Verify originator before use</td><td>Not yet confirmed in project documentation. Locate the specific publication before using with attribution.</td></tr>
+          <tr><td>Reflection-in-action</td><td>Donald Schön</td><td>Cite: <em>The Reflective Practitioner</em> (Basic Books, 1983).</td></tr>
+          <tr><td>Backward Design</td><td>Wiggins &amp; McTighe</td><td>Cite: <em>Understanding by Design</em> (ASCD, 1998; expanded 2nd ed. 2005). Confirm edition.</td></tr>
+        </tbody>
+      </table>
+
+      <h2>3. Citation format and accuracy</h2>
+      <div class="step-list">
+        <li>
+          <div class="step-content">
+            <div class="step-title">Every book citation must include: Author, Title, Publisher, Year</div>
+            <div class="step-desc">Do not omit the publisher. When citing an edition other than the first, specify it. Csikszentmihalyi's <em>Flow</em> has been republished in multiple editions — confirm which edition you are citing.</div>
+          </div>
+        </li>
+        <li>
+          <div class="step-content">
+            <div class="step-title">Journal articles must include journal name, volume, and issue</div>
+            <div class="step-desc">Plus a DOI or URL where available.</div>
+          </div>
+        </li>
+        <li>
+          <div class="step-content">
+            <div class="step-title">Verify every author name, title, publisher, and year against the source itself</div>
+            <div class="step-desc">Or a reliable library database — not against AI-generated text or memory. Common error pattern in this project: AI tools generate plausible but incorrect titles for creative health publications. Always check titles character by character against the actual source.</div>
+          </div>
+        </li>
+        <li>
+          <div class="step-content">
+            <div class="step-title">Never cite a source you have not read</div>
+            <div class="step-desc">If a source appears in another publication's reference list, locate and read the original before citing it. For online sources, confirm the URL resolves to the correct page before publishing.</div>
+          </div>
+        </li>
+      </div>
+
+      <h2>4. The Other Bodies material</h2>
+      <div class="callout">
+        <div class="callout-label">Internal source caution</div>
+        <p>Other Bodies is a proprietary creative work. When drawing on its emotional reframes, natural companions, page references, or specific language, the source is the book itself — not the Make Space curriculum documents or AI-generated summaries of those documents.</p>
+      </div>
+      <div class="step-list">
+        <li>
+          <div class="step-content">
+            <div class="step-title">Verify page references against the physical or digital text before publication</div>
+            <div class="step-desc">E.g. [70–75] for Octopus/Shame — check the page range against the actual book before publishing.</div>
+          </div>
+        </li>
+        <li>
+          <div class="step-content">
+            <div class="step-title">Emotional reframes must reproduce the exact language from the source</div>
+            <div class="step-desc">"Octopus as sensitivity," "Permafrost as careful keeping" — paraphrasing these reframes changes their meaning.</div>
+          </div>
+        </li>
+        <li>
+          <div class="step-content">
+            <div class="step-title">Distinguish clearly between Other Bodies and Make Space curriculum design</div>
+            <div class="step-desc">The 52-feeling framework and 10 constellations are internal Make Space curriculum design. Do not attribute these to Other Bodies unless you can point to the passage.</div>
+          </div>
+        </li>
+      </div>
+
+      <h2>5. AI-assisted drafting</h2>
+      <div class="step-list">
+        <li>
+          <div class="step-content">
+            <div class="step-title">Treat all factual content in AI-generated drafts as unverified</div>
+            <div class="step-desc">This includes: names, dates, titles, figures, institutional descriptions, and outcomes. AI writing tools can draft structure, argument, and prose effectively. They cannot reliably produce accurate citations, statistics, or biographical facts.</div>
+          </div>
+        </li>
+        <li>
+          <div class="step-content">
+            <div class="step-title">Known failure modes for this project</div>
+            <div class="step-desc">Incorrect or invented publication years for creative health research · Misattributed frameworks · Statistics that appear precise but cannot be traced to a named source · Plausible but fabricated institutional claims · Paraphrases of the Other Bodies reframes that subtly shift the original meaning</div>
+          </div>
+        </li>
+      </div>
+
+      <h2>6. Series consistency</h2>
+      <div class="step-list">
+        <li>
+          <div class="step-content">
+            <div class="step-title">Maintain a running document of every source cited across 52 weeks</div>
+            <div class="step-desc">Before adding a source to a new post, check the running document to ensure it matches previous citations exactly. When a source recurs (Fancourt, Patel, Csikszentmihalyi, WHO mhGAP), copy the citation from the verified version rather than retyping it.</div>
+          </div>
+        </li>
+        <li>
+          <div class="step-content">
+            <div class="step-title">The emotional reframe language must be consistent across weeks</div>
+            <div class="step-desc">When a natural body or emotional reframe recurs across posts, check that the language matches exactly. Do not rephrase reframes from memory — return to the source.</div>
+          </div>
+        </li>
+      </div>
+
+      <h2>7. Before publishing — full checklist</h2>
+      <div class="template-block">
+        <div class="template-header">
+          <span class="template-tag">Pre-publication checklist</span>
+        </div>
+        <div class="template-body">
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <label style="display:flex; gap:10px; align-items:flex-start; cursor:pointer;"><input type="checkbox" style="margin-top:3px; flex-shrink:0;"> <span style="font-size:13px;">Every statistic is traceable to a specific source, page number or URL, and year</span></label>
+            <label style="display:flex; gap:10px; align-items:flex-start; cursor:pointer;"><input type="checkbox" style="margin-top:3px; flex-shrink:0;"> <span style="font-size:13px;">Every citation has been verified: author name, full title, publisher, year, edition where relevant</span></label>
+            <label style="display:flex; gap:10px; align-items:flex-start; cursor:pointer;"><input type="checkbox" style="margin-top:3px; flex-shrink:0;"> <span style="font-size:13px;">Every framework attribution has a named source pointing to a specific publication</span></label>
+            <label style="display:flex; gap:10px; align-items:flex-start; cursor:pointer;"><input type="checkbox" style="margin-top:3px; flex-shrink:0;"> <span style="font-size:13px;">Every biographical claim about a real person has a named source</span></label>
+            <label style="display:flex; gap:10px; align-items:flex-start; cursor:pointer;"><input type="checkbox" style="margin-top:3px; flex-shrink:0;"> <span style="font-size:13px;">Every claim about an institution is sourced and appropriately hedged</span></label>
+            <label style="display:flex; gap:10px; align-items:flex-start; cursor:pointer;"><input type="checkbox" style="margin-top:3px; flex-shrink:0;"> <span style="font-size:13px;">All URLs in the references section resolve correctly</span></label>
+            <label style="display:flex; gap:10px; align-items:flex-start; cursor:pointer;"><input type="checkbox" style="margin-top:3px; flex-shrink:0;"> <span style="font-size:13px;">No source is cited that has not been read by the author</span></label>
+            <label style="display:flex; gap:10px; align-items:flex-start; cursor:pointer;"><input type="checkbox" style="margin-top:3px; flex-shrink:0;"> <span style="font-size:13px;">Other Bodies page references have been checked against the text</span></label>
+            <label style="display:flex; gap:10px; align-items:flex-start; cursor:pointer;"><input type="checkbox" style="margin-top:3px; flex-shrink:0;"> <span style="font-size:13px;">Emotional reframe language reproduces the source text exactly</span></label>
+            <label style="display:flex; gap:10px; align-items:flex-start; cursor:pointer;"><input type="checkbox" style="margin-top:3px; flex-shrink:0;"> <span style="font-size:13px;">No AI-generated statistics or biographical details have been carried over unverified</span></label>
+            <label style="display:flex; gap:10px; align-items:flex-start; cursor:pointer;"><input type="checkbox" style="margin-top:3px; flex-shrink:0;"> <span style="font-size:13px;">The citation matches the verified version in the series running document</span></label>
+          </div>
+        </div>
+      </div>
+
+      <h2>Outstanding items to resolve</h2>
+      <table class="data-table" style="width:100%">
+        <thead><tr><th>Item</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>"Artscaping" — originator and publication</td><td>Not yet confirmed. Verify before using term with attribution.</td></tr>
+          <tr><td>IDEO U "see/try/share/reflect" cycle</td><td>Cited in series but not yet sourced. Verify and add a link before using again.</td></tr>
+          <tr><td>Any treatment gap figure more specific than WHO (2017/2023)</td><td>Trace to named source before using.</td></tr>
+          <tr><td>Flow state citations</td><td>Confirm which edition of Csikszentmihalyi is being cited across posts and standardise.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ═══════════════ VERIFIED CITATIONS ═══════════════ -->
+    <div id="citations" class="page">
+      <p class="page-eyebrow">Integrity</p>
+      <h1 class="page-title">Verified Citations</h1>
+      <p class="page-subtitle">Copy these exactly when reusing in future posts. Do not retype.</p>
+
+      <div class="callout">
+        <div class="callout-label">How to use this page</div>
+        <p>These are the verified citation formats for Make Space's core sources. When a source recurs across posts, copy from here rather than retyping — retyping introduces errors. Before adding a new recurrence, check that your version matches this list exactly.</p>
+      </div>
+
+      <h2>Global Mental Health</h2>
+      <div class="template-block">
+        <div class="template-body">
+          <div class="template-field" style="font-family: monospace; font-size: 12.5px; background: var(--brand-light); padding: 0.75rem; border-radius: 4px; line-height: 1.8;">
+            World Health Organization. <em>Depression and Other Common Mental Disorders: Global Health Estimates.</em> WHO, 2017. apps.who.int/iris/handle/10665/254610
+          </div>
+          <div class="template-field" style="font-family: monospace; font-size: 12.5px; background: var(--brand-light); padding: 0.75rem; border-radius: 4px; line-height: 1.8; margin-top: 0.5rem;">
+            Fancourt, D. &amp; Finn, S. <em>What is the evidence on the role of the arts in improving health and well-being? A scoping review.</em> WHO Regional Office for Europe, 2019. euro.who.int/en/publications/abstracts/what-is-the-evidence-on-the-role-of-the-arts-in-improving-health-and-well-being
+          </div>
+          <div class="template-field" style="font-family: monospace; font-size: 12.5px; background: var(--brand-light); padding: 0.75rem; border-radius: 4px; line-height: 1.8; margin-top: 0.5rem;">
+            Patel, V. et al. The Lancet Commission on global mental health and sustainable development. <em>The Lancet,</em> 392(10157), 1553–1598. 2018.
+          </div>
+        </div>
+      </div>
+
+      <h2>Creative Health and Psychology</h2>
+      <div class="template-block">
+        <div class="template-body">
+          <div class="template-field" style="font-family: monospace; font-size: 12.5px; background: var(--brand-light); padding: 0.75rem; border-radius: 4px; line-height: 1.8;">
+            Csikszentmihalyi, M. <em>Flow: The Psychology of Optimal Experience.</em> Harper &amp; Row, 1990.
+          </div>
+          <div class="template-field" style="font-family: monospace; font-size: 12.5px; background: var(--brand-light); padding: 0.75rem; border-radius: 4px; line-height: 1.8; margin-top: 0.5rem;">
+            Fredrickson, B.L. The role of positive emotions in positive psychology: The broaden-and-build theory of positive emotions. <em>American Psychologist,</em> 56(3), 218–226. 2001.
+          </div>
+          <div class="template-field" style="font-family: monospace; font-size: 12.5px; background: var(--brand-light); padding: 0.75rem; border-radius: 4px; line-height: 1.8; margin-top: 0.5rem;">
+            Schön, D. <em>The Reflective Practitioner: How Professionals Think in Action.</em> Basic Books, 1983.
+          </div>
+        </div>
+      </div>
+
+      <h2>Social Prescribing and Task-Shifting</h2>
+      <div class="template-block">
+        <div class="template-body">
+          <div class="template-field" style="font-family: monospace; font-size: 12.5px; background: var(--brand-light); padding: 0.75rem; border-radius: 4px; line-height: 1.8;">
+            World Health Organization. <em>mhGAP Intervention Guide for mental, neurological and substance use disorders in non-specialized health settings.</em> Version 2.0. WHO, 2016. who.int/publications/i/item/9789241549790
+          </div>
+        </div>
+      </div>
+
+      <div class="callout" style="margin-top:2rem;">
+        <div class="callout-label">Calibrating claim strength</div>
+        <p>"Arts engagement is associated with reduced depression symptoms" is an evidence-supported claim. "Creative practice cures depression" is not. Calibrate the strength of every claim in your writing to what the cited evidence actually supports — not more, not less.</p>
+      </div>
+
+      <h2>Adding new verified citations</h2>
+      <p>When you verify a new source for use across the series, add it here with the exact format used above. Include the date you verified it. Use this page as the single source of truth for recurring citations.</p>
+    </div>
+
+  </main>
+</div>
+
+<script>
+function show(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.currentTarget.classList.add('active');
+  document.querySelector('.main').scrollTop = 0;
+}
+</script>
+</body>
+</html>
