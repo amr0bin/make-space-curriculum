@@ -1,0 +1,1190 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brand-text: #5d5a5b;
+    --brand-bg: #ffffff;
+    --brand-accent: #a29f9f;
+    --brand-light: #f5f3f0;
+    --brand-mid: #e8e5e0;
+    --brand-warm: #c8c3bc;
+    --brand-dark: #3a3838;
+    --brand-muted: #7a7775;
+    --serif: 'Asap', Georgia, serif;
+    --sans: 'Asap', system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--sans);
+    color: var(--brand-text);
+    background: var(--brand-bg);
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  .layout {
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    width: 220px;
+    min-width: 220px;
+    background: var(--brand-light);
+    border-right: 1px solid var(--brand-mid);
+    padding: 2rem 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    flex-shrink: 0;
+  }
+
+  .sidebar-logo {
+    font-family: var(--serif);
+    font-size: 13px;
+    color: var(--brand-muted);
+    padding: 0 1.5rem 1.5rem;
+    border-bottom: 1px solid var(--brand-mid);
+    letter-spacing: 0.03em;
+    font-style: italic;
+  }
+
+  .sidebar-logo strong {
+    display: block;
+    font-family: var(--serif);
+    font-size: 15px;
+    color: var(--brand-dark);
+    font-weight: 400;
+    margin-bottom: 2px;
+  }
+
+  .nav-section {
+    padding: 1rem 0 0;
+  }
+
+  .nav-label {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brand-warm);
+    padding: 0.75rem 1.5rem 0.25rem;
+    font-weight: 500;
+  }
+
+  .nav-item {
+    display: block;
+    padding: 0.5rem 1.5rem;
+    color: var(--brand-muted);
+    font-size: 13.5px;
+    cursor: pointer;
+    border: none;
+    background: none;
+    text-align: left;
+    width: 100%;
+    border-left: 2px solid transparent;
+    transition: all 0.15s;
+    font-family: var(--sans);
+  }
+
+  .nav-item:hover {
+    color: var(--brand-dark);
+    background: var(--brand-mid);
+  }
+
+  .nav-item.active {
+    color: var(--brand-dark);
+    border-left-color: var(--brand-accent);
+    background: var(--brand-mid);
+    font-weight: 500;
+  }
+
+  /* MAIN */
+  .main {
+    flex: 1;
+    overflow-y: auto;
+    max-height: 100vh;
+  }
+
+  .page {
+    display: none;
+    padding: 3rem;
+    max-width: 860px;
+  }
+
+  .page.active {
+    display: block;
+  }
+
+  /* TYPOGRAPHY */
+  .page-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brand-warm);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+
+  .page-title {
+    font-family: var(--serif);
+    font-size: 36px;
+    color: var(--brand-dark);
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+
+  .page-subtitle {
+    color: var(--brand-muted);
+    font-size: 15px;
+    margin-bottom: 2.5rem;
+    font-style: italic;
+  }
+
+  h2 {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--brand-dark);
+    margin: 2.5rem 0 0.75rem;
+    line-height: 1.3;
+  }
+
+  h3 {
+    font-size: 13px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--brand-accent);
+    margin: 1.75rem 0 0.5rem;
+  }
+
+  p {
+    margin-bottom: 0.85rem;
+    color: var(--brand-text);
+    font-size: 14.5px;
+  }
+
+  /* DIVIDER */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--brand-mid);
+    margin: 2rem 0;
+  }
+
+  /* CARDS */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+
+  .card {
+    background: var(--brand-light);
+    border: 1px solid var(--brand-mid);
+    border-radius: 8px;
+    padding: 1.25rem;
+  }
+
+  .card-num {
+    font-family: var(--serif);
+    font-size: 28px;
+    color: var(--brand-warm);
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  .card-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--brand-dark);
+    margin-bottom: 0.4rem;
+  }
+
+  .card-desc {
+    font-size: 12.5px;
+    color: var(--brand-muted);
+    line-height: 1.5;
+  }
+
+  /* STEP LIST */
+  .step-list {
+    list-style: none;
+    counter-reset: steps;
+    margin: 1rem 0 1.5rem;
+  }
+
+  .step-list li {
+    counter-increment: steps;
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    align-items: flex-start;
+  }
+
+  .step-list li::before {
+    content: counter(steps);
+    font-family: var(--serif);
+    font-size: 18px;
+    color: var(--brand-warm);
+    min-width: 24px;
+    line-height: 1.3;
+    margin-top: 1px;
+  }
+
+  .step-content {
+    flex: 1;
+  }
+
+  .step-title {
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--brand-dark);
+    margin-bottom: 0.2rem;
+  }
+
+  .step-desc {
+    font-size: 13px;
+    color: var(--brand-muted);
+    line-height: 1.55;
+  }
+
+  /* CALLOUT */
+  .callout {
+    background: var(--brand-light);
+    border-left: 3px solid var(--brand-accent);
+    padding: 1rem 1.25rem;
+    margin: 1.25rem 0;
+    border-radius: 0 6px 6px 0;
+  }
+
+  .callout-label {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--brand-accent);
+    font-weight: 500;
+    margin-bottom: 0.35rem;
+  }
+
+  .callout p {
+    font-size: 13.5px;
+    margin: 0;
+    color: var(--brand-text);
+  }
+
+  /* TEMPLATE BLOCK */
+  .template-block {
+    background: var(--brand-light);
+    border: 1px solid var(--brand-mid);
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 1.25rem 0;
+  }
+
+  .template-header {
+    background: var(--brand-mid);
+    padding: 0.6rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .template-tag {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--brand-muted);
+    font-weight: 500;
+  }
+
+  .template-body {
+    padding: 1.25rem;
+  }
+
+  .template-section {
+    margin-bottom: 1.25rem;
+  }
+
+  .template-section:last-child {
+    margin-bottom: 0;
+  }
+
+  .template-section-title {
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--brand-accent);
+    border-bottom: 1px solid var(--brand-mid);
+    padding-bottom: 0.3rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .template-field {
+    font-size: 13px;
+    color: var(--brand-muted);
+    font-style: italic;
+    line-height: 1.6;
+    margin-bottom: 0.4rem;
+  }
+
+  .template-placeholder {
+    display: inline-block;
+    background: var(--brand-mid);
+    color: var(--brand-text);
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-style: normal;
+    font-size: 12px;
+  }
+
+  /* TABLE */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin: 1rem 0;
+  }
+
+  .data-table th {
+    background: var(--brand-mid);
+    padding: 0.6rem 0.75rem;
+    text-align: left;
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--brand-muted);
+    border-bottom: 1px solid var(--brand-warm);
+  }
+
+  .data-table td {
+    padding: 0.65rem 0.75rem;
+    border-bottom: 1px solid var(--brand-mid);
+    color: var(--brand-text);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+
+  .data-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .data-table tr:hover td {
+    background: var(--brand-light);
+  }
+
+  /* PILL */
+  .pill {
+    display: inline-block;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 500;
+    background: var(--brand-mid);
+    color: var(--brand-muted);
+  }
+
+  .pill-accent {
+    background: #e8e4de;
+    color: var(--brand-dark);
+  }
+
+  /* WEEK CONSTELLATION */
+  .constellation-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.75rem;
+    margin: 1rem 0;
+  }
+
+  .constellation-item {
+    border: 1px solid var(--brand-mid);
+    border-radius: 6px;
+    padding: 0.85rem 1rem;
+    background: var(--brand-bg);
+  }
+
+  .const-weeks {
+    font-size: 11px;
+    color: var(--brand-warm);
+    margin-bottom: 0.25rem;
+  }
+
+  .const-body {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--brand-dark);
+    margin-bottom: 0.2rem;
+  }
+
+  .const-emotion {
+    font-size: 12px;
+    color: var(--brand-muted);
+    font-style: italic;
+  }
+
+  /* README STEP */
+  .readme-step {
+    display: flex;
+    gap: 1.25rem;
+    margin-bottom: 1.75rem;
+    align-items: flex-start;
+  }
+
+  .readme-num {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    background: var(--brand-dark);
+    color: white;
+    font-family: var(--serif);
+    font-size: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+  }
+
+  .readme-content {
+    flex: 1;
+  }
+
+  .readme-title {
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--brand-dark);
+    margin-bottom: 0.35rem;
+  }
+
+  .readme-body {
+    font-size: 13.5px;
+    color: var(--brand-muted);
+    line-height: 1.6;
+  }
+
+  .readme-body strong {
+    color: var(--brand-text);
+    font-weight: 500;
+  }
+
+  /* TAG */
+  .tag {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border: 1px solid var(--brand-mid);
+    border-radius: 3px;
+    color: var(--brand-muted);
+    display: inline-block;
+    margin-right: 4px;
+    margin-bottom: 4px;
+  }
+
+  /* LINK */
+  a.brand-link {
+    color: var(--brand-text);
+    text-decoration: underline;
+    text-decoration-color: var(--brand-warm);
+    text-underline-offset: 2px;
+    font-size: 13.5px;
+  }
+
+  a.brand-link:hover {
+    text-decoration-color: var(--brand-text);
+  }
+
+  .inline-accent {
+    color: var(--brand-accent);
+    font-style: italic;
+  }
+
+  /* Two-col */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin: 1rem 0;
+  }
+
+  @media (max-width: 700px) {
+    .two-col { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    .page { padding: 1.5rem; }
+  }
+</style>
+<style>
+  /* Supplemental styles for the program reference */
+  .qa { border-bottom: 1px solid var(--brand-mid); padding: 1.1rem 0; }
+  .qa:last-child { border-bottom: none; }
+  .qa-q { font-family: var(--serif); font-size: 17px; color: var(--brand-dark); margin-bottom: 0.5rem; line-height: 1.3; }
+  .qa-a { font-size: 14px; color: var(--brand-text); line-height: 1.6; }
+  .qa-a p { font-size: 14px; }
+  .flag { display:inline-block; font-size:10px; letter-spacing:0.06em; text-transform:uppercase; background:#efe9e2; color:#8a6d4b; padding:1px 6px; border-radius:3px; font-weight:600; margin-left:4px; vertical-align:middle; }
+  .ref { font-size: 13px; color: var(--brand-text); line-height: 1.6; padding: 0.6rem 0; border-bottom: 1px solid var(--brand-mid); }
+  .ref:last-child { border-bottom:none; }
+  .ref-cite { font-family: var(--serif); color: var(--brand-dark); }
+  .ref-note { display:block; font-size:12px; color:var(--brand-muted); margin-top:2px; }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size:12px; background:var(--brand-light); padding:0.7rem 0.85rem; border-radius:4px; line-height:1.7; color:var(--brand-text); margin-bottom:0.5rem; }
+  .lead { font-size: 15.5px; color: var(--brand-text); line-height:1.7; margin-bottom:1rem; }
+  .pyramid-row { display:flex; align-items:center; gap:0.85rem; margin-bottom:0.4rem; }
+  .pyramid-bar { height:34px; border-radius:4px; display:flex; align-items:center; padding-left:0.85rem; color:var(--brand-dark); font-size:12.5px; font-weight:500; }
+  .disclaimer { background:#f6efe8; border:1px solid #e6d9c9; border-radius:8px; padding:1rem 1.25rem; margin:1.5rem 0; }
+  .disclaimer .callout-label { color:#8a6d4b; }
+  .disclaimer p { font-size:13.5px; margin:0; color:#6b5847; }
+</style>
+</head>
+<body>
+
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar-logo">
+      <strong>Make Space</strong>
+      A Community Mental Health Program
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-label">Start here</div>
+      <button class="nav-item active" onclick="show('overview')">Overview</button>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-label">The Program</div>
+      <button class="nav-item" onclick="show('what')">What Make Space Is</button>
+      <button class="nav-item" onclick="show('reframe')">Curriculum → Program</button>
+      <button class="nav-item" onclick="show('layers')">The Four Layers</button>
+      <button class="nav-item" onclick="show('scope')">Where It Sits &amp; Scope</button>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-label">Critical questions</div>
+      <button class="nav-item" onclick="show('questions')">The Big Questions</button>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-label">Global Mental Health</div>
+      <button class="nav-item" onclick="show('gap')">The Treatment Gap</button>
+      <button class="nav-item" onclick="show('taskshift')">Task-Shifting</button>
+      <button class="nav-item" onclick="show('creativehealth')">Creative Health &amp; Social Prescribing</button>
+      <button class="nav-item" onclick="show('culture')">Cultural Humility</button>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-label">Building it</div>
+      <button class="nav-item" onclick="show('ethics')">Ethical Architecture</button>
+      <button class="nav-item" onclick="show('facilitator')">The Facilitator Model</button>
+      <button class="nav-item" onclick="show('evidence')">Evidence &amp; Sustainability</button>
+      <button class="nav-item" onclick="show('pathway')">The Staged Pathway</button>
+      <button class="nav-item" onclick="show('risks')">Risks &amp; Cautions</button>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-label">Library</div>
+      <button class="nav-item" onclick="show('leaders')">Leaders in the Field</button>
+      <button class="nav-item" onclick="show('research')">Research &amp; Evidence</button>
+      <button class="nav-item" onclick="show('citations')">Verified Citations</button>
+    </div>
+  </nav>
+
+  <main class="main">
+
+    <!-- ═══════════════ OVERVIEW ═══════════════ -->
+    <div id="overview" class="page active">
+      <p class="page-eyebrow">Start here</p>
+      <h1 class="page-title">Make Space as a Community Mental Health Program</h1>
+      <p class="page-subtitle">A reference for understanding the program, its place in Global Mental Health, and what a responsible path to scale would require.</p>
+
+      <p class="lead">Make Space: Other Bodies and Creative Health began as a fifty-two-week creative curriculum — a personal investigation into what happens when a person is given permission to make without a goal, with the natural world kept close as a companion for feeling. This document describes what that practice becomes when it is deliberately reframed as a <em>community mental health program</em>, and what would be required for it to grow, ethically and sustainably, toward a Global Mental Health initiative for reaching people whom early depression care does not currently reach.</p>
+
+      <div class="disclaimer">
+        <div class="callout-label">The one line that governs everything</div>
+        <p>Make Space is <strong>not therapy</strong> and does not treat or cure depression. It is a preventive, supportive, early-access layer — a first rung people can reach before, alongside, or when they cannot get clinical care — and a pathway <em>toward</em> support, never a substitute for it. Hold this line and the rest becomes possible. Blur it and the program becomes both unethical and unfundable.</p>
+      </div>
+
+      <h2>What this document contains</h2>
+      <div class="card-grid">
+        <div class="card">
+          <span class="card-num">1</span>
+          <div class="card-label">The Program</div>
+          <div class="card-desc">What Make Space is as an intervention, the reframe that makes it a program, its four operating layers, and where it sits in the wider system of care.</div>
+        </div>
+        <div class="card">
+          <span class="card-num">2</span>
+          <div class="card-label">The Big Questions</div>
+          <div class="card-desc">Direct answers to the critical questions anyone — a participant, a partner, a funder, an ethics board — will ask before they trust it.</div>
+        </div>
+        <div class="card">
+          <span class="card-num">3</span>
+          <div class="card-label">Global Context</div>
+          <div class="card-desc">The treatment gap, task-shifting, creative health and social prescribing, and the cultural humility that any global effort must be built on.</div>
+        </div>
+        <div class="card">
+          <span class="card-num">4</span>
+          <div class="card-label">Building It</div>
+          <div class="card-desc">The ethical architecture, the facilitator model, the evidence-and-funding ladder, a staged pathway, and an honest account of the risks.</div>
+        </div>
+        <div class="card">
+          <span class="card-num">5</span>
+          <div class="card-label">The Library</div>
+          <div class="card-desc">Leaders in the field, the existing research and evidence base, and verified citations to draw on.</div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <div class="callout-label">A note on evidence discipline</div>
+        <p>This document follows Make Space's own fact-checking standard. Claims are calibrated to what the evidence actually supports; "evidence-informed" is preferred to "evidence-based" until the evidence is the program's own; and anything not yet verified against a primary source carries a <span class="flag">verify</span> flag rather than being stated as settled fact.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════ WHAT MAKE SPACE IS ═══════════════ -->
+    <div id="what" class="page">
+      <p class="page-eyebrow">The Program</p>
+      <h1 class="page-title">What Make Space Is</h1>
+      <p class="page-subtitle">The intervention beneath the program — its content, its mechanism, and what makes it distinctive.</p>
+
+      <p>At its centre is a simple, disciplined practice: <strong>goal-less making</strong> — creative acts with no requirement to be good or finished — carried out inside a supportive structure that keeps the natural world close as a mirror for human feeling. The medium is watercolour, chosen precisely because it resists control; staying present while the paint pools and spreads is itself the practice. Every session begins and ends with <strong>somatic arrival</strong>: noticing the weight of the body and the breath before and after making.</p>
+
+      <h2>The Other Bodies framework</h2>
+      <p>The signature contribution is <strong>Other Bodies</strong>: fifty-two feelings mapped across a year, each set beside one natural body and one small act of making. Animals, plants, and weather systems are treated as "sites of wisdom" rather than metaphors — bodies that have practised difficult states without pathologising them. Shame met through the exquisite sensitivity of the octopus; anger through the storm that redistributes pressure and dissipates; longing through the wolf's howl that locates the pack. The feelings are offered <em>in pencil, not ink</em> — a guess held loosely, never a diagnosis.</p>
+
+      <div class="callout">
+        <div class="callout-label">Why this matters for a mental health program</div>
+        <p>Because Other Bodies works through nature and making rather than through diagnostic language, it offers a somatic, non-verbal doorway for people whom words — and clinical framing — have failed or excluded. This is exactly the population early depression care most often misses.</p>
+      </div>
+
+      <h2>The structure: a four-part investigative arc</h2>
+      <div class="constellation-grid">
+        <div class="constellation-item"><div class="const-weeks">Weeks 1–13</div><div class="const-body">Foundations</div><div class="const-emotion">What creative health is and isn't; the studio as a state of readiness, not a room</div></div>
+        <div class="constellation-item"><div class="const-weeks">Weeks 14–26</div><div class="const-body">Literature</div><div class="const-emotion">What research, history, and theory say — and the honest limits of that case</div></div>
+        <div class="constellation-item"><div class="const-weeks">Weeks 27–48</div><div class="const-body">Investigation</div><div class="const-emotion">The living case study: the Other Bodies constellations, one feeling at a time</div></div>
+        <div class="constellation-item"><div class="const-weeks">Weeks 49–52</div><div class="const-body">Synthesis</div><div class="const-emotion">What the year produced, and what it contributes to the field</div></div>
+      </div>
+
+      <h2>What it proposes (the working hypothesis)</h2>
+      <p>Creative health is best cultivated when individuals are given explicit permission to fail — through goal-less making — within a highly supportive structure that uses the natural world as a mirror for the complexities of human feeling. The program treats this as a genuine research question, investigated in the open, where the making is the data.</p>
+
+      <h2>The active ingredients — in order of evidential strength</h2>
+      <table class="data-table">
+        <thead><tr><th>Ingredient</th><th>What it does</th><th>Evidence footing</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Social connection &amp; belonging</strong></td><td>The gathered community counters isolation; being witnessed without being fixed</td><td>Strongest — social connection is among the most robust protective factors in mental health</td></tr>
+          <tr><td><strong>Structured creative engagement</strong></td><td>Flow states, emotional regulation, a therapeutic outlet for difficult experience</td><td>Promising, associational <span class="flag">calibrate</span></td></tr>
+          <tr><td><strong>Somatic grounding</strong></td><td>Nervous-system regulation through attention to breath and body</td><td>Supportive, drawn from broader somatic and mindfulness literature</td></tr>
+          <tr><td><strong>Emotional reframing (Other Bodies)</strong></td><td>Holding complex states non-judgmentally through a natural companion</td><td>Novel; the program's own instrument, not yet independently studied <span class="flag">verify</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ═══════════════ REFRAME ═══════════════ -->
+    <div id="reframe" class="page">
+      <p class="page-eyebrow">The Program</p>
+      <h1 class="page-title">From Curriculum to Program</h1>
+      <p class="page-subtitle">The single reframe that turns a personal practice into a community mental health intervention.</p>
+
+      <p class="lead">The move is not to add clinical machinery. It is to change what the thing understands itself to be: from content delivered to an audience, to a documented, community-based early intervention in which the participant is a co-investigator of their own creative health, and the program itself is studied as it runs.</p>
+
+      <h2>The two shifts that cost nothing</h2>
+      <div class="step-list">
+        <li><div class="step-content"><div class="step-title">The participant becomes a co-investigator, not an audience</div><div class="step-desc">The year-long question — what happens when people give themselves permission to make without a goal? — is genuinely a research question. The participant gathers evidence in their own life, week by week. The making is the data.</div></div></li>
+        <li><div class="step-content"><div class="step-title">Other Bodies becomes the living case study and instrument set</div><div class="step-desc">The emotional compass, the constellations, the emotion stories are not illustrations. They are original conceptual instruments for mapping the inner world — and naming them that way changes how the whole program is read by a partner or a researcher.</div></div></li>
+      </div>
+
+      <h2>What must be protected in the move</h2>
+      <p>The gravest failure mode is becoming clinical at the cost of being kind. Three strengths are particular to Make Space and must not be flattened by borrowed structure:</p>
+      <div class="card-grid">
+        <div class="card"><div class="card-label">Original instruments</div><div class="card-desc">The Other Bodies tools are genuinely novel — potentially the program's first publishable innovation. Protect them as signature contribution.</div></div>
+        <div class="card"><div class="card-label">A somatic, non-verbal entry</div><div class="card-desc">Reaching people through making and the body, not argument — a doorway for those whom words have failed.</div></div>
+        <div class="card"><div class="card-label">A live, gathered community</div><div class="card-desc">The real-time social layer that most task-shifting models and publications structurally struggle to sustain.</div></div>
+      </div>
+
+      <div class="callout">
+        <div class="callout-label">The value rule</div>
+        <p>When something must be cut, cut from the front — the concept — never from the back: the making, sharing, and rest. The made thing and the rest are the medicine; the concept is only the doorway. At scale the temptation is to ship cheap "content about creative health" and quietly thin the guided making. Resist it with fidelity checks.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════ FOUR LAYERS ═══════════════ -->
+    <div id="layers" class="page">
+      <p class="page-eyebrow">The Program</p>
+      <h1 class="page-title">The Four Layers</h1>
+      <p class="page-subtitle">From the individual outward to the globe — four concentric layers, each a real deliverable.</p>
+
+      <h2>Layer 1 — The Practice</h2>
+      <p>The 52-week arc is the content spine. For a community program it becomes modular: the full year for depth, and a bounded <strong>12-week "core dose"</strong> (the Foundations arc plus two or three Other Bodies constellations) that a partner site can actually run and study. Task-shifting needs a teachable, bounded protocol; a year is a way of life, twelve weeks is a program.</p>
+
+      <h2>Layer 2 — The Group</h2>
+      <p>The ohHEY Creative Care Community, formalised into the <strong>facilitated circle</strong>: 6–12 people, a trained non-specialist facilitator, a weekly rhythm of somatic arrival → goal-less making → invited sharing → rest. The group is the mechanism — belonging and connection are the most evidence-supported ingredients in the whole model.</p>
+
+      <h2>Layer 3 — The Site</h2>
+      <p>A partner-hosted home for circles — a library, a clinic waiting room, a school, a refugee support centre, a rural health post. Following the community-engagement model in the Araya/TAPS literature, each site is built through a <strong>pre-engagement phase</strong>: local organisations and leaders develop a shared understanding of local need before a single circle runs. The site handles referral both ways — receiving people via social prescribing, and routing anyone in distress out to clinical care.</p>
+
+      <h2>Layer 4 — The Network</h2>
+      <p>Sites federated into a network that shares the protocol, the training, the documentation standard, and the evidence — while each locale adapts the <em>content</em> to its culture. Lightweight federation, not heavy central control; local ownership of content and data.</p>
+
+      <div class="callout">
+        <div class="callout-label">The design principle across all four</div>
+        <p>Scale the trained human relationship and the honest evidence at the same rate as the content. The program is only as strong as its weakest layer — and the weakest layer is almost always the one where a human facilitator was replaced by a document.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════ SCOPE ═══════════════ -->
+    <div id="scope" class="page">
+      <p class="page-eyebrow">The Program</p>
+      <h1 class="page-title">Where It Sits &amp; Scope</h1>
+      <p class="page-subtitle">Locating Make Space precisely in the system of care — and drawing the boundary that keeps it safe.</p>
+
+      <p>The WHO service-organisation pyramid places care in tiers, from self-care and community supports at the base to specialist and long-stay services at the top. Make Space lives at the base — and knows it.</p>
+
+      <div style="margin:1.5rem 0;">
+        <div class="pyramid-row"><div class="pyramid-bar" style="background:#d8cfc4; width:35%;">Specialist &amp; acute care</div></div>
+        <div class="pyramid-row"><div class="pyramid-bar" style="background:#e0d8cd; width:50%;">Primary care mental health services</div></div>
+        <div class="pyramid-row"><div class="pyramid-bar" style="background:#e8e2d8; width:70%;">Community &amp; informal supports</div></div>
+        <div class="pyramid-row"><div class="pyramid-bar" style="background:#efe9e2; width:92%;">Self-care · promotion · prevention &nbsp;<strong>← Make Space</strong></div></div>
+      </div>
+
+      <h2>The scope boundary</h2>
+      <p>Facilitators hold space for making and feeling. They do <strong>not</strong> assess, diagnose, counsel, or treat. The single non-negotiable competency is recognising when someone is beyond the program's scope — signs of crisis, acute risk, or clinical-level depression — and knowing exactly where to route them.</p>
+
+      <div class="two-col">
+        <div class="card"><div class="card-label" style="color:#4a7a5a;">Make Space is</div><div class="card-desc">Preventive · early-access · supportive · adjunctive · a pathway to care · a place to be met in a feeling · a low-threshold community doorway</div></div>
+        <div class="card"><div class="card-label" style="color:#a85a4a;">Make Space is not</div><div class="card-desc">Therapy · a treatment for depression · a diagnosis · a crisis service · a substitute for clinical care · a replacement for a professional</div></div>
+      </div>
+
+      <div class="disclaimer">
+        <div class="callout-label">Standing care note (belongs everywhere)</div>
+        <p>A short, kind, current note — what this is, what it isn't, and where to turn if today is hard — belongs visibly on the program and near anything that touches distress. A creative-health program without a live route to clinical care is not an early intervention; it is an abdication.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════ BIG QUESTIONS ═══════════════ -->
+    <div id="questions" class="page">
+      <p class="page-eyebrow">Critical questions</p>
+      <h1 class="page-title">The Big Questions</h1>
+      <p class="page-subtitle">The questions a participant, a partner, a funder, or an ethics board will ask — answered directly and honestly.</p>
+
+      <div class="qa">
+        <div class="qa-q">What actually is it — in one sentence a stranger would understand?</div>
+        <div class="qa-a">A community-based, non-clinical creative program in which small facilitated groups make art without a goal, using the natural world as a companion for difficult feelings, as an early and preventive layer of mental health support that also connects people to care.</div>
+      </div>
+
+      <div class="qa">
+        <div class="qa-q">Who is it for?</div>
+        <div class="qa-a">People experiencing low mood, isolation, subthreshold or mild depressive symptoms, or the "difficulty that has no name yet" — especially those whom clinical services miss or reach too late. It is designed to be accessible to people excluded from both creative spaces and mental health services. It is <strong>not</strong> for people in acute crisis or with severe, active illness, who need clinical care the program refers them toward.</div>
+      </div>
+
+      <div class="qa">
+        <div class="qa-q">Does it work? What's the evidence?</div>
+        <div class="qa-a">The honest answer: the broader field of arts-and-health has a real and growing evidence base (the 2019 WHO scoping review synthesised hundreds of studies), and arts engagement is <em>associated</em> with reduced depressive symptoms and improved wellbeing. But that evidence is largely associational, and Make Space's specific model has not yet been trialled. So the defensible claim today is "evidence-informed and promising," not "proven." Generating the program's own evidence is a core task, not an afterthought.</div>
+      </div>
+
+      <div class="qa">
+        <div class="qa-q">Is it therapy? Is it safe?</div>
+        <div class="qa-a">It is explicitly not therapy, and saying so protects both the participant and the program. Safety rests on four things: a bright scope boundary, a live two-way referral pathway to clinical care, trauma-aware design (invitation not instruction; consent and pace honoured; a visible door to support), and clinical oversight in the governance structure.</div>
+      </div>
+
+      <div class="qa">
+        <div class="qa-q">How could it possibly scale globally?</div>
+        <div class="qa-a">Through task-shifting: training non-specialist community members to deliver a bounded, teachable protocol under supervision. This is a well-established mechanism in global mental health. The critical caveat is that the strongest task-shifting evidence is for structured brief psychological treatments — not creative approaches — so Make Space scales first as a preventive/early-access layer while it builds its own evidence toward any stronger claim.</div>
+      </div>
+
+      <div class="qa">
+        <div class="qa-q">How is a program like this funded and kept alive?</div>
+        <div class="qa-a">Through diversified funding tied to an evidence ladder: quality data → qualitative paper → feasibility study → pilot → controlled evidence, each stage unlocking the next tier of funder (philanthropy, health-system social-prescribing budgets, global-health grants). The Araya/TAPS experience names the four things that kill programs like this — weak financial sustainability, administrative burden, poor inter-organisational coordination, and the digital divide — so sustainability is designed against those four by name.</div>
+      </div>
+
+      <div class="qa">
+        <div class="qa-q">Won't a Western emotional model harm the cultures it enters?</div>
+        <div class="qa-a">It can, and that is the field's most common failure (Kleinman's central warning). The safeguard is structural: the framework travels, but the specific natural companions, idioms, and feelings are co-created locally with each community, which also owns its own content and data. Depression is experienced differently across cultures, and the program must be adapted, not translated.</div>
+      </div>
+
+      <div class="qa">
+        <div class="qa-q">What's the single thing most likely to go wrong?</div>
+        <div class="qa-a">That the claim outruns the proof, or the content scales faster than the trained human care — and someone in real distress is held by a circle instead of routed to help. Every structural safeguard in this document exists to prevent that one outcome.</div>
+      </div>
+
+      <div class="qa">
+        <div class="qa-q">Why creative health at all — why not just fund more clinicians?</div>
+        <div class="qa-a">Because there will never be enough specialists to close the gap, especially in low-resource settings, and because many people never reach clinical services for reasons of stigma, access, cost, or design. A low-threshold, culturally adaptable, community-owned doorway reaches people the specialist system structurally cannot — not instead of clinical care, but as the wide base beneath it.</div>
+      </div>
+
+      <div class="qa">
+        <div class="qa-q">What does success look like in five years?</div>
+        <div class="qa-a">Not "millions treated." Realistically: a validated, manualised core dose; a trained-and-supervised facilitator corps; feasibility and early outcome evidence published honestly; two or more culturally distinct sites co-owning their adaptations; and a funding base that isn't a single grant. Depth and integrity first; reach follows from proof.</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ TREATMENT GAP ═══════════════ -->
+    <div id="gap" class="page">
+      <p class="page-eyebrow">Global Mental Health</p>
+      <h1 class="page-title">The Treatment Gap</h1>
+      <p class="page-subtitle">The stakes that give Make Space its purpose — the distance between who needs care and who receives it.</p>
+
+      <p class="lead">Depression is one of the leading causes of disability worldwide, affecting hundreds of millions of people. Yet a large majority of those who need care never receive it — and the gap is widest exactly where resources are thinnest.</p>
+
+      <div class="card-grid">
+        <div class="card"><span class="card-num">280M+</span><div class="card-label">Living with depression</div><div class="card-desc">WHO global estimate — updated periodically; confirm the current figure before use.<span class="flag">verify</span></div></div>
+        <div class="card"><span class="card-num">&lt;50%</span><div class="card-label">Treated in high-income countries</div><div class="card-desc">Even where services exist, fewer than half receive treatment. Trace to Lancet Commission (2018) / WHO.<span class="flag">verify</span></div></div>
+        <div class="card"><span class="card-num">~75%</span><div class="card-label">Untreated in many LMICs</div><div class="card-desc">In low- and middle-income settings the majority receive no treatment. Figure varies by source/year.<span class="flag">verify</span></div></div>
+      </div>
+
+      <p>The gap is not primarily a diagnostic problem. It is a problem of <strong>access, resource, workforce, and design</strong>. Over 80% of the world's population lives in low- and middle-income countries, which receive a small fraction of global mental health resources — a disparity Kleinman frames not only as inequality but as a violation of basic rights.</p>
+
+      <h2>Why this shapes the whole program</h2>
+      <p>Make Space operates inside this context — not as a clinical solution, but as part of the evidential case that structured creative approaches can reach people whom specialist systems cannot. The treatment gap is not an abstraction; it is a design failure with a human cost. That awareness should shape how the program is built: for the people currently left out, in the settings where care is hardest to reach.</p>
+
+      <div class="callout">
+        <div class="callout-label">Where it appears in the curriculum</div>
+        <p>Weeks 24–26 make this frame explicit: the depression treatment gap (24), task-shifting as a learning-design problem (25), and the global shift from reactive to proactive care (26). Phase 4 then asks what the accumulated year of practice contributes to the evidential case.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════ TASK-SHIFTING ═══════════════ -->
+    <div id="taskshift" class="page">
+      <p class="page-eyebrow">Global Mental Health</p>
+      <h1 class="page-title">Task-Shifting</h1>
+      <p class="page-subtitle">The mechanism that lets non-specialists deliver care where specialists don't exist — and its honest limits for creative approaches.</p>
+
+      <p class="lead">Task-shifting (also "task-sharing") means training and supervising non-specialist workers — community members, peers, facilitators — to deliver simplified, structured mental health interventions. It is the central strategy behind scaling mental health care in resource-limited settings, developed most influentially through Vikram Patel's work and the WHO's mhGAP framework.</p>
+
+      <h2>What the evidence supports</h2>
+      <p>Trials of task-shifted, manualised psychological treatments — such as brief behavioural interventions delivered by lay counsellors — have shown that non-specialists <em>can</em> deliver effective depression care when they are trained, supervised, and working from a structured protocol. Supervision is the quiet key: the model works when non-specialists are supported, not when they are trained and abandoned.</p>
+
+      <h2>The honest caveat for Make Space</h2>
+      <div class="disclaimer">
+        <div class="callout-label">Calibrate this carefully</div>
+        <p>The strongest task-shifting evidence is for <strong>structured brief psychological treatments</strong>, not for creative approaches. So Make Space cannot yet claim to be an evidence-based, task-shifted <em>treatment</em> for depression. Two defensible paths, likely in sequence: (a) scale it as a preventive / early-access / adjunctive layer, where the evidence bar and the ethics are cleaner; and (b) generate its own trial evidence so that, one day, a stronger claim is earned rather than borrowed.</p>
+      </div>
+
+      <h2>The tiered delivery model</h2>
+      <table class="data-table">
+        <thead><tr><th>Tier</th><th>Role</th><th>Key safeguard</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Tier 0</strong></td><td>Participant — completes the practice; may become a peer</td><td>Consent; clear "what this is / isn't"</td></tr>
+          <tr><td><strong>Tier 1</strong></td><td>Peer facilitator — holds a circle: rhythm, safety behaviours, referral</td><td>The workhorse tier; trained to a fidelity checklist</td></tr>
+          <tr><td><strong>Tier 2</strong></td><td>Site lead / trainer — trains and supervises facilitators, holds referral relationships</td><td>Supervision — the single strongest predictor of task-shifting success</td></tr>
+          <tr><td><strong>Tier 3</strong></td><td>Clinical oversight — a licensed professional per region</td><td>Reviews escalations; guards the scope boundary; makes the whole thing legitimate</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ═══════════════ CREATIVE HEALTH ═══════════════ -->
+    <div id="creativehealth" class="page">
+      <p class="page-eyebrow">Global Mental Health</p>
+      <h1 class="page-title">Creative Health &amp; Social Prescribing</h1>
+      <p class="page-subtitle">The field Make Space lives inside — its evidence base and the policy mechanism that can carry it.</p>
+
+      <h2>Creative health</h2>
+      <p>"Creative health" describes the use of the arts and creative engagement to support health and wellbeing — broader and more person-centred than clinical art therapy. The anchor evidence is the 2019 WHO scoping review by Daisy Fancourt and Saoirse Finn, which synthesised a large body of studies on the arts and health. The field is real and growing, and also young: parts of it are thinner than its enthusiasts would like. Both are true at once, and a responsible program holds them together.</p>
+
+      <div class="card-grid">
+        <div class="card"><div class="card-label">What's supported</div><div class="card-desc">Arts engagement is <em>associated</em> with reduced depressive symptoms, improved social connection, and physiological markers such as lower stress hormones.<span class="flag">calibrate</span></div></div>
+        <div class="card"><div class="card-label">What isn't</div><div class="card-desc">That creative practice "cures" or "treats" depression. The strength of every claim must match what the cited source actually says.</div></div>
+      </div>
+
+      <h2>Social prescribing</h2>
+      <p>Social prescribing is the practice of referring people from primary care to non-medical, community-based activities — including creative programs. It is embedded in the NHS and spreading internationally. It matters to Make Space in two directions: it is the <strong>referral mechanism that sends people in</strong>, and it is the <strong>policy category that funders and health systems already recognise</strong>. A program built to be "the kind of thing social prescribing sends people to" has a ready-made route to legitimacy and funding.</p>
+
+      <div class="callout">
+        <div class="callout-label">Positioning</div>
+        <p>Make Space is a living case study inside the creative-health evidence base and a natural destination for social prescribing. Mapping it explicitly against these two frames is how it becomes legible to partners who have never heard of Other Bodies.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════ CULTURE ═══════════════ -->
+    <div id="culture" class="page">
+      <p class="page-eyebrow">Global Mental Health</p>
+      <h1 class="page-title">Cultural Humility</h1>
+      <p class="page-subtitle">Arthur Kleinman's warning, and why it is structural rather than decorative for any global effort.</p>
+
+      <p class="lead">Kleinman — psychiatrist and anthropologist — reshaped global mental health by insisting that mental illness cannot be separated from the cultural and social contexts in which it occurs. Depression is experienced, expressed, and understood differently across cultures: through the body, through spiritual frames, through idioms that do not map onto Western diagnostic categories.</p>
+
+      <h2>The concepts that matter here</h2>
+      <div class="step-list">
+        <li><div class="step-content"><div class="step-title">Explanatory models</div><div class="step-desc">People hold their own models of what their suffering is and what it needs. Care that ignores those models miscommunicates and fails. A program must meet people inside their own understanding.</div></div></li>
+        <li><div class="step-content"><div class="step-title">Social suffering</div><div class="step-desc">Distress is shaped by social and structural conditions, not only individual pathology. This aligns closely with Make Space's community, non-medicalising stance.</div></div></li>
+        <li><div class="step-content"><div class="step-title">Critique of psychiatric globalisation</div><div class="step-desc">Exporting a Western model and universalising it can flatten the very cultures it claims to serve. The alternative is context-specific, community-based care.</div></div></li>
+      </div>
+
+      <h2>Why Other Bodies is unusually well-suited — if handled right</h2>
+      <p>Because the framework works through nature and making rather than diagnostic language, it can travel across cultures more gently than a symptom checklist. But this only holds if the natural companions are <strong>locally chosen</strong>. The octopus, the permafrost, the storm are one culture's companions; another community's will be its own animals, its own weather, its own plants, named in its own idioms. The framework travels; the specific companions must be co-created locally.</p>
+
+      <div class="disclaimer">
+        <div class="callout-label">The line between global program and cultural colonialism</div>
+        <p>Communities co-create their own companions and own their own content and data — including any ancestral or traditional knowledge, which is attributed to its source community or left out entirely if it cannot be properly attributed. This is not a courtesy. It is the ethical condition of operating globally at all.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════ ETHICS ═══════════════ -->
+    <div id="ethics" class="page">
+      <p class="page-eyebrow">Building it</p>
+      <h1 class="page-title">Ethical Architecture</h1>
+      <p class="page-subtitle">For a program that names depression, ethics is not a compliance chore — it is the product. Built first, not bolted on.</p>
+
+      <div class="step-list">
+        <li><div class="step-content"><div class="step-title">Scope of practice &amp; the referral spine</div><div class="step-desc">Facilitators hold space; they do not assess, diagnose, or treat. The core competency is recognising when someone is beyond scope and knowing exactly where to route them. This referral pathway must be mapped, current, and locally real at every site before it opens.</div></div></li>
+        <li><div class="step-content"><div class="step-title">Emotional-safety design</div><div class="step-desc">Offer a feeling, never instruct it; honour pace and consent; sharing is invitation, never requirement; trauma-aware prompts that offer outs and never force memory or exposure; a visible standing note pointing to real support. At scale these become trained behaviours with a fidelity checklist.</div></div></li>
+        <li><div class="step-content"><div class="step-title">Claims discipline</div><div class="step-desc">"Evidence-informed," not "evidence-based," until the evidence is the program's own. Supportive and preventive, never curative. Every claim calibrated to what its source actually supports. This honesty is also the program's credibility moat with serious funders.</div></div></li>
+        <li><div class="step-content"><div class="step-title">Consent &amp; data ethics</div><div class="step-desc">Once making becomes data, participants must know it, agree to it, and be able to withdraw it. Informed consent, anonymisation, secure storage — and, at global scale, data sovereignty: communities own their own data.</div></div></li>
+        <li><div class="step-content"><div class="step-title">Cultural humility as design</div><div class="step-desc">Adapt, don't translate. Local companions, local idioms, local ownership. The framework travels; the specifics are co-created.</div></div></li>
+        <li><div class="step-content"><div class="step-title">Born-accessible</div><div class="step-desc">Every interactive tool ships with a linear, screen-reader-and-keyboard companion. For a program claiming to reach people the system misses, accessibility is part of the ethical claim, not a feature.</div></div></li>
+      </div>
+
+      <div class="callout">
+        <div class="callout-label">The formal layer</div>
+        <p>Before scaling beyond a first pilot: research-ethics / IRB review, a legal and governance structure (nonprofit, or hosted by an existing health organisation), safeguarding policies, data-protection compliance appropriate to each jurisdiction, and named clinical oversight. These convert a beautiful practice into a defensible program.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════ FACILITATOR ═══════════════ -->
+    <div id="facilitator" class="page">
+      <p class="page-eyebrow">Building it</p>
+      <h1 class="page-title">The Facilitator Model</h1>
+      <p class="page-subtitle">The operational heart — how ordinary community members are trained to hold a circle safely.</p>
+
+      <p>The facilitator is where task-shifting becomes real. The training is not about making people junior therapists; it is about equipping them to hold a specific, bounded rhythm with warmth, and to recognise the edge of their scope.</p>
+
+      <h2>What a facilitator is trained to do</h2>
+      <table class="data-table">
+        <thead><tr><th>Competency</th><th>What it looks like</th></tr></thead>
+        <tbody>
+          <tr><td>Hold the rhythm</td><td>Somatic arrival → goal-less making → invited sharing → rest, week over week, with fidelity to the protocol</td></tr>
+          <tr><td>Safety behaviours</td><td>Invitation not instruction; consent and pace; trauma-aware prompting; a visible route to support</td></tr>
+          <tr><td>Recognise the edge</td><td>Spot signs of crisis, acute risk, or clinical-level distress — and know this is beyond scope</td></tr>
+          <tr><td>Refer, both ways</td><td>Route people out to clinical care; receive people in via social prescribing</td></tr>
+          <tr><td>Document with consent</td><td>Keep the reflective notes that become the program's evidence — ethically and consistently</td></tr>
+          <tr><td>Hold the boundary</td><td>Never assess, diagnose, counsel, or treat; name clearly what the circle is and isn't</td></tr>
+        </tbody>
+      </table>
+
+      <h2>The training pathway</h2>
+      <div class="step-list">
+        <li><div class="step-content"><div class="step-title">Experience the practice first</div><div class="step-desc">A facilitator completes the core dose as a participant before training to hold it. You cannot facilitate a doorway you have not walked through.</div></div></li>
+        <li><div class="step-content"><div class="step-title">Learn the protocol and the safety spine</div><div class="step-desc">The manual, the fidelity checklist, and — above all — the referral/escalation protocol and the scope boundary.</div></div></li>
+        <li><div class="step-content"><div class="step-title">Practise under supervision</div><div class="step-desc">Co-facilitate, then facilitate with observation and feedback. Supervision continues after training, not just during it.</div></div></li>
+        <li><div class="step-content"><div class="step-title">Ongoing support</div><div class="step-desc">Regular supervision, a community of facilitators, and clear escalation to clinical oversight. This is what separates safe task-shifting from abandonment.</div></div></li>
+      </div>
+
+      <div class="disclaimer">
+        <div class="callout-label">The non-negotiable</div>
+        <p>No circle runs anywhere until the local referral pathway is mapped, current, and real, and clinical oversight is named. The safety spine is built before the first session, not after the first incident.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════ EVIDENCE & SUSTAINABILITY ═══════════════ -->
+    <div id="evidence" class="page">
+      <p class="page-eyebrow">Building it</p>
+      <h1 class="page-title">Evidence &amp; Sustainability</h1>
+      <p class="page-subtitle">The same act, done twice — documentation solves the research problem and the funding problem together.</p>
+
+      <p class="lead">The reflective journal after each session, the end-of-phase feedback, the careful notes on what the Other Bodies tools produce — kept consistently, at scale, with consent — become, in ascending order, the program's evidence and its funding case at once.</p>
+
+      <h2>The evidence ladder</h2>
+      <div class="step-list">
+        <li><div class="step-content"><div class="step-title">Internal quality data</div><div class="step-desc">Consistent documentation from day one — before you need it.</div></div></li>
+        <li><div class="step-content"><div class="step-title">Qualitative paper</div><div class="step-desc">What participants experience, in their own voices, analysed honestly.</div></div></li>
+        <li><div class="step-content"><div class="step-title">Feasibility study</div><div class="step-desc">Can the model be delivered as designed, safely, in a real setting?</div></div></li>
+        <li><div class="step-content"><div class="step-title">Pilot with validated measures</div><div class="step-desc">A brief depression screen used <em>as a wellbeing signal and referral trigger, not a diagnosis</em>.</div></div></li>
+        <li><div class="step-content"><div class="step-title">Controlled evidence</div><div class="step-desc">The trial evidence a serious global funder or health system eventually requires.</div></div></li>
+      </div>
+
+      <h2>Sustainability — designed against the four TAPS failure modes</h2>
+      <p>The Araya/TAPS experience is instructive precisely because of what broke it. Build against each by name:</p>
+      <table class="data-table">
+        <thead><tr><th>Named risk (from TAPS)</th><th>Design response</th></tr></thead>
+        <tbody>
+          <tr><td>Weak financial sustainability</td><td>Diversified funding across the evidence ladder — never a single grant</td></tr>
+          <tr><td>Administrative burden</td><td>Radically low admin load on facilitators; simple, embedded documentation</td></tr>
+          <tr><td>Poor inter-organisational coordination</td><td>Lightweight federation, not heavy central control; clear local roles</td></tr>
+          <tr><td>The digital divide</td><td>Offline-first, low-bandwidth delivery so the tech doesn't re-exclude the target population</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout">
+        <div class="callout-label">Start now</div>
+        <p>The documentation layer costs nothing to begin and compounds. By the time you want a paper, a partner, or a funder, the evidence already exists. Treat documentation as part of the practice, not admin after it.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════ PATHWAY ═══════════════ -->
+    <div id="pathway" class="page">
+      <p class="page-eyebrow">Building it</p>
+      <h1 class="page-title">The Staged Pathway</h1>
+      <p class="page-subtitle">What "possible" actually looks like — each stage cheap, compounding, and producing the artifact the next stage needs.</p>
+
+      <div class="constellation-grid">
+        <div class="constellation-item"><div class="const-weeks">Stage 0</div><div class="const-body">Formalise the intervention</div><div class="const-emotion">Reframe, value map, series map, care note, claims guidelines, begin documentation. Needs no partner or funding.</div></div>
+        <div class="constellation-item"><div class="const-weeks">Stage 1</div><div class="const-body">Protocol &amp; safety spine</div><div class="const-emotion">Turn the method into a teachable manual with a fidelity checklist, referral protocol, and scope boundary.</div></div>
+        <div class="constellation-item"><div class="const-weeks">Stage 2</div><div class="const-body">First supervised pilot</div><div class="const-emotion">One site, one community you know, real facilitators, real clinical oversight. Document everything with consent.</div></div>
+        <div class="constellation-item"><div class="const-weeks">Stage 3</div><div class="const-body">Ethics, structure, evidence</div><div class="const-emotion">IRB review, legal/governance structure, feasibility study with validated wellbeing measures.</div></div>
+        <div class="constellation-item"><div class="const-weeks">Stage 4</div><div class="const-body">Cultural adaptation</div><div class="const-emotion">A second, different culture; local companions co-created. The real test of whether the framework travels.</div></div>
+        <div class="constellation-item"><div class="const-weeks">Stage 5</div><div class="const-body">Federation &amp; network</div><div class="const-emotion">Shared protocol and evidence standard; local ownership. Map formally against WHO mhGAP and the Lancet Commission.</div></div>
+      </div>
+
+      <div class="callout">
+        <div class="callout-label">The sequencing principle</div>
+        <p>Depth and integrity precede reach. Each stage earns the next; nothing scales until it has been shown to be safe, deliverable, and honestly evidenced at the smaller size.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════ RISKS ═══════════════ -->
+    <div id="risks" class="page">
+      <p class="page-eyebrow">Building it</p>
+      <h1 class="page-title">Risks &amp; Cautions</h1>
+      <p class="page-subtitle">Four ways this breaks — named plainly, so the program can be built against them.</p>
+
+      <div class="qa">
+        <div class="qa-q">1 — The claim outruns the proof</div>
+        <div class="qa-a">It overstates its evidence; a partner over-relies on it in place of clinical care; someone in crisis is held by a circle instead of routed to help. <strong>Guard:</strong> the scope boundary and referral spine, enforced as the first competency and audited at every site.</div>
+      </div>
+      <div class="qa">
+        <div class="qa-q">2 — Cultural flattening</div>
+        <div class="qa-a">It exports a Western emotional model globally and erases the cultures it claims to serve — Kleinman's exact warning. <strong>Guard:</strong> local co-creation of companions and idioms; communities own their content and data.</div>
+      </div>
+      <div class="qa">
+        <div class="qa-q">3 — Hollowing the practice at scale</div>
+        <div class="qa-a">It scales the cheap content (the noticing half) while quietly thinning the making, sharing, and rest — the part that carries the value. <strong>Guard:</strong> the value rule and fidelity checklists that protect the back half of every session.</div>
+      </div>
+      <div class="qa">
+        <div class="qa-q">4 — The four TAPS failure modes</div>
+        <div class="qa-a">It burns out on money, admin, coordination, or the digital divide. <strong>Guard:</strong> design against each by name from Stage 0, as set out in Evidence &amp; Sustainability.</div>
+      </div>
+
+      <div class="disclaimer">
+        <div class="callout-label">The whole thing in one sentence</div>
+        <p>Make Space can become a global mental health initiative if and only if it scales the trained human relationship and the honest evidence at the same rate as the beautiful content — and never lets the claim outrun the proof, or the care outrun its scope.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════ LEADERS ═══════════════ -->
+    <div id="leaders" class="page">
+      <p class="page-eyebrow">Library</p>
+      <h1 class="page-title">Leaders in the Field</h1>
+      <p class="page-subtitle">The people whose work situates Make Space — in global mental health, creative health, and the psychology beneath the practice.</p>
+
+      <div class="callout">
+        <div class="callout-label">On this list</div>
+        <p>Figures already verified within the Make Space project are marked as such. Others are widely recognised in the field but should be confirmed against a primary source before being cited in any published material.<span class="flag">verify</span></p>
+      </div>
+
+      <h2>Global mental health &amp; task-shifting</h2>
+      <div class="ref"><span class="ref-cite">Vikram Patel</span> — Task-shifting; founder-associate of Sangath (India); co-author of the Lancet Commission on global mental health. The systems logic behind non-specialist delivery at scale. <span class="ref-note">Verified in project. Cite specific publications; Sangath and WHO mhGAP are separate entities — do not conflate.</span></div>
+      <div class="ref"><span class="ref-cite">Arthur Kleinman</span> — Psychiatrist and anthropologist; explanatory models, social suffering, the critique of psychiatric globalisation. The framework for not universalising Western experience. <span class="ref-note">Verified in project. Rabb Professor of Anthropology, Harvard; co-author of <em>Reimagining Global Health</em> (2013) with Farmer and Kim.</span></div>
+      <div class="ref"><span class="ref-cite">Ricardo Araya</span> — Community mental health in low-resource settings; participatory, evidence-based interventions and the "ecology of practice" engagement model. <span class="ref-note">Verified in project (TAPS material). Instructive on both community engagement and the failure modes of sustainability.</span></div>
+
+      <h2>Creative health &amp; arts in health</h2>
+      <div class="ref"><span class="ref-cite">Daisy Fancourt</span> — Arts-in-health epidemiology (UCL); lead author of the 2019 WHO scoping review. The primary evidence base the hypothesis lives inside. <span class="ref-note">Verified in project. Do not describe findings more strongly than the review itself does.</span></div>
+      <div class="ref"><span class="ref-cite">Norma Daykin</span> — Critical perspective on arts, health and wellbeing research, policy and practice; directly engages the evidence gap. <span class="ref-note">Named in project practitioner index.<span class="flag">verify</span> Confirm the specific work before citing.</span></div>
+      <div class="ref"><span class="ref-cite">Hilary Cottam</span> — Social entrepreneur; relationship-centred, community-designed models of care (<em>Radical Help</em>, 2018). Relevant to scaling care through community rather than institutions. <span class="ref-note">Named in project.<span class="flag">verify</span></span></div>
+
+      <h2>The psychology &amp; theory beneath the practice</h2>
+      <div class="ref"><span class="ref-cite">Mihaly Csikszentmihalyi</span> — Flow: the psychology of optimal experience. The state structured creative engagement aims to cultivate. <span class="ref-note">Verified in project. Confirm edition of <em>Flow</em> (1990) when citing.</span></div>
+      <div class="ref"><span class="ref-cite">Barbara Fredrickson</span> — Broaden-and-Build theory of positive emotions. <span class="ref-note">Verified in project. Cite <em>American Psychologist</em>, 56(3), 218–226, 2001.</span></div>
+      <div class="ref"><span class="ref-cite">Donald Schön</span> — Reflection-in-action; the reflective practitioner. Underpins the participant-as-researcher stance. <span class="ref-note">Verified in project. <em>The Reflective Practitioner</em> (Basic Books, 1983).</span></div>
+      <div class="ref"><span class="ref-cite">Robin Wall Kimmerer</span> — Reciprocity between humans and the more-than-human world; a companion sensibility to Other Bodies. <span class="ref-note">Named in project.<span class="flag">verify</span> A worldview reference, not an evidence source.</span></div>
+
+      <h2>Related figures to know (confirm before citing)</h2>
+      <p style="font-size:13.5px; color:var(--brand-muted);">The broader global mental health and arts-health conversation also runs through figures such as those associated with the WHO mhGAP programme, the movement for social prescribing in primary care, and community-based participatory research. Because roles, affiliations, and specific claims change, treat every name here as a starting point requiring verification against a current primary source before it appears in published material.<span class="flag">verify</span></p>
+    </div>
+
+    <!-- ═══════════════ RESEARCH ═══════════════ -->
+    <div id="research" class="page">
+      <p class="page-eyebrow">Library</p>
+      <h1 class="page-title">Research &amp; Evidence Base</h1>
+      <p class="page-subtitle">What already exists that Make Space can stand on — organised by what each body of work does and doesn't support.</p>
+
+      <h2>The anchor evidence</h2>
+      <div class="ref"><span class="ref-cite">Fancourt &amp; Finn (2019), WHO scoping review</span> — the single most important synthesis of arts-and-health research. Establishes that the field is real and substantial. <span class="ref-note">Supports: arts engagement is <em>associated</em> with mental health and wellbeing benefits. Does not support: causal "treatment" claims.</span></div>
+      <div class="ref"><span class="ref-cite">The Lancet Commission on Global Mental Health and Sustainable Development (2018)</span> — the field's central statement of the treatment gap and the case for scaling care. <span class="ref-note">Supports: the scale of unmet need and the logic of community-based, task-shared care.</span></div>
+      <div class="ref"><span class="ref-cite">WHO mhGAP Intervention Guide (v2.0, 2016)</span> — the international framework for delivering mental health care in non-specialised settings. <span class="ref-note">The framework partners and funders expect fluency with. Map Make Space against it as a promotion/prevention-tier complement.</span></div>
+
+      <h2>What the evidence supports — and how to phrase it</h2>
+      <table class="data-table">
+        <thead><tr><th>Defensible claim</th><th>Overreach to avoid</th></tr></thead>
+        <tbody>
+          <tr><td>Arts engagement is associated with reduced depressive symptoms</td><td>Creative practice cures / treats depression</td></tr>
+          <tr><td>Social connection is protective for mental health</td><td>Make Space prevents depression</td></tr>
+          <tr><td>Non-specialists can deliver structured interventions under supervision</td><td>Make Space is an evidence-based task-shifted treatment</td></tr>
+          <tr><td>Creative health is a plausible early/preventive layer worth studying</td><td>Creative health replaces clinical care</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Where the evidence is still thin — and honest about it</h2>
+      <div class="disclaimer">
+        <div class="callout-label">Open questions the program itself must help answer</div>
+        <p>The specific Make Space model is untrialled. Creative-approach task-shifting for depression lacks the trial base that structured psychological treatments have. Physiological claims (cortisol, immune markers, DMN, mirror-neuron system) must each trace to a specific primary study, not a review — and some (e.g. mirror-neuron scope) are contested. This is not a weakness to hide; it is the research agenda that gives the program its purpose.<span class="flag">verify</span></p>
+      </div>
+
+      <h2>Neuroscience &amp; physiology claims — handle with special care</h2>
+      <p style="font-size:13.5px; color:var(--brand-muted);">Default Mode Network (trace to primary research, e.g. Raichle et al.), Mirror Neuron System (Rizzolatti et al.; do not describe as "proven" — contested in scope), cortisol reduction and immune function (trace to Fancourt's UCL work or the 2019 WHO report specifically). Never cite a secondary source that itself cites the study.<span class="flag">verify</span></p>
+    </div>
+
+    <!-- ═══════════════ CITATIONS ═══════════════ -->
+    <div id="citations" class="page">
+      <p class="page-eyebrow">Library</p>
+      <h1 class="page-title">Verified Citations</h1>
+      <p class="page-subtitle">Copy these exactly when reusing. These formats are already verified within the Make Space project.</p>
+
+      <div class="callout">
+        <div class="callout-label">How to use this page</div>
+        <p>When a source recurs, copy from here rather than retyping — retyping introduces errors. Before adding a new recurrence, check it matches exactly. Never cite a source you have not read.</p>
+      </div>
+
+      <h2>Global mental health</h2>
+      <div class="mono">World Health Organization. <em>Depression and Other Common Mental Disorders: Global Health Estimates.</em> WHO, 2017. apps.who.int/iris/handle/10665/254610</div>
+      <div class="mono">Fancourt, D. &amp; Finn, S. <em>What is the evidence on the role of the arts in improving health and well-being? A scoping review.</em> WHO Regional Office for Europe, 2019. euro.who.int/en/publications/abstracts/what-is-the-evidence-on-the-role-of-the-arts-in-improving-health-and-well-being</div>
+      <div class="mono">Patel, V. et al. The Lancet Commission on global mental health and sustainable development. <em>The Lancet,</em> 392(10157), 1553–1598. 2018.</div>
+
+      <h2>Creative health &amp; psychology</h2>
+      <div class="mono">Csikszentmihalyi, M. <em>Flow: The Psychology of Optimal Experience.</em> Harper &amp; Row, 1990.</div>
+      <div class="mono">Fredrickson, B.L. The role of positive emotions in positive psychology: The broaden-and-build theory of positive emotions. <em>American Psychologist,</em> 56(3), 218–226. 2001.</div>
+      <div class="mono">Schön, D. <em>The Reflective Practitioner: How Professionals Think in Action.</em> Basic Books, 1983.</div>
+
+      <h2>Social prescribing &amp; task-shifting</h2>
+      <div class="mono">World Health Organization. <em>mhGAP Intervention Guide for mental, neurological and substance use disorders in non-specialized health settings.</em> Version 2.0. WHO, 2016. who.int/publications/i/item/9789241549790</div>
+
+      <h2>Flagged for verification before publication</h2>
+      <table class="data-table">
+        <thead><tr><th>Item</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Depression prevalence (280M)</td><td>WHO figure, updated periodically — confirm current value before use</td></tr>
+          <tr><td>LMIC treatment gap (~75% untreated)</td><td>Varies by source/year — verify against Patel et al. or WHO mhGAP</td></tr>
+          <tr><td>High-income treatment (&lt;50%)</td><td>Check Lancet Commission (2018) or WHO source</td></tr>
+          <tr><td>Kleinman biographical/institutional claims</td><td>Verify each against a named source before it does argumentative work</td></tr>
+          <tr><td>Neuroscience claims (DMN, MNS, cortisol)</td><td>Trace each to a specific primary study — not a review</td></tr>
+          <tr><td>"Artscaping"; IDEO see/try/share/reflect</td><td>Originators not yet confirmed — verify before attribution</td></tr>
+        </tbody>
+      </table>
+
+      <div class="disclaimer">
+        <div class="callout-label">Calibrating claim strength</div>
+        <p>"Arts engagement is associated with reduced depression symptoms" is evidence-supported. "Creative practice cures depression" is not. Calibrate the strength of every claim to what the cited evidence actually supports — not more, not less.</p>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+function show(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.currentTarget.classList.add('active');
+  document.querySelector('.main').scrollTop = 0;
+}
+</script>
+</body>
+</html>
