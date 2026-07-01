@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Companions — Make Space · Other Bodies</title>
+<meta name="description" content="A companion to the Make Space series map: the feeling that may arise each week, and the natural body that keeps it company. Feelings named in pencil, not ink.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#ffffff;
+    --ink:#5d5a5b;        /* primary text — strong contrast on white */
+    --ink-soft:#6f6c6d;    /* small labels only */
+    --accent:#a29f9f;      /* decorative only: rules, the pencil line */
+    --rule:rgba(162,159,159,.45);
+    --whisper:rgba(162,159,159,.13);
+    --measure:64ch;
+  }
+
+  *{box-sizing:border-box;}
+  html{font-size:100%;-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Asap",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    font-size:1.125rem;
+    line-height:1.6;
+    font-weight:400;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+
+  .wrap{
+    max-width:46rem;
+    margin:0 auto;
+    padding:clamp(2.5rem,6vw,5.5rem) clamp(1.25rem,5vw,2.5rem) 5rem;
+  }
+
+  /* ---------- masthead ---------- */
+  .eyebrow{
+    font-size:.72rem;
+    font-weight:500;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin:0 0 1.4rem;
+  }
+  h1{
+    font-size:clamp(2rem,6vw,2.9rem);
+    line-height:1.08;
+    font-weight:700;
+    letter-spacing:-.015em;
+    margin:0 0 1.1rem;
+  }
+  .dek{
+    font-size:1.18rem;
+    max-width:var(--measure);
+    margin:0 0 1.6rem;
+  }
+  .pencil-note{
+    font-size:1rem;
+    color:var(--ink-soft);
+    max-width:var(--measure);
+    margin:0 0 1.1rem;
+  }
+  .pencil-note em{font-style:italic;border-bottom:1.5px dotted var(--accent);}
+  .map-link{font-size:1rem;max-width:var(--measure);margin:0;}
+  a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:3px;text-decoration-thickness:1.5px;}
+  a:hover{text-decoration-color:var(--ink);}
+  a:focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:2px;}
+
+  .masthead-rule{height:0;border:0;border-top:1px solid var(--rule);margin:2.6rem 0 0;}
+
+  /* ---------- movements (phases) ---------- */
+  .movement{margin-top:3.8rem;}
+  .movement:first-of-type{margin-top:2.8rem;}
+  .movement-head{margin:0 0 2rem;}
+  .movement-kicker{
+    font-size:.72rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--ink-soft);margin:0 0 .5rem;
+  }
+  .movement-head h2{
+    font-size:clamp(1.5rem,4vw,1.9rem);font-weight:700;letter-spacing:-.01em;
+    margin:0 0 .5rem;line-height:1.12;
+  }
+  .movement-desc{font-size:1.02rem;color:var(--ink);max-width:var(--measure);margin:0;font-style:italic;}
+
+  /* ---------- constellations (phase 3 groupings) ---------- */
+  .constellation{margin:2.6rem 0 1.6rem;padding-top:1.6rem;border-top:1px solid var(--rule);}
+  .movement > .constellation:first-of-type{border-top:0;padding-top:0;margin-top:1.4rem;}
+  .constellation h3{
+    font-size:1.12rem;font-weight:600;letter-spacing:.01em;margin:0 0 .3rem;
+  }
+  .constellation p{font-size:.98rem;color:var(--ink-soft);font-style:italic;margin:0;max-width:var(--measure);}
+
+  /* ---------- entries (weeks) ---------- */
+  .entry{
+    padding:1.7rem 0;
+    border-top:1px solid var(--whisper);
+  }
+  .movement > .entry:first-of-type,
+  .constellation + .entry{border-top:0;}
+  .entry-head{display:flex;align-items:baseline;gap:.9rem;flex-wrap:wrap;margin:0 0 .9rem;}
+  .wk{
+    font-size:.72rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--ink-soft);white-space:nowrap;
+  }
+  .entry-head h3,.entry-head h4{
+    font-size:1.16rem;font-weight:600;letter-spacing:-.005em;margin:0;line-height:1.25;
+  }
+
+  .pairing{margin:0 0 .9rem;}
+  .lab{
+    display:inline-block;
+    font-size:.66rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--ink-soft);margin-right:.55rem;
+    vertical-align:1px;
+  }
+  .feeling-line{margin:0 0 .35rem;}
+  .feeling{
+    font-style:italic;font-size:1.18rem;line-height:1.4;
+    border-bottom:1.5px dotted var(--accent);   /* named in pencil */
+    padding-bottom:1px;
+  }
+  .companion-line{margin:0;}
+  .companion{font-weight:600;font-size:1.05rem;}   /* the steady companion */
+
+  .attune{margin:.9rem 0 0;max-width:var(--measure);}
+  .attune .knows{font-weight:600;}
+
+  /* ---------- footer ---------- */
+  footer{margin-top:4.5rem;padding-top:1.8rem;border-top:1px solid var(--rule);
+    font-size:.95rem;color:var(--ink-soft);max-width:var(--measure);}
+  footer p{margin:0 0 .7rem;}
+  .totop{font-size:.85rem;}
+
+  @media (max-width:30rem){
+    .entry-head{gap:.4rem .9rem;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none!important;animation:none!important;}
+  }
+</style>
+</head>
+<body>
+<main class="wrap" id="top">
+
+  <header>
+    <p class="eyebrow">Other Bodies · A companion to the series map</p>
+    <h1>Companions</h1>
+    <p class="dek">The feeling that may arise in each of the fifty-two weeks of Make Space, and the natural body that keeps it company — a site of wisdom, not a symbol.</p>
+    <p class="pencil-note">Feelings are named here <em>in pencil, not ink</em>. They are not a fixed set to be identified and filed, but something discovered by attunement — by staying in the week long enough to feel what is actually there. What is offered is a guess held loosely, and a companion to hold it with.</p>
+    <p class="pencil-note">Some companions return across the year in a different light — a body that teaches one thing in spring can teach another in the dark. That is not repetition. It is a relationship deepening.</p>
+    <p class="map-link">Read alongside the <a href="https://amr0bin.github.io/make-space-curriculum/make-space-series-map.html">series map</a> · Published by <a href="https://www.therapeuticstudio.ca/make-space">Therapeutic Studio</a>.</p>
+    <hr class="masthead-rule">
+  </header>
+
+  <!-- ======================= MOVEMENT ONE ======================= -->
+  <section class="movement" aria-labelledby="m1">
+    <div class="movement-head">
+      <p class="movement-kicker">Movement One · Weeks 1–13</p>
+      <h2 id="m1">Foundations</h2>
+      <p class="movement-desc">Establishing the field, and the questions worth asking. The feelings here are mostly the feelings of beginning.</p>
+    </div>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 1</span><h3>The Permission to Fail</h3></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">the held breath of not&nbsp;good&nbsp;enough</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">the seedling in darkness</span></p>
+      </div>
+      <p class="attune">A seedling spends itself upward in the dark, on the strength of the seed alone, before there is any proof it is growing. <span class="knows">What it knows:</span> growing and the evidence of growing are not the same absence — and nothing green is possible without this blind, unwitnessed first reach.</p>
+    </article>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 2</span><h3>Somatic Arrival</h3></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">the suspicion you have not really arrived yet</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">the morning tide</span></p>
+      </div>
+      <p class="attune">The tide comes in before anyone on the shore decides it should, pulled by a moon it cannot see. <span class="knows">What it knows:</span> you do not have to manufacture your own presence; you are already, partly, here, answering pulls you did not author.</p>
+    </article>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 3</span><h3>The Architecture of the Studio</h3></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">the wish for somewhere safe enough to begin</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">the nest</span></p>
+      </div>
+      <p class="attune">A nest is not a place but a practice of returning to the same branch with whatever the day provided. <span class="knows">What it knows:</span> safety is built by coming back, not by getting it right the first time.</p>
+    </article>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 4</span><h3>Material Agency</h3></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">the small panic of not being in control</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">water</span></p>
+      </div>
+      <p class="attune">Water finds the lowest point and does not argue with the ground. <span class="knows">What it knows:</span> yielding to what the material wants is not the same as losing — the bleed and the pool were never yours to prevent.</p>
+    </article>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 5</span><h3>Intentionality Without Outcome</h3></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">the unease of moving without a destination</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">the river</span></p>
+      </div>
+      <p class="attune">A river has a direction without a destination it is hurrying toward. <span class="knows">What it knows:</span> you can aim toward a feeling without naming what you will make, and direction alone is enough to move by.</p>
+    </article>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 6</span><h3>The Other Body as Companion</h3></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">the unfamiliar ease of being accompanied, not answered</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">lichen</span></p>
+      </div>
+      <p class="attune">Lichen is two lives grown into one, neither dissolving into the other. <span class="knows">What it knows:</span> company is not the same as merger — a presence can stay beside you without trying to resolve you.</p>
+    </article>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 7</span><h3>Defining Creative Health</h3></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">the discomfort of belonging to no clear category</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">the watershed</span></p>
+      </div>
+      <p class="attune">A watershed belongs to no single stream; it is the gathering that makes all of them possible. <span class="knows">What it knows:</span> working in an unnamed space is not being lost — it is holding many sources at once.</p>
+    </article>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 8</span><h3>The Question of Stakeholders</h3></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">the unease of noticing who is left out</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">the commons</span></p>
+      </div>
+      <p class="attune">A commons is land held together, and easily enclosed by the few. <span class="knows">What it knows:</span> every practice was shaped for some bodies and not others, and noticing whose is the beginning of honesty, not the end of it.</p>
+    </article>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 9</span><h3>Creative Access</h3></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">the quiet grief of a door that was never opened to you</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">groundwater</span></p>
+      </div>
+      <p class="attune">Groundwater lies beneath every surface, reachable only where someone has dug. <span class="knows">What it knows:</span> there is a difference between being allowed in and being invited — and the water is no less present for going unreached.</p>
+    </article>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 10</span><h3>The Ethics of Witnessing</h3></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">the exposure of watching yourself</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">the owl</span></p>
+      </div>
+      <p class="attune">The owl sees completely and does not intervene. <span class="knows">What it knows:</span> it is possible to witness yourself without correcting — to see the one who is making without seizing the brush from them.</p>
+    </article>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 11</span><h3>The 3D Emotion Space</h3></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">the small vertigo of more than one dimension</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">the atmosphere</span></p>
+      </div>
+      <p class="attune">Weather is three conditions at once — temperature, pressure, humidity — never a single thing. <span class="knows">What it knows:</span> your feeling was never one feeling, and the extra axes are not a complication to fix but a truth you were not given language for.</p>
+    </article>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 12</span><h3>Differentiated Making</h3></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">the worry that changing the practice will dilute it</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">mycelium</span></p>
+      </div>
+      <p class="attune">Mycelium is one network that fruits differently depending on what the soil requires. <span class="knows">What it knows:</span> the network holds while the fruit changes — adaptation is not dilution, and something irreducible survives every version.</p>
+    </article>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 13</span><h3>Collective Empowerment</h3></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">the pull between making alone and moving with others</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">the murmuration</span></p>
+      </div>
+      <p class="attune">A murmuration has no leader; its coherence is each bird attending to the few nearest it. <span class="knows">What it knows:</span> you can be part of a shape larger than yourself without disappearing into it.</p>
+    </article>
+  </section>
+
+  <!-- ======================= MOVEMENT TWO ======================= -->
+  <section class="movement" aria-labelledby="m2">
+    <div class="movement-head">
+      <p class="movement-kicker">Movement Two · Weeks 14–26</p>
+      <h2 id="m2">Literature</h2>
+      <p class="movement-desc">Surveying what research, history, and theory can say. The feelings here are the feelings of encountering knowledge — and its limits.</p>
+    </div>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 14</span><h3>Historical Context</h3></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">the humility of arriving late to ancient work</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">the painted cave</span></p>
+      </div>
+      <p class="attune">In the cave, art was made before any other building existed. <span class="knows">What it knows:</span> this is old work, older than medicine — you are not its inventor but its inheritor.</p>
+    </article>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 15</span><h3>The Neuroscientific Perspective</h3></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">the mixed comfort of seeing yourself explained</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">the myelin sheath</span></p>
+      </div>
+      <p class="attune">Myelin is insulation laid down by repetition, making each signal faster than the last. <span class="knows">What it knows:</span> being explained by the brain can hold you and slightly reduce you at once — both are true, and neither is the whole of what happened.</p>
+    </article>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 16</span><h3>Psychological Impact</h3></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">the tentative widening when the body stops bracing</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">the field in spring</span></p>
+      </div>
+      <p class="attune">A field expands in spring because the threat of winter has passed; nothing has to be achieved. <span class="knows">What it knows:</span> range returns on its own once survival is no longer the only task.</p>
+    </article>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 17</span><h3>Physiological Resilience</h3></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">a quiet, strange trust in a body you cannot feel working</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">the immune system</span></p>
+      </div>
+      <p class="attune">The immune system is everywhere and located nowhere, adapting without being told. <span class="knows">What it knows:</span> much of what keeps you is distributed, wordless, and entirely uninterested in your attention.</p>
+    </article>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 18</span><h3>Social Connection Theory</h3></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">the ache between being near others and belonging to them</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">the coral reef</span></p>
+      </div>
+      <p class="attune">A reef sustains more life than any single organism could, by sheer proximity. <span class="knows">What it knows:</span> nearness is not yet belonging — and the distance between them is real, crossable, and not guaranteed.</p>
+    </article>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 19</span><h3>The State of Flow</h3></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">the longing for ease, and the honesty about who cannot reach it</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">the river in full current</span></p>
+      </div>
+      <p class="attune">A river in full current is not forcing; it moves at the pace the land allows. <span class="knows">What it knows:</span> ease like this assumes a security not every nervous system has — and to pretend otherwise is to abandon the people who most need another door.</p>
+    </article>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 20</span><h3>Narrative and Meaning-Making</h3></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">the pressure of something unnamed asking to be told</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">the salmon</span></p>
+      </div>
+      <p class="attune">The salmon carries the memory of its origin in its body; the return is encoded, not chosen. <span class="knows">What it knows:</span> some things ask to be told, and some cannot be made to mean — and telling does not always resolve what it names.</p>
+    </article>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 21</span><h3>Creative Health in Education</h3></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">a longing for the self before self-consciousness arrived</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">the forest school</span></p>
+      </div>
+      <p class="attune">A forest school learns outside the building designed for learning. <span class="knows">What it knows:</span> there was a time you made things without watching yourself make them, and the watching was taught — which means it can be set down.</p>
+    </article>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 22</span><h3>Clinical Environments</h3></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">the stubbornness of making in a place that doesn't invite it</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">lichen on stone</span></p>
+      </div>
+      <p class="attune">Lichen finds purchase on bare rock that offers it nothing. <span class="knows">What it knows:</span> you do not always get hospitable ground — and life that waits for better conditions sometimes waits forever.</p>
+    </article>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 23</span><h3>Social Prescribing</h3></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">arriving at a threshold still carrying everything you came with</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">the estuary</span></p>
+      </div>
+      <p class="attune">An estuary is the meeting of river and sea, with a chemistry neither makes alone. <span class="knows">What it knows:</span> you can be sent somewhere and arrive carrying all of it — the referral changes the water without emptying it.</p>
+    </article>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 24</span><h3>The Depression Treatment Gap</h3></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">the heavy knowledge of unreachable need</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">the aquifer</span></p>
+      </div>
+      <p class="attune">An aquifer is real water, present and unreachable without the infrastructure to lift it. <span class="knows">What it knows:</span> most who need this will never reach it — and the work is to refuse to let that knowledge harden into numbness.</p>
+    </article>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 25</span><h3>Task-Shifting</h3></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">the question of what only you can give</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">the fig wasp</span></p>
+      </div>
+      <p class="attune">The fig and its wasp are a relationship so specific that neither survives without the other. <span class="knows">What it knows:</span> some of a practice can be handed on, and some is irreplaceable — and telling the two apart is the whole of teaching it safely.</p>
+    </article>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 26</span><h3>The Global Shift</h3></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">the unfamiliar steadiness of working from enough</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">the mycorrhizal network</span></p>
+      </div>
+      <p class="attune">The mycorrhizal network sustains the forest underground, long before any distress shows above. <span class="knows">What it knows:</span> the deepest care is preventive and unseen — a deposit made before it is needed, by something that will not be thanked.</p>
+    </article>
+  </section>
+
+  <!-- ======================= MOVEMENT THREE ======================= -->
+  <section class="movement" aria-labelledby="m3">
+    <div class="movement-head">
+      <p class="movement-kicker">Movement Three · Weeks 27–48</p>
+      <h2 id="m3">Investigation — Other Bodies</h2>
+      <p class="movement-desc">The case study: one feeling, one natural body, one act of making, each week. Here the companion does not console — it reframes.</p>
+    </div>
+
+    <div class="constellation"><h3>Constellation One — Threshold States</h3><p>Emotions that stand at the edge between what was and what might be.</p></div>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 27</span><h4>Octopus / Shame</h4></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">shame, as exquisite sensitivity to being seen</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">the octopus</span></p>
+      </div>
+      <p class="attune">The octopus changes colour in response to everything it sees; it does not hide, it responds. <span class="knows">What it reframes:</span> shame is not a verdict on you — it is a sign you are paying attention.</p>
+    </article>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 28</span><h4>Cave / Fear</h4></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">fear, as the body preparing</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">the cave</span></p>
+      </div>
+      <p class="attune">The cave holds darkness as protection; what waits inside is not threat but accumulation. <span class="knows">What it reframes:</span> fear is not only something to escape — it is somewhere to gather.</p>
+    </article>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 29</span><h4>Permafrost / Numbness</h4></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">numbness, as a kind of keeping</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">permafrost</span></p>
+      </div>
+      <p class="attune">Permafrost holds millennia in suspension — not dead, not lost, waiting for conditions that do not yet exist. <span class="knows">What it reframes:</span> numbness is not emptiness; it is storage, and what is stored is not gone.</p>
+    </article>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 30</span><h4>Pine Cone / Guardedness</h4></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">guardedness, as discernment about when to open</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">the pine cone</span></p>
+      </div>
+      <p class="attune">The pine cone releases its seeds only in heat, waiting for the conditions that make germination possible. <span class="knows">What it reframes:</span> guardedness is not armour — it is wisdom about timing.</p>
+    </article>
+
+    <div class="constellation"><h3>Constellation Two — Grief and Loss</h3><p>Emotions that ask the body to carry what cannot be fixed.</p></div>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 31</span><h4>Moss / Grief</h4></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">grief, as a slow, spreading form of love</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">moss</span></p>
+      </div>
+      <p class="attune">Moss grows over what is broken, making it bearable without restoring it; it accompanies rather than repairs. <span class="knows">What it reframes:</span> grief is not a disorder to be cured — it is patience the colour of velvet.</p>
+    </article>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 32</span><h4>Rain / Sadness</h4></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">sadness, as honest precipitation</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">rain</span></p>
+      </div>
+      <p class="attune">Rain disturbs the still surface and does not apologise; the ripples are accurate. <span class="knows">What it reframes:</span> sadness is not an interruption of a clear day — it is what honest disturbance looks like.</p>
+    </article>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 33</span><h4>River Delta / Exhaustion</h4></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">exhaustion, as the end of a long carrying</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">the river delta</span></p>
+      </div>
+      <p class="attune">The delta does not collapse; it spreads slowly into many channels, setting down everything it carried. <span class="knows">What it reframes:</span> exhaustion is not defeat — it is the quiet arrival of something carried a long way.</p>
+    </article>
+
+    <div class="constellation"><h3>Constellation Three — Activation and Urgency</h3><p>Emotions that move the body before the mind has decided.</p></div>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 34</span><h4>Dormant Volcano / Despair</h4></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">despair, as energy held at depth</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">the dormant volcano</span></p>
+      </div>
+      <p class="attune">The dormant volcano is not empty but pressurised; the quiet surface is not the whole story. <span class="knows">What it reframes:</span> despair is not the end — it is power waiting for the conditions that will move it.</p>
+    </article>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 35</span><h4>Deep Ocean / Loneliness</h4></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">loneliness, as depth that has not been reached</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">the deep ocean</span></p>
+      </div>
+      <p class="attune">The deep ocean is full of life adapted to exist without light or witness, and it makes its own. <span class="knows">What it reframes:</span> loneliness is not the absence of connection — it is what it looks like to be generative in the dark.</p>
+    </article>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 36</span><h4>Starling / Anxiety</h4></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">anxiety, as extraordinary attunement</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">the starling</span></p>
+      </div>
+      <p class="attune">The murmuration moves without a leader because every bird is giving complete attention to the nearest few. <span class="knows">What it reframes:</span> anxiety is not fragmentation — it is keeping-close, seen from the outside.</p>
+    </article>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 37</span><h4>Salmon / Urgency</h4></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">urgency, as the body following what it knows</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">the salmon</span></p>
+      </div>
+      <p class="attune">The salmon does not rush; it moves at exactly the pace the current and the body together require. <span class="knows">What it reframes:</span> urgency is not panic — it is a deep orientation, obeyed.</p>
+    </article>
+
+    <div class="constellation"><h3>Constellation Four — Joy and Its Complications</h3><p>Emotions that are not simple, even when they feel good.</p></div>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 38</span><h4>Firefly / Joy</h4></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">joy, as a signal rather than a reward</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">the firefly</span></p>
+      </div>
+      <p class="attune">The firefly's light is how it finds its kind — communication, not performance. <span class="knows">What it reframes:</span> joy is not a luxury you earn — it is how the body locates belonging.</p>
+    </article>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 39</span><h4>Hummingbird / Delight</h4></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">delight, as precision at high speed</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">the hummingbird</span></p>
+      </div>
+      <p class="attune">The hummingbird hovers exactly as long as the flower requires — total presence, then gone. <span class="knows">What it reframes:</span> delight is not a distraction from serious things — it is full attention that happens to be pleasurable.</p>
+    </article>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 40</span><h4>Spring Flood / Overwhelm</h4></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">overwhelm, as more than the channel can carry</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">the spring flood</span></p>
+      </div>
+      <p class="attune">The spring flood is not the river's failure; it is a snowpack larger than the banks were built for. <span class="knows">What it reframes:</span> overwhelm is not a sign something is wrong with you — it is information about capacity and the conditions that shaped it.</p>
+    </article>
+
+    <div class="constellation"><h3>Constellation Five — Stillness and Its Difficulty</h3><p>Emotions that resist motion, or that motion cannot reach.</p></div>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 41</span><h4>Desert / Boredom</h4></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">boredom, as the waiting before what doesn't yet know it will happen</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">the desert</span></p>
+      </div>
+      <p class="attune">The desert is not empty but extraordinarily patient, holding everything it needs for when the rain comes. <span class="knows">What it reframes:</span> boredom is not a failure of engagement — it is the waiting that makes germination possible.</p>
+    </article>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 42</span><h4>Turtle / Patience</h4></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">patience, as a different relationship to time</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">the turtle</span></p>
+      </div>
+      <p class="attune">The turtle does not wait so much as inhabit time differently; its pace is a method, not a concession. <span class="knows">What it reframes:</span> patience is not endurance — it is a changed relationship to when things are allowed to happen.</p>
+    </article>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 43</span><h4>Estuary / Ambivalence</h4></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">ambivalence, as holding two true things at once</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">the estuary</span></p>
+      </div>
+      <p class="attune">The estuary is neither river nor sea but both continuously, with a chemistry neither could produce alone. <span class="knows">What it reframes:</span> ambivalence is not weakness of character — it is ecological richness.</p>
+    </article>
+
+    <div class="constellation"><h3>Constellation Six — Transition States</h3><p>Emotions that mark passage — between states, between selves.</p></div>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 44</span><h4>Fog / Confusion</h4></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">confusion, as the mind midway through changing form</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">fog</span></p>
+      </div>
+      <p class="attune">Fog is water that is neither rain nor air. <span class="knows">What it reframes:</span> confusion is not ignorance — it is what thinking looks like while it is transforming.</p>
+    </article>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 45</span><h4>Chrysalis / Uncertainty</h4></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">uncertainty, as the condition in which the future is built</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">the chrysalis</span></p>
+      </div>
+      <p class="attune">The chrysalis holds dissolved material that has not yet become anything; the transformation is improvised, not planned. <span class="knows">What it reframes:</span> uncertainty is not waiting for clarity — it is what becoming looks like from the inside.</p>
+    </article>
+
+    <div class="constellation"><h3>Constellation Seven — Anger and Its Intelligence</h3><p>Emotions that are often refused, and that carry information when they are received.</p></div>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 46</span><h4>Storm / Anger</h4></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">anger, as the redistribution of what was held too long</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">the storm</span></p>
+      </div>
+      <p class="attune">The storm moves energy from high pressure to low, does its work, and dissipates; it does not choose its targets. <span class="knows">What it reframes:</span> anger is not a loss of control — it is information about what has been accumulating, and where.</p>
+    </article>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 47</span><h4>Wasp / Irritability</h4></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">irritability, as a boundary crossed too many times</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">the wasp</span></p>
+      </div>
+      <p class="attune">The wasp stings when the nest is threatened and the warning has gone unheeded. <span class="knows">What it reframes:</span> irritability is not a character flaw — it is a threshold, exceeded, speaking.</p>
+    </article>
+
+    <div class="constellation"><h3>Constellation Eight — Belonging and Its Limits</h3><p>The emotional territory of being among others, and the cost of it.</p></div>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 48</span><h4>Wolf Pack / Longing</h4></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">longing, as the shape of what you know is possible</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">the wolf pack</span></p>
+      </div>
+      <p class="attune">The wolf howls not to mourn but to locate the pack; the sound is a way of knowing others exist. <span class="knows">What it reframes:</span> longing is not suffering from absence — it is proof of a capacity for connection.</p>
+    </article>
+  </section>
+
+  <!-- ======================= MOVEMENT FOUR ======================= -->
+  <section class="movement" aria-labelledby="m4">
+    <div class="movement-head">
+      <p class="movement-kicker">Movement Four · Weeks 49–52</p>
+      <h2 id="m4">Synthesis</h2>
+      <p class="movement-desc">The year turns outward and does not close. The feelings here are the feelings of looking back, and of not arriving.</p>
+    </div>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 49</span><h3>The Public Record of Learning</h3></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">the recognition of seeing what you couldn't see from inside</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">the coral record</span></p>
+      </div>
+      <p class="attune">Coral keeps its years as visible rings; the archive is the body itself. <span class="knows">What it knows:</span> looking back at early work shows you what was true while you made it and invisible to you then.</p>
+    </article>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 50</span><h3>Addressing the Evidence Gap</h3></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">the frustration of being real and unmeasured</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">bioluminescence</span></p>
+      </div>
+      <p class="attune">Bioluminescence is light below the depth our instruments reach — not absent, only unmeasured. <span class="knows">What it knows:</span> something can happen that no questionnaire catches, and the failure to measure it is not the same as its not being there.</p>
+    </article>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 51</span><h3>Scaling Creative Health</h3></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">the humbling of a problem larger than one practice</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">the mycorrhizal network at forest scale</span></p>
+      </div>
+      <p class="attune">A forest's underground network has no centre and cannot be installed quickly; it was built over centuries. <span class="knows">What it knows:</span> some infrastructure outlasts its builders, and the work is to add to it, not to finish it.</p>
+    </article>
+
+    <article class="entry">
+      <div class="entry-head"><span class="wk">Week 52</span><h3>Arriving at the Horizon</h3></div>
+      <div class="pairing">
+        <p class="feeling-line"><span class="lab">may arise</span><span class="feeling">the honest disappointment, and the quiet freedom, of arriving</span></p>
+        <p class="companion-line"><span class="lab">companion</span><span class="companion">the horizon</span></p>
+      </div>
+      <p class="attune">The horizon is not a destination but the edge of what can currently be seen, which moves exactly as far as you travel toward it. <span class="knows">What it knows:</span> you do not arrive; you learn to see from further out, which is a different and harder thing than finishing.</p>
+    </article>
+  </section>
+
+  <footer>
+    <p>An extension of the Other Bodies series — companions to be collected and integrated over time. The feelings are named in pencil; the year may revise them.</p>
+    <p>Make Space: Other Bodies and Creative Health · Therapeutic Studio. Read alongside the <a href="https://amr0bin.github.io/make-space-curriculum/make-space-series-map.html">series map</a> and the <a href="https://www.therapeuticstudio.ca/make-space">Make Space page</a>.</p>
+    <p class="totop"><a href="#top">Back to top</a> · © 2026</p>
+  </footer>
+
+</main>
+</body>
+</html>
